@@ -7,7 +7,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/mendvibe-app/golf-shot-guide)](https://github.com/mendvibe-app/golf-shot-guide/issues)
 
 ## 🚀 **Live Demo**
-Experience the app: [Golf Shot Guide App](https://your-demo-url.vercel.app)
+Experience the app: [https://golf-shot-guide.vercel.app/](https://golf-shot-guide.vercel.app/)
 
 ## ✨ **Key Features**
 
