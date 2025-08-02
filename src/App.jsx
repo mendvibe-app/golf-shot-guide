@@ -23,6 +23,7 @@ import {
   FaWater,
   FaRuler
 } from "react-icons/fa";
+import MobilePageCurlTest from "./components/MobilePageCurlTest";
 import { 
   MdGolfCourse,
   MdSportsGolf,
@@ -1818,6 +1819,7 @@ const GolfShotGuide = () => {
     { id: "calculator", name: "Distance", icon: FaCalculator },
     { id: "putting", name: "Putting", icon: FaGolfBall },
     { id: "ballselection", name: "Balls", icon: TbGolf },
+    { id: "pagecurl", name: "Page Curl", icon: FaFire },
     { id: "mydata", name: "Data", icon: FaUser },
     { id: "learn", name: "Learn", icon: FaBook }
   ];
@@ -2306,6 +2308,11 @@ const GolfShotGuide = () => {
           </div>
         )}
 
+        {/* Page Curl Test Tab */}
+        {activeTab === "pagecurl" && (
+          <MobilePageCurlTest />
+        )}
+
         {/* My Data Tab */}
         {activeTab === "mydata" && (
           <div className="space-y-6">
@@ -2611,7 +2618,7 @@ const GolfShotGuide = () => {
 
       {/* Bottom Navigation */}
       <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-slate-200/60 z-50 shadow-2xl shadow-slate-900/10">
-        <div className="grid grid-cols-6 px-1 py-1">
+        <div className="grid grid-cols-7 px-1 py-1">
           {tabs.map(tab => {
             const IconComponent = tab.icon;
             return (
