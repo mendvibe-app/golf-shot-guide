@@ -17,7 +17,7 @@ export interface CurlState {
   currentX: number;
   currentY: number;
   curlAmount: number;
-  cornerGrabbed: 'bottom-left' | 'bottom-right' | null;
+  cornerGrabbed: 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right' | null;
 }
 
 export interface CurlConfig {

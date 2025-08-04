@@ -231,8 +231,8 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
   const currentPageRef = useRef<HTMLDivElement>(null);
   const nextPageRef = useRef<HTMLDivElement>(null);
 
-  // Calculate curl effect values for vertical page flipping
-  const calculateCurlEffect = useCallback((x: number, y: number, startX: number, startY: number, corner: 'bottom-left' | 'bottom-right') => {
+  // Calculate curl effect values for vertical page flipping (forward and backward)
+  const calculateCurlEffect = useCallback((x: number, y: number, startX: number, startY: number, corner: 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right') => {
     if (!containerRef.current) return { 
       curlAmount: 0, 
       rotateX: 0, 
@@ -251,33 +251,49 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
     const deltaX = x - startX;
     const deltaY = y - startY;
     
-    // For vertical flipping, we primarily care about upward movement
-    const verticalDistance = Math.max(0, startY - y); // Only count upward movement
+    const isTopCorner = corner === 'top-left' || corner === 'top-right';
+    const isBottomCorner = corner === 'bottom-left' || corner === 'bottom-right';
+    
+    let verticalDistance: number;
+    let curlAmount: number;
+    let rotateX: number;
+    let gradientAngle: number;
+    
+    if (isBottomCorner) {
+      // FORWARD navigation: bottom corners flip UP
+      verticalDistance = Math.max(0, startY - y); // Only count upward movement
+      const maxVerticalDistance = rect.height * 0.8;
+      curlAmount = Math.min(verticalDistance / maxVerticalDistance, 1);
+      rotateX = curlAmount * 90; // Rotate around X-axis, hinging from top seam
+      gradientAngle = corner === 'bottom-left' ? 45 : 135;
+    } else {
+      // BACKWARD navigation: top corners flip DOWN
+      verticalDistance = Math.max(0, y - startY); // Only count downward movement  
+      const maxVerticalDistance = rect.height * 0.8;
+      curlAmount = Math.min(verticalDistance / maxVerticalDistance, 1);
+      rotateX = curlAmount * -90; // Negative rotation for backward flip
+      gradientAngle = corner === 'top-left' ? 225 : 315;
+    }
+    
     const horizontalDistance = Math.abs(deltaX);
     
-    // Calculate curl amount based on upward movement
-    const maxVerticalDistance = rect.height * 0.8; // 80% of height
-    const curlAmount = Math.min(verticalDistance / maxVerticalDistance, 1);
-    
-    // Calculate transformations for realistic vertical paper curl (hinge from top)
-    const rotateX = curlAmount * 90; // Rotate around X-axis, hinging from top seam
+    // Calculate transformations for realistic vertical paper curl
     const rotateY = (horizontalDistance / rect.width) * 10; // Slight Y rotation for corner twist
     const skewX = curlAmount * 5; // Subtle skew for perspective
     
-    // Page follows the drag but hinges from top
+    // Page follows the drag but hinges appropriately
     const translateX = deltaX * 0.2;
-    const translateY = 0; // No Y translation - page hinges from top
-    
-    // Gradient angle for shadow effect (diagonal from corner)
-    const gradientAngle = corner === 'bottom-left' ? 45 : 135;
+    const translateY = 0; // No Y translation - page hinges from seam
     
     // Curl radius for smooth corner rounding
     const curlRadius = curlAmount * 30;
     
     // Corner curl effect - how much the corner itself curls
     const cornerCurlX = deltaX * 0.5;
-    const cornerCurlY = Math.max(0, startY - y) * 0.3;
-    const cornerCurlRotate = curlAmount * 45;
+    const cornerCurlY = isBottomCorner ? 
+      Math.max(0, startY - y) * 0.3 : // Bottom: curl up
+      Math.max(0, y - startY) * 0.3;   // Top: curl down
+    const cornerCurlRotate = curlAmount * (isBottomCorner ? 45 : -45);
     
     return {
       curlAmount,
@@ -326,7 +342,7 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
   }, []);
 
   // Check if point is in corner grab area (bottom corners for vertical flipping)
-  const isInCorner = useCallback((x: number, y: number): 'bottom-left' | 'bottom-right' | null => {
+  const isInCorner = useCallback((x: number, y: number): 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right' | null => {
     if (!containerRef.current) return null;
     
     const rect = containerRef.current.getBoundingClientRect();
@@ -336,18 +352,26 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
     // Larger corner areas for mobile (easier to grab)
     const cornerSize = Math.max(curlConfig.cornerSize, 100); // Minimum 100px for mobile
     
-    // Bottom-left corner
+    // Bottom corners for NEXT page
     if (relativeX < cornerSize && relativeY > rect.height - cornerSize) {
       return 'bottom-left';
     }
-    
-    // Bottom-right corner  
     if (relativeX > rect.width - cornerSize && relativeY > rect.height - cornerSize) {
       return 'bottom-right';
     }
     
+    // Top corners for PREVIOUS page (only if not on first page)
+    if (currentPage > 0) {
+      if (relativeX < cornerSize && relativeY < cornerSize) {
+        return 'top-left';
+      }
+      if (relativeX > rect.width - cornerSize && relativeY < cornerSize) {
+        return 'top-right';
+      }
+    }
+    
     return null;
-  }, []);
+  }, [currentPage]);
 
   // Handle pointer events
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
@@ -443,12 +467,25 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
     
     // Determine if we should flip the page
     const shouldFlip = curlState.curlAmount > curlConfig.threshold;
+    const isTopCorner = curlState.cornerGrabbed === 'top-left' || curlState.cornerGrabbed === 'top-right';
+    const isBottomCorner = curlState.cornerGrabbed === 'bottom-left' || curlState.cornerGrabbed === 'bottom-right';
     
-    if (shouldFlip && currentPage < pages.length - 1) {
-      // Enhanced feedback for successful page flip
-      triggerHapticFeedback('heavy');
-      playPaperSound('flip');
-      onPageChange(currentPage + 1);
+    if (shouldFlip) {
+      if (isBottomCorner && currentPage < pages.length - 1) {
+        // FORWARD navigation: bottom corners go to next page
+        triggerHapticFeedback('heavy');
+        playPaperSound('flip');
+        onPageChange(currentPage + 1);
+      } else if (isTopCorner && currentPage > 0) {
+        // BACKWARD navigation: top corners go to previous page
+        triggerHapticFeedback('heavy');
+        playPaperSound('flip');
+        onPageChange(currentPage - 1);
+      } else {
+        // Can't flip (at first/last page)
+        triggerHapticFeedback('light');
+        playPaperSound('rustle');
+      }
     } else {
       // Feedback for snap-back
       triggerHapticFeedback('light');
@@ -563,6 +600,11 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
           opacity: calc(var(--curl-amount) * 0.8 + 0.2);
         }
 
+        .page-curl-prev {
+          z-index: 0;
+          opacity: calc(var(--curl-amount) * 0.8 + 0.2);
+        }
+
         .page-curl-content {
           height: 100%;
           display: flex;
@@ -650,6 +692,24 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
             translate(calc(var(--corner-curl-x) * -1), calc(var(--corner-curl-y) * -1))
             rotate(calc(var(--corner-curl-rotate) * -1))
             rotateX(calc(var(--curl-amount) * 30deg));
+        }
+
+        .page-curl-current[data-corner="top-right"]::after {
+          top: -60px;
+          right: -60px;
+          transform: 
+            translate(var(--corner-curl-x), var(--corner-curl-y))
+            rotate(var(--corner-curl-rotate))
+            rotateX(calc(var(--curl-amount) * -30deg));
+        }
+
+        .page-curl-current[data-corner="top-left"]::after {
+          top: -60px;
+          left: -60px;
+          transform: 
+            translate(calc(var(--corner-curl-x) * -1), var(--corner-curl-y))
+            rotate(calc(var(--corner-curl-rotate) * -1))
+            rotateX(calc(var(--curl-amount) * -30deg));
         }
 
         /* Additional curling shadow on the main page */
@@ -828,7 +888,17 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
           onPointerLeave={handlePointerUp}
         >
           <div className="page-curl-stack">
-            {/* Next page (underneath) */}
+            {/* Previous page (underneath for backward navigation) */}
+            {currentPage > 0 && (
+              <div
+                className="page-curl-layer page-curl-prev"
+                style={{ zIndex: 0 }}
+              >
+                {pages[currentPage - 1]?.content}
+              </div>
+            )}
+            
+            {/* Next page (underneath for forward navigation) */}
             {currentPage < pages.length - 1 && (
               <div
                 ref={nextPageRef}
@@ -866,8 +936,9 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
           {/* Instructions */}
           {!curlState.isDragging && (
             <div className="absolute inset-x-4 bottom-12 text-center text-gray-500 text-sm z-20">
-              <div className="font-semibold text-gray-600">Enhanced Paper Feel</div>
-              <div className="mt-1">Touch corners to flip • Feel haptic feedback • Listen for paper sounds</div>
+              <div className="font-semibold text-gray-600">Bi-Directional Page Flipping</div>
+              <div className="mt-1">Bottom corners: Next page • Top corners: Previous page</div>
+              <div className="text-xs text-gray-400 mt-1">Feel haptic feedback • Listen for paper sounds</div>
             </div>
           )}
 
