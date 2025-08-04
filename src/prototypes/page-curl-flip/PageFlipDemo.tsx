@@ -270,10 +270,43 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
     cornerGrabbed: null
   });
 
+  // Hint state for better user discovery
+  const [showCornerHints, setShowCornerHints] = useState(false);
+  const [showTutorial, setShowTutorial] = useState(false);
+
   // Refs
   const containerRef = useRef<HTMLDivElement>(null);
   const currentPageRef = useRef<HTMLDivElement>(null);
   const nextPageRef = useRef<HTMLDivElement>(null);
+
+  // Show hints after user reaches page 2 for the first time
+  useEffect(() => {
+    if (currentPage > 0 && !showCornerHints) {
+      const timer = setTimeout(() => {
+        setShowCornerHints(true);
+        // Show tutorial after hints appear
+        setTimeout(() => setShowTutorial(true), 1000);
+      }, 2000); // Wait 2 seconds after reaching page 2
+      
+      return () => clearTimeout(timer);
+    }
+  }, [currentPage, showCornerHints]);
+
+  // Hide tutorial after 5 seconds or on interaction
+  useEffect(() => {
+    if (showTutorial) {
+      const timer = setTimeout(() => setShowTutorial(false), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [showTutorial]);
+
+  // Hide hints after successful backward navigation
+  useEffect(() => {
+    if (currentPage === 0 && showCornerHints) {
+      setShowCornerHints(false);
+      setShowTutorial(false);
+    }
+  }, [currentPage, showCornerHints]);
 
   // Calculate curl effect values for vertical page flipping (forward and backward)
   const calculateCurlEffect = useCallback((x: number, y: number, startX: number, startY: number, corner: 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right') => {
@@ -367,9 +400,14 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
     cornerCurlX: number,
     cornerCurlY: number,
     cornerCurlRotate: number,
-    corner: 'bottom-left' | 'bottom-right' | null
+    corner: 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right' | null
   ) => {
     if (currentPageRef.current) {
+      // Set transform origin based on direction
+      const isTopCorner = corner === 'top-left' || corner === 'top-right';
+      const transformOrigin = isTopCorner ? 'bottom center' : 'top center';
+      currentPageRef.current.style.setProperty('--transform-origin', transformOrigin);
+      
       currentPageRef.current.style.setProperty('--curl-amount', curlAmount.toString());
       currentPageRef.current.style.setProperty('--rotate-x', `${rotateX}deg`);
       currentPageRef.current.style.setProperty('--rotate-y', `${rotateY}deg`);
@@ -434,6 +472,11 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
     
     e.preventDefault();
     
+    // Dismiss tutorial on first interaction
+    if (showTutorial) {
+      setShowTutorial(false);
+    }
+    
     // Enhanced feedback on grab start
     triggerHapticFeedback('light');
     playPaperSound('rustle');
@@ -451,7 +494,7 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
     if (containerRef.current) {
       containerRef.current.style.cursor = 'grabbing';
     }
-  }, [isInCorner]);
+  }, [isInCorner, showTutorial]);
 
   const handlePointerMove = useCallback((e: React.PointerEvent) => {
     // Update cursor based on corner proximity
@@ -623,7 +666,7 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
 
         .page-curl-current {
           z-index: 2;
-          transform-origin: top center;
+          transform-origin: var(--transform-origin, top center);
           transform: 
             translate3d(var(--translate-x), var(--translate-y), 0)
             rotateX(var(--rotate-x))
@@ -639,6 +682,11 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
           filter: 
             drop-shadow(0 4px 8px rgba(0,0,0,0.1))
             drop-shadow(0 8px 16px rgba(0,0,0,0.1));
+        }
+
+        /* Backward navigation uses different transform origin */
+        .page-curl-current[data-corner^="top"] {
+          transform-origin: bottom center;
         }
 
         .page-curl-current.dragging {
@@ -960,7 +1008,72 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
           display: none;
         }
 
-        /* Debug overlay for corner detection areas */
+        /* Subtle pulsing hint for top corners when available */
+        .corner-hint-top {
+          position: absolute;
+          top: 10px;
+          width: 60px;
+          height: 60px;
+          border: 2px solid rgba(59,130,246,0.6);
+          border-radius: 8px;
+          pointer-events: none;
+          z-index: 15;
+          animation: cornerPulse 3s ease-in-out infinite;
+          opacity: 0;
+        }
+
+        .corner-hint-top.show {
+          opacity: 1;
+        }
+
+        .corner-hint-top-left {
+          left: 10px;
+        }
+
+        .corner-hint-top-right {
+          right: 10px;
+        }
+
+        @keyframes cornerPulse {
+          0%, 70%, 100% { 
+            opacity: 0; 
+            transform: scale(1);
+          }
+          10%, 60% { 
+            opacity: 0.6; 
+            transform: scale(1.1);
+          }
+        }
+
+        /* Tutorial hint */
+        .tutorial-hint {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: rgba(0,0,0,0.8);
+          color: white;
+          padding: 16px 20px;
+          border-radius: 12px;
+          font-size: 14px;
+          text-align: center;
+          z-index: 100;
+          max-width: 280px;
+          animation: fadeInUp 0.5s ease-out;
+        }
+
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translate(-50%, -40%);
+          }
+          to {
+            opacity: 1;
+            transform: translate(-50%, -50%);
+          }
+        }
+
+        /* Debug overlay for corner detection areas (can be removed in production) */
         .corner-debug {
           position: absolute;
           border: 2px solid red;
@@ -1025,51 +1138,80 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
             </div>
           </div>
 
-          {/* Debug overlays for corner detection areas */}
-          <div 
-            className="corner-debug" 
-            style={{
-              top: 0,
-              left: 0,
-              width: Math.max(curlConfig.cornerSize, 100),
-              height: Math.max(curlConfig.cornerSize, 100)
-            }}
-          >
-            {currentPage > 0 ? "TOP-L" : "X"}
-          </div>
-          <div 
-            className="corner-debug" 
-            style={{
-              top: 0,
-              right: 0,
-              width: Math.max(curlConfig.cornerSize, 100),
-              height: Math.max(curlConfig.cornerSize, 100)
-            }}
-          >
-            {currentPage > 0 ? "TOP-R" : "X"}
-          </div>
-          <div 
-            className="corner-debug" 
-            style={{
-              bottom: 0,
-              left: 0,
-              width: Math.max(curlConfig.cornerSize, 100),
-              height: Math.max(curlConfig.cornerSize, 100)
-            }}
-          >
-            BOT-L
-          </div>
-          <div 
-            className="corner-debug" 
-            style={{
-              bottom: 0,
-              right: 0,
-              width: Math.max(curlConfig.cornerSize, 100),
-              height: Math.max(curlConfig.cornerSize, 100)
-            }}
-          >
-            BOT-R
-          </div>
+          {/* Debug overlays for corner detection areas (hidden in production) */}
+          {process.env.NODE_ENV === 'development' && (
+            <>
+              <div 
+                className="corner-debug" 
+                style={{
+                  top: 0,
+                  left: 0,
+                  width: Math.max(curlConfig.cornerSize, 100),
+                  height: Math.max(curlConfig.cornerSize, 100)
+                }}
+              >
+                {currentPage > 0 ? "TOP-L" : "X"}
+              </div>
+              <div 
+                className="corner-debug" 
+                style={{
+                  top: 0,
+                  right: 0,
+                  width: Math.max(curlConfig.cornerSize, 100),
+                  height: Math.max(curlConfig.cornerSize, 100)
+                }}
+              >
+                {currentPage > 0 ? "TOP-R" : "X"}
+              </div>
+              <div 
+                className="corner-debug" 
+                style={{
+                  bottom: 0,
+                  left: 0,
+                  width: Math.max(curlConfig.cornerSize, 100),
+                  height: Math.max(curlConfig.cornerSize, 100)
+                }}
+              >
+                BOT-L
+              </div>
+              <div 
+                className="corner-debug" 
+                style={{
+                  bottom: 0,
+                  right: 0,
+                  width: Math.max(curlConfig.cornerSize, 100),
+                  height: Math.max(curlConfig.cornerSize, 100)
+                }}
+              >
+                BOT-R
+              </div>
+            </>
+          )}
+
+          {/* Corner hints for discoverability */}
+          {showCornerHints && currentPage > 0 && (
+            <>
+              <div className={`corner-hint-top corner-hint-top-left ${showCornerHints ? 'show' : ''}`} />
+              <div className={`corner-hint-top corner-hint-top-right ${showCornerHints ? 'show' : ''}`} />
+            </>
+          )}
+
+          {/* Tutorial overlay */}
+          {showTutorial && (
+            <div 
+              className="tutorial-hint"
+              onClick={() => setShowTutorial(false)}
+            >
+              <div style={{ marginBottom: '8px', fontSize: '16px' }}>💡 Pro Tip</div>
+              <div>
+                <strong>Grab top corners</strong> and drag down<br />
+                to flip back to previous pages!
+              </div>
+              <div style={{ fontSize: '12px', marginTop: '8px', opacity: 0.8 }}>
+                Tap anywhere to dismiss
+              </div>
+            </div>
+          )}
 
           {/* Page indicator */}
           <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
