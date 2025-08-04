@@ -354,18 +354,22 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
     
     // Bottom corners for NEXT page
     if (relativeX < cornerSize && relativeY > rect.height - cornerSize) {
+      console.log('🔥 Detected bottom-left corner');
       return 'bottom-left';
     }
     if (relativeX > rect.width - cornerSize && relativeY > rect.height - cornerSize) {
+      console.log('🔥 Detected bottom-right corner');
       return 'bottom-right';
     }
     
     // Top corners for PREVIOUS page (only if not on first page)
     if (currentPage > 0) {
       if (relativeX < cornerSize && relativeY < cornerSize) {
+        console.log('🔥 Detected top-left corner (go back!)');
         return 'top-left';
       }
       if (relativeX > rect.width - cornerSize && relativeY < cornerSize) {
+        console.log('🔥 Detected top-right corner (go back!)');
         return 'top-right';
       }
     }
@@ -768,16 +772,19 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
           top: 0; left: 0; right: 0; height: 2rem;
           background: linear-gradient(to bottom, #d1d5db, #9ca3af);
           border-bottom: 2px solid #6b7280;
+          pointer-events: none; /* Allow touch events to pass through for top corners */
         }
 
         .spiral-holes {
           display: flex; justify-content: center; align-items: center;
           height: 100%; gap: 3rem;
+          pointer-events: none; /* Allow touch events to pass through */
         }
 
         .spiral-hole {
           width: 0.75rem; height: 0.75rem; background: #374151;
           border-radius: 50%; box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+          pointer-events: none; /* Allow touch events to pass through */
         }
 
         .page-curl-body { margin-top: 2rem; flex: 1; }
@@ -868,6 +875,40 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
         .page-curl-container:hover::before {
           opacity: 1;
         }
+
+        /* Top corner indicators for backward navigation */
+        .page-curl-container::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 80px;
+          height: 80px;
+          background: 
+            radial-gradient(
+              circle at top left,
+              rgba(59,130,246,0.3) 0%,
+              rgba(59,130,246,0.15) 40%,
+              transparent 70%
+            );
+          border-radius: 0 0 50px 0;
+          pointer-events: none;
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+
+        .page-curl-container:hover::after {
+          opacity: 1;
+        }
+
+        /* Show top corner indicators only when not on first page */
+        .page-curl-container[data-can-go-back="true"]:hover::after {
+          opacity: 1;
+        }
+
+        .page-curl-container[data-can-go-back="false"]::after {
+          display: none;
+        }
       `}</style>
 
       <div className="max-w-md mx-auto bg-white rounded-3xl shadow-2xl shadow-gray-900/25 overflow-hidden relative page-curl-flip" style={{ height: '600px' }}>
@@ -882,6 +923,7 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
           ref={containerRef}
           className="page-curl-container relative h-full bg-gradient-to-br from-gray-50 to-gray-100"
           style={{ height: 'calc(100% - 80px)' }}
+          data-can-go-back={currentPage > 0 ? "true" : "false"}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
