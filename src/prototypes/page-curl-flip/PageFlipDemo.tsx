@@ -13,11 +13,55 @@ const triggerHapticFeedback = (intensity: 'light' | 'medium' | 'heavy' = 'medium
   }
 };
 
-// Paper sound effects (optional)
+// Paper sound effects using Web Audio API
 const playPaperSound = (type: 'flip' | 'rustle' = 'rustle') => {
-  // Note: In a real app, you'd preload audio files
-  // For now, we'll just log for demo purposes
-  console.log(`Playing ${type} sound effect`);
+  try {
+    // Create audio context if it doesn't exist
+    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+    
+    if (type === 'flip') {
+      // Page flip sound - quick high-low sweep
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+      oscillator.frequency.exponentialRampToValueAtTime(200, audioContext.currentTime + 0.1);
+      
+      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.1);
+    } else {
+      // Rustle sound - white noise burst
+      const bufferSize = 4096;
+      const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+      const output = buffer.getChannelData(0);
+      
+      for (let i = 0; i < bufferSize; i++) {
+        output[i] = Math.random() * 2 - 1;
+      }
+      
+      const whiteNoise = audioContext.createBufferSource();
+      const gainNode = audioContext.createGain();
+      
+      whiteNoise.buffer = buffer;
+      whiteNoise.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      gainNode.gain.setValueAtTime(0.05, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.05);
+      
+      whiteNoise.start(audioContext.currentTime);
+      whiteNoise.stop(audioContext.currentTime + 0.05);
+    }
+  } catch (error) {
+    // Fallback to console log if audio fails
+    console.log(`🔊 Playing ${type} sound effect (audio failed: ${error})`);
+  }
 };
 
 // Golf yardage book mock content
@@ -352,6 +396,9 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
     // Larger corner areas for mobile (easier to grab)
     const cornerSize = Math.max(curlConfig.cornerSize, 100); // Minimum 100px for mobile
     
+    // Debug logging
+    console.log(`📍 Touch at: (${Math.round(relativeX)}, ${Math.round(relativeY)}) | Container: ${Math.round(rect.width)}x${Math.round(rect.height)} | Corner size: ${cornerSize} | Page: ${currentPage}`);
+    
     // Bottom corners for NEXT page
     if (relativeX < cornerSize && relativeY > rect.height - cornerSize) {
       console.log('🔥 Detected bottom-left corner');
@@ -364,6 +411,7 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
     
     // Top corners for PREVIOUS page (only if not on first page)
     if (currentPage > 0) {
+      console.log(`🔍 Checking top corners: relativeY < ${cornerSize}? ${relativeY < cornerSize}`);
       if (relativeX < cornerSize && relativeY < cornerSize) {
         console.log('🔥 Detected top-left corner (go back!)');
         return 'top-left';
@@ -372,6 +420,8 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
         console.log('🔥 Detected top-right corner (go back!)');
         return 'top-right';
       }
+    } else {
+      console.log('❌ Cannot go back - on first page');
     }
     
     return null;
@@ -909,6 +959,21 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
         .page-curl-container[data-can-go-back="false"]::after {
           display: none;
         }
+
+        /* Debug overlay for corner detection areas */
+        .corner-debug {
+          position: absolute;
+          border: 2px solid red;
+          background: rgba(255, 0, 0, 0.2);
+          pointer-events: none;
+          z-index: 1000;
+          font-size: 10px;
+          color: red;
+          font-weight: bold;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
       `}</style>
 
       <div className="max-w-md mx-auto bg-white rounded-3xl shadow-2xl shadow-gray-900/25 overflow-hidden relative page-curl-flip" style={{ height: '600px' }}>
@@ -958,6 +1023,52 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
             >
               {pages[currentPage]?.content}
             </div>
+          </div>
+
+          {/* Debug overlays for corner detection areas */}
+          <div 
+            className="corner-debug" 
+            style={{
+              top: 0,
+              left: 0,
+              width: Math.max(curlConfig.cornerSize, 100),
+              height: Math.max(curlConfig.cornerSize, 100)
+            }}
+          >
+            {currentPage > 0 ? "TOP-L" : "X"}
+          </div>
+          <div 
+            className="corner-debug" 
+            style={{
+              top: 0,
+              right: 0,
+              width: Math.max(curlConfig.cornerSize, 100),
+              height: Math.max(curlConfig.cornerSize, 100)
+            }}
+          >
+            {currentPage > 0 ? "TOP-R" : "X"}
+          </div>
+          <div 
+            className="corner-debug" 
+            style={{
+              bottom: 0,
+              left: 0,
+              width: Math.max(curlConfig.cornerSize, 100),
+              height: Math.max(curlConfig.cornerSize, 100)
+            }}
+          >
+            BOT-L
+          </div>
+          <div 
+            className="corner-debug" 
+            style={{
+              bottom: 0,
+              right: 0,
+              width: Math.max(curlConfig.cornerSize, 100),
+              height: Math.max(curlConfig.cornerSize, 100)
+            }}
+          >
+            BOT-R
           </div>
 
           {/* Page indicator */}
