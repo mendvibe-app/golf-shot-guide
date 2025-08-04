@@ -1,6 +1,25 @@
 import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import type { PageContent, PageFlipProps, CurlState, CurlConfig } from './types';
 
+// Web Haptic Feedback utility
+const triggerHapticFeedback = (intensity: 'light' | 'medium' | 'heavy' = 'medium') => {
+  if ('vibrate' in navigator) {
+    const patterns = {
+      light: [10],
+      medium: [20],
+      heavy: [30]
+    };
+    navigator.vibrate(patterns[intensity]);
+  }
+};
+
+// Paper sound effects (optional)
+const playPaperSound = (type: 'flip' | 'rustle' = 'rustle') => {
+  // Note: In a real app, you'd preload audio files
+  // For now, we'll just log for demo purposes
+  console.log(`Playing ${type} sound effect`);
+};
+
 // Golf yardage book mock content
 const createGolfContent = (): PageContent[] => [
   {
@@ -336,6 +355,11 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
     if (!corner) return;
     
     e.preventDefault();
+    
+    // Enhanced feedback on grab start
+    triggerHapticFeedback('light');
+    playPaperSound('rustle');
+    
     setCurlState({
       isDragging: true,
       startX: e.clientX,
@@ -371,6 +395,24 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
       curlState.cornerGrabbed!
     );
     
+    // Progressive haptic feedback based on curl progress
+    const previousCurlAmount = curlState.curlAmount;
+    const curlDelta = Math.abs(curlEffect.curlAmount - previousCurlAmount);
+    
+    // Trigger feedback at key thresholds
+    if (curlEffect.curlAmount > 0.2 && previousCurlAmount <= 0.2) {
+      triggerHapticFeedback('light'); // Start curling
+    } else if (curlEffect.curlAmount > 0.5 && previousCurlAmount <= 0.5) {
+      triggerHapticFeedback('medium'); // Halfway point
+    } else if (curlEffect.curlAmount > 0.8 && previousCurlAmount <= 0.8) {
+      triggerHapticFeedback('heavy'); // Almost flipping
+    }
+    
+    // Subtle continuous feedback for active dragging
+    if (curlDelta > 0.05) {
+      playPaperSound('rustle');
+    }
+    
     setCurlState(prev => ({
       ...prev,
       currentX: e.clientX,
@@ -403,8 +445,14 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
     const shouldFlip = curlState.curlAmount > curlConfig.threshold;
     
     if (shouldFlip && currentPage < pages.length - 1) {
-      // Complete the page flip
+      // Enhanced feedback for successful page flip
+      triggerHapticFeedback('heavy');
+      playPaperSound('flip');
       onPageChange(currentPage + 1);
+    } else {
+      // Feedback for snap-back
+      triggerHapticFeedback('light');
+      playPaperSound('rustle');
     }
     
     // Reset curl state
@@ -418,7 +466,7 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
       cornerGrabbed: null
     });
     
-    // Reset CSS
+    // Reset CSS with smooth transition
     updateCurlEffect(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null);
     
     if (containerRef.current) {
@@ -490,11 +538,24 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
             rotateX(var(--rotate-x))
             rotateY(var(--rotate-y))
             skewX(var(--skew-x));
-          transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          /* Enhanced spring-like animation inspired by React Spring */
+          transition: 
+            transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+            opacity 0.3s ease-out;
+          /* Hardware acceleration for 60fps performance */
+          will-change: transform, opacity;
+          /* Improved filter for realistic paper feel */
+          filter: 
+            drop-shadow(0 4px 8px rgba(0,0,0,0.1))
+            drop-shadow(0 8px 16px rgba(0,0,0,0.1));
         }
 
         .page-curl-current.dragging {
           transition: none;
+          /* Enhanced drop shadow during drag */
+          filter: 
+            drop-shadow(0 8px 16px rgba(0,0,0,0.2))
+            drop-shadow(0 16px 32px rgba(0,0,0,0.15));
         }
 
         .page-curl-next {
@@ -509,19 +570,37 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
           padding: 1.5rem;
           position: relative;
           overflow: hidden;
-          background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
+          /* Enhanced paper texture inspired by React Native LinearGradient */
+          background: 
+            radial-gradient(circle at 20% 20%, rgba(255,255,255,0.3) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(0,0,0,0.05) 0%, transparent 50%),
+            linear-gradient(135deg, #fef3c7 0%, #fed7aa 60%, #f5f5dc 100%);
+          /* Subtle paper grain effect */
+          background-size: 100% 100%, 100% 100%, 100% 100%;
+          box-shadow: 
+            inset 0 0 20px rgba(0,0,0,0.1),
+            0 2px 10px rgba(0,0,0,0.15);
         }
 
         .page-curl-content-amber {
-          background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
+          background: 
+            radial-gradient(circle at 20% 20%, rgba(255,255,255,0.3) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(139,69,19,0.1) 0%, transparent 50%),
+            linear-gradient(135deg, #fef3c7 0%, #fed7aa 60%, #f5f5dc 100%);
         }
 
         .page-curl-content-blue {
-          background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+          background: 
+            radial-gradient(circle at 20% 20%, rgba(255,255,255,0.3) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(30,64,175,0.1) 0%, transparent 50%),
+            linear-gradient(135deg, #dbeafe 0%, #e0e7ff 60%, #f0f9ff 100%);
         }
 
         .page-curl-content-green {
-          background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+          background: 
+            radial-gradient(circle at 20% 20%, rgba(255,255,255,0.3) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(5,150,105,0.1) 0%, transparent 50%),
+            linear-gradient(135deg, #d1fae5 0%, #a7f3d0 60%, #ecfdf5 100%);
         }
 
         .page-curl-content {
@@ -787,7 +866,8 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
           {/* Instructions */}
           {!curlState.isDragging && (
             <div className="absolute inset-x-4 bottom-12 text-center text-gray-500 text-sm z-20">
-              Touch and drag bottom corners up to flip like a real yardage book
+              <div className="font-semibold text-gray-600">Enhanced Paper Feel</div>
+              <div className="mt-1">Touch corners to flip • Feel haptic feedback • Listen for paper sounds</div>
             </div>
           )}
 

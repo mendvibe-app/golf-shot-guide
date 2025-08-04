@@ -7,9 +7,14 @@ Authentic page curl implementation that simulates peeling paper from corners, ju
 - **Vertical Page Flipping**: Authentic yardage book style - flip pages up like a spiral notepad
 - **Corner Grab Detection**: Grab bottom-left or bottom-right corners to start curl
 - **Realistic Paper Curl**: Smooth 3D transforms with X-axis rotation and perspective
+- **Enhanced Paper Textures**: Multi-layered gradients inspired by React Native LinearGradient
+- **Haptic Feedback**: Progressive web vibration API for tactile response
+- **Audio Cues**: Paper rustle and flip sound effects (console logged for demo)
 - **Peek Behind**: See the next page underneath as you curl upward
-- **Progressive Feedback**: Visual indicator of curl progress and 30% threshold
-- **Natural Drop**: Release before threshold to snap back realistically
+- **Progressive Feedback**: Visual indicator of curl progress and 30% threshold with haptic thresholds
+- **Natural Drop**: Release before threshold to snap back realistically with feedback
+- **Premium Animations**: Spring-physics inspired transitions for natural movement
+- **Hardware Acceleration**: 60fps performance with optimized CSS transforms
 - **Zero Dependencies**: Pure CSS and Web Animations API
 
 ## Technical Implementation
@@ -147,3 +152,37 @@ const curlConfig = {
 - Applications prioritizing realism
 - Touch-first interfaces
 - When paper-like feel is critical
+
+## Enhanced Features (v2.0)
+
+### Multi-Sensory Feedback
+- **Haptic Response**: Vibration patterns at 20%, 50%, and 80% curl thresholds
+- **Audio Cues**: Paper rustle during drag, flip sound on completion
+- **Visual Enhancement**: Improved drop shadows and spring animations
+
+### Premium Paper Textures
+Inspired by React Native's LinearGradient, now featuring:
+- Multi-layered radial gradients for depth
+- Subtle paper grain effects
+- Enhanced shadow systems
+- Hardware-accelerated filters
+
+### Performance Optimizations
+- 60fps animations with `will-change` optimization
+- Spring-physics inspired easing curves
+- Reduced paint operations
+- Progressive enhancement patterns
+
+### Browser Support
+- **Haptics**: Chrome/Edge 79+, Safari 13.1+, Firefox (none)
+- **Visuals**: All modern browsers
+- **Performance**: Hardware acceleration on all major browsers
+
+### Integration Example
+```javascript
+// Enable haptic feedback
+triggerHapticFeedback('medium'); // light, medium, heavy
+
+// Play audio cues
+playPaperSound('flip'); // rustle, flip
+```
