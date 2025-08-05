@@ -1940,44 +1940,20 @@ const GolfShotGuide = () => {
       </div>
 
       {/* Full-screen page curl tabs */}
-      {(activeTab === "shots" || activeTab === "calculator" || activeTab === "putting" || activeTab === "learn") && (
+      {activeTab === "shots" && (
         <div className="fixed inset-0 top-12 bottom-24 z-30">
-          {activeTab === "shots" && (
-            <ContextAwarePageCurl 
-              tabId="shots"
-              tabName="Shot Selection"
-              tabIcon={FaBullseye}
-            />
-          )}
-          {activeTab === "calculator" && (
-            <ContextAwarePageCurl 
-              tabId="calculator"
-              tabName="Distance Calculator"
-              tabIcon={FaCalculator}
-            />
-          )}
-          {activeTab === "putting" && (
-            <ContextAwarePageCurl 
-              tabId="putting"
-              tabName="Putting Mastery"
-              tabIcon={FaGolfBall}
-            />
-          )}
-          {activeTab === "learn" && (
-            <ContextAwarePageCurl 
-              tabId="learn"
-              tabName="Golf Fundamentals"
-              tabIcon={FaBook}
-            />
-          )}
-
+          <ContextAwarePageCurl 
+            tabId="shots"
+            tabName="Shot Selection"
+            tabIcon={FaBullseye}
+          />
         </div>
       )}
 
       {/* Regular padded content for other tabs */}
-      <div className={`px-5 py-6 pt-16 ${(activeTab === "shots" || activeTab === "calculator" || activeTab === "putting" || activeTab === "learn") ? 'hidden' : ''}`}>
-        {/* Distance Calculator Tab - OLD VERSION (for reference) */}
-        {false && activeTab === "calculator" && (
+      <div className={`px-5 py-6 pt-16 ${(activeTab === "shots") ? 'hidden' : ''}`}>
+        {/* Distance Calculator Tab - Full Interactive Version */}
+        {activeTab === "calculator" && (
           <div className="space-y-6">
             <div className="text-center">
               <FaCalculator className="text-4xl mb-2 mx-auto text-emerald-600" />
@@ -2048,8 +2024,8 @@ const GolfShotGuide = () => {
 
         {/* Putting Tab - now handled in full-screen section */}
 
-        {/* Putting Tab - OLD VERSION (for reference) */}
-        {false && activeTab === "putting" && (
+        {/* Putting Tab - Full Interactive Version */}
+        {activeTab === "putting" && (
           <div className="space-y-6">
             <div className="text-center">
               <FaGolfBall className="text-4xl mb-2 mx-auto text-emerald-600" />
@@ -2581,8 +2557,8 @@ const GolfShotGuide = () => {
 
         {/* Learn Tab - now handled in full-screen section */}
 
-        {/* Learn Tab - OLD VERSION (for reference) */}
-        {false && activeTab === "learn" && (
+        {/* Learn Tab - Full Interactive Version */}
+        {activeTab === "learn" && (
           <div className="space-y-6">
             <div className="text-center">
               <FaBook className="text-4xl mb-2 mx-auto text-emerald-600" />
