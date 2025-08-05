@@ -439,11 +439,6 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
     
     e.preventDefault();
     
-    // Dismiss tutorial on first interaction
-    if (showTutorial) {
-      setShowTutorial(false);
-    }
-    
     // Enhanced feedback on grab start
     triggerHapticFeedback('light');
     playPaperSound('rustle');
@@ -461,7 +456,7 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
     if (containerRef.current) {
       containerRef.current.style.cursor = 'grabbing';
     }
-  }, [isInCorner, showTutorial]);
+  }, [isInCorner]);
 
   const handlePointerMove = useCallback((e: React.PointerEvent) => {
     // Update cursor based on corner proximity
