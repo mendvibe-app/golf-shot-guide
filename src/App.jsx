@@ -24,6 +24,7 @@ import {
   FaRuler
 } from "react-icons/fa";
 import MobilePageCurlTest from "./components/MobilePageCurlTest";
+import ContextAwarePageCurl from "./components/ContextAwarePageCurl";
 import { 
   MdGolfCourse,
   MdSportsGolf,
@@ -1835,37 +1836,18 @@ const GolfShotGuide = () => {
       </header>
 
       <div className="px-5 py-6">
-        {/* Shots Tab */}
+        {/* Shots Tab - Enhanced with Page Curl */}
         {activeTab === "shots" && (
-          <div className="space-y-6">
-            <div className="relative">
-              <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 h-5 w-5" />
-              <input
-                type="text"
-                placeholder="Search golf shots..."
-                className="w-full pl-12 pr-4 py-4 border-0 bg-white rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:bg-white shadow-lg shadow-slate-900/5 text-base placeholder:text-slate-400 transition-all duration-200"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
+          <ContextAwarePageCurl 
+            tabId="shots"
+            tabName="Shot Selection"
+            tabIcon={FaBullseye}
+          />
+        )}
 
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-slate-700 px-1">Filter by Category</h3>
-              <select 
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full py-3 px-4 bg-white border-0 rounded-xl focus:ring-2 focus:ring-emerald-500/20 shadow-md text-base font-medium text-slate-700 transition-all duration-200"
-              >
-                <option value="">All Shot Types</option>
-                {quickCategories.map(category => (
-                  <option key={category.id} value={category.id} className="py-2">
-                    {category.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="space-y-3">
+        {/* Shots Tab - OLD VERSION (for reference) */}
+        {false && activeTab === "shots" && (
+          <div className="space-y-3">
               {shotData
                 .filter(shot => {
                   const matchesSearch = shot.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -1915,8 +1897,17 @@ const GolfShotGuide = () => {
           </div>
         )}
 
-        {/* Distance Calculator Tab */}
+        {/* Distance Calculator Tab - Enhanced with Page Curl */}
         {activeTab === "calculator" && (
+          <ContextAwarePageCurl 
+            tabId="calculator"
+            tabName="Distance Calculator"
+            tabIcon={FaCalculator}
+          />
+        )}
+
+        {/* Distance Calculator Tab - OLD VERSION (for reference) */}
+        {false && activeTab === "calculator" && (
           <div className="space-y-6">
             <div className="text-center">
               <FaCalculator className="text-4xl mb-2 mx-auto text-emerald-600" />
@@ -1985,8 +1976,17 @@ const GolfShotGuide = () => {
           </div>
         )}
 
-        {/* Putting Tab */}
+        {/* Putting Tab - Enhanced with Page Curl */}
         {activeTab === "putting" && (
+          <ContextAwarePageCurl 
+            tabId="putting"
+            tabName="Putting Mastery"
+            tabIcon={FaGolfBall}
+          />
+        )}
+
+        {/* Putting Tab - OLD VERSION (for reference) */}
+        {false && activeTab === "putting" && (
           <div className="space-y-6">
             <div className="text-center">
               <FaGolfBall className="text-4xl mb-2 mx-auto text-emerald-600" />
@@ -2519,8 +2519,17 @@ const GolfShotGuide = () => {
           </div>
         )}
 
-        {/* Learn Tab */}
+        {/* Learn Tab - Enhanced with Page Curl */}
         {activeTab === "learn" && (
+          <ContextAwarePageCurl 
+            tabId="learn"
+            tabName="Golf Fundamentals"
+            tabIcon={FaBook}
+          />
+        )}
+
+        {/* Learn Tab - OLD VERSION (for reference) */}
+        {false && activeTab === "learn" && (
           <div className="space-y-6">
             <div className="text-center">
               <FaBook className="text-4xl mb-2 mx-auto text-emerald-600" />
