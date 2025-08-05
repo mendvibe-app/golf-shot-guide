@@ -691,27 +691,27 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
         .page-curl-container {
           perspective: 1500px;
           position: relative;
-          touch-action: pan-y;
+          touch-action: none;
           user-select: none;
           overflow: hidden;
         }
         
         /* Custom scrollbar for page content */
-        .page-curl-content::-webkit-scrollbar {
+        .page-curl-scrollable::-webkit-scrollbar {
           width: 4px;
         }
         
-        .page-curl-content::-webkit-scrollbar-track {
+        .page-curl-scrollable::-webkit-scrollbar-track {
           background: rgba(0,0,0,0.1);
           border-radius: 2px;
         }
         
-        .page-curl-content::-webkit-scrollbar-thumb {
+        .page-curl-scrollable::-webkit-scrollbar-thumb {
           background: rgba(0,0,0,0.3);
           border-radius: 2px;
         }
         
-        .page-curl-content::-webkit-scrollbar-thumb:hover {
+        .page-curl-scrollable::-webkit-scrollbar-thumb:hover {
           background: rgba(0,0,0,0.5);
         }
 
@@ -775,10 +775,8 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
           height: 100%;
           display: flex;
           flex-direction: column;
-          padding: 1.5rem;
           position: relative;
-          overflow-y: auto;
-          overflow-x: hidden;
+          overflow: hidden;
           /* Enhanced paper texture inspired by React Native LinearGradient */
           background: 
             radial-gradient(circle at 20% 20%, rgba(255,255,255,0.3) 0%, transparent 50%),
@@ -789,12 +787,18 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
           box-shadow: 
             inset 0 0 20px rgba(0,0,0,0.1),
             0 2px 10px rgba(0,0,0,0.15);
-          /* Mobile scrolling optimization */
+        }
+        
+        /* Scrollable content area that avoids corners */
+        .page-curl-scrollable {
+          flex: 1;
+          overflow-y: auto;
+          overflow-x: hidden;
+          padding: 1.5rem;
+          margin: 60px 60px 80px 60px; /* Avoid corner areas */
           -webkit-overflow-scrolling: touch;
           overscroll-behavior: contain;
-          /* Allow vertical scrolling, disable horizontal */
           touch-action: pan-y;
-          /* Custom scrollbar for page content */
         }
 
         .page-curl-content-amber {

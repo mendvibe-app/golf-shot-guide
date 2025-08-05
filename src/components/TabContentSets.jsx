@@ -87,7 +87,7 @@ const createShotPage = (shot, index) => {
           <div className={`coffee-stain coffee-stain-${(index % 6) + 1}`}></div>
         </div>
         
-        <div className="page-curl-body">
+        <div className="page-curl-scrollable">
           <div className="page-curl-header">
             <h2 className="hole-title">{shot.name.toUpperCase()}</h2>
             <p className="hole-subtitle">{shot.situation}</p>
