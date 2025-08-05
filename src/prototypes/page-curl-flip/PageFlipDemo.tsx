@@ -339,7 +339,22 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
   const pages = externalPages || defaultPages;
   const [internalCurrentPage, setInternalCurrentPage] = useState(0);
   const currentPage = externalCurrentPage ?? internalCurrentPage;
-  const onPageChange = externalOnPageChange || setInternalCurrentPage;
+  
+  // Enhanced page change handler that resets scroll position
+  const handlePageChange = useCallback((newPage: number) => {
+    const originalHandler = externalOnPageChange || setInternalCurrentPage;
+    originalHandler(newPage);
+    
+    // Reset scroll position to top when page changes
+    setTimeout(() => {
+      const scrollableElements = document.querySelectorAll('.page-curl-scrollable');
+      scrollableElements.forEach(element => {
+        element.scrollTop = 0;
+      });
+    }, 50); // Small delay to ensure page has rendered
+  }, [externalOnPageChange]);
+  
+  const onPageChange = handlePageChange;
 
   // Curl state
   const [curlState, setCurlState] = useState<CurlState>({
@@ -799,6 +814,7 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
           -webkit-overflow-scrolling: touch;
           overscroll-behavior: contain;
           touch-action: pan-y;
+          scroll-behavior: smooth; /* Smooth scroll to top */
         }
 
         .page-curl-content-amber {
