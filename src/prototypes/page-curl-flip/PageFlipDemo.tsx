@@ -827,27 +827,106 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
           bottom: 2rem; left: 2rem; width: 1.5rem; height: 1rem; background: #059669;
         }
 
+        /* Realistic Metal Spiral Binding */
         .spiral-binding {
           position: absolute;
-          top: 0; left: 0; right: 0; height: 2rem;
-          background: linear-gradient(to bottom, #d1d5db, #9ca3af);
-          border-bottom: 2px solid #6b7280;
-          pointer-events: none; /* Allow touch events to pass through for top corners */
+          top: 0; left: 0; right: 0; height: 3rem;
+          background: linear-gradient(to bottom, 
+            #f8f9fa 0%, 
+            #e9ecef 20%, 
+            #dee2e6 40%, 
+            #ced4da 60%, 
+            #adb5bd 80%, 
+            #6c757d 100%
+          );
+          border-bottom: 1px solid #495057;
+          box-shadow: 
+            0 2px 8px rgba(0, 0, 0, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.8),
+            inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+          pointer-events: none;
+          z-index: 20;
         }
 
         .spiral-holes {
-          display: flex; justify-content: center; align-items: center;
-          height: 100%; gap: 3rem;
-          pointer-events: none; /* Allow touch events to pass through */
+          display: flex; 
+          justify-content: space-evenly; 
+          align-items: center;
+          height: 100%; 
+          padding: 0 2rem;
+          pointer-events: none;
         }
 
         .spiral-hole {
-          width: 0.75rem; height: 0.75rem; background: #374151;
-          border-radius: 50%; box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
-          pointer-events: none; /* Allow touch events to pass through */
+          position: relative;
+          width: 1rem; 
+          height: 1rem; 
+          background: radial-gradient(circle at 30% 30%, 
+            #2d3748, 
+            #1a202c 30%, 
+            #0d1117 60%,
+            #000000 100%
+          );
+          border-radius: 50%; 
+          box-shadow: 
+            inset 0 3px 6px rgba(0, 0, 0, 0.8),
+            inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+            0 1px 2px rgba(0, 0, 0, 0.3);
+          pointer-events: none;
         }
 
-        .page-curl-body { margin-top: 2rem; flex: 1; }
+        /* Metal wire coils - realistic spiral effect */
+        .spiral-hole::before {
+          content: '';
+          position: absolute;
+          top: -8px; bottom: -8px;
+          left: 50%; 
+          transform: translateX(-50%);
+          width: 6px;
+          background: linear-gradient(to right,
+            #8e9aaf 0%,
+            #cbc0d3 25%,
+            #fdedf4 50%,
+            #cbc0d3 75%,
+            #8e9aaf 100%
+          );
+          border-radius: 3px;
+          box-shadow: 
+            inset 1px 0 0 rgba(255, 255, 255, 0.6),
+            inset -1px 0 0 rgba(0, 0, 0, 0.3),
+            2px 0 4px rgba(0, 0, 0, 0.2);
+          z-index: -1;
+        }
+
+        /* Additional wire segments for realism */
+        .spiral-hole::after {
+          content: '';
+          position: absolute;
+          top: -12px; bottom: -12px;
+          left: 50%; 
+          transform: translateX(-50%) rotate(0deg);
+          width: 4px;
+          background: linear-gradient(45deg,
+            #6c757d 0%,
+            #adb5bd 25%,
+            #e9ecef 50%,
+            #adb5bd 75%,
+            #6c757d 100%
+          );
+          border-radius: 2px;
+          box-shadow: 
+            1px 0 2px rgba(0, 0, 0, 0.3),
+            inset 0.5px 0 0 rgba(255, 255, 255, 0.4);
+          z-index: -2;
+          animation: subtleShimmer 4s ease-in-out infinite;
+        }
+
+        @keyframes subtleShimmer {
+          0%, 100% { opacity: 0.8; }
+          50% { opacity: 1; }
+        }
+
+        .page-curl-body { margin-top: 3rem; flex: 1; }
         .page-curl-header { text-align: center; margin-bottom: 1.5rem; }
         .hole-title { font-size: 1.5rem; font-weight: bold; color: #374151; margin-bottom: 0.5rem; }
         .hole-subtitle { color: #6b7280; font-weight: 500; }
@@ -976,17 +1055,10 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
       `}</style>
 
       <div className="w-full h-full bg-white overflow-hidden relative page-curl-flip">
-        {/* Header - Spiral binding */}
-        <div className="bg-gradient-to-r from-orange-600 to-red-600 text-white p-3 relative z-10">
-          <h1 className="text-lg font-bold text-center">Golf Yardage Book</h1>
-          <p className="text-center text-orange-100 text-xs">Page Curl Version</p>
-        </div>
-
-        {/* Page container - Full height minus header */}
+        {/* Page container - Full height */}
         <div 
           ref={containerRef}
-          className="page-curl-container relative bg-gradient-to-br from-gray-50 to-gray-100"
-          style={{ height: 'calc(100% - 56px)' }}
+          className="page-curl-container relative bg-gradient-to-br from-gray-50 to-gray-100 w-full h-full"
           data-can-go-back={currentPage > 0 ? "true" : "false"}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
