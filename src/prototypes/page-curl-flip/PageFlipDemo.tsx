@@ -988,26 +988,7 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
             ))}
           </div>
 
-          {/* Instructions */}
-          {!curlState.isDragging && (
-            <div className="absolute inset-x-4 bottom-12 text-center text-gray-500 text-sm z-20">
-              <div className="font-semibold text-gray-600">Bi-Directional Page Flipping</div>
-              <div className="mt-1">Bottom corners: Next page • Top corners: Previous page</div>
-              <div className="text-xs text-gray-400 mt-1">Feel haptic feedback • Listen for paper sounds</div>
-            </div>
-          )}
 
-          {/* Curl feedback */}
-          {curlState.isDragging && (
-            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-20">
-              <div className="bg-white/80 backdrop-blur-sm rounded-full px-3 py-1 text-xs text-gray-600">
-                {curlState.curlAmount > curlConfig.threshold ? 
-                  "Release to flip page" : 
-                  `${Math.round(curlState.curlAmount * 100)}% - ${Math.round(curlConfig.threshold * 100)}% to flip`
-                }
-              </div>
-            </div>
-          )}
         </div>
 
 

@@ -1931,16 +1931,8 @@ const GolfShotGuide = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 pb-24">
-      <header className="bg-white/90 backdrop-blur-md border-b border-slate-200/60 sticky top-0 z-40 shadow-sm">
-        <div className="px-6 py-5">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent text-center tracking-tight">
-            Golf Shot Guide
-          </h1>
-        </div>
-      </header>
-
-      {/* Spiral Binding - Always visible at top */}
-      <div className="fixed top-20 left-0 right-0 z-40 spiral-binding">
+      {/* Spiral Binding - Always visible at very top */}
+      <div className="fixed top-0 left-0 right-0 z-50 spiral-binding">
         <div className="spiral-holes">
           {[...Array(8)].map((_, i) => (
             <div key={i} className="spiral-hole"></div>
@@ -1950,7 +1942,7 @@ const GolfShotGuide = () => {
 
       {/* Full-screen page curl tabs */}
       {(activeTab === "shots" || activeTab === "calculator" || activeTab === "putting" || activeTab === "learn" || activeTab === "pagecurl") && (
-        <div className="fixed inset-0 top-32 bottom-24 z-30">
+        <div className="fixed inset-0 top-12 bottom-24 z-30">
           {activeTab === "shots" && (
             <ContextAwarePageCurl 
               tabId="shots"
@@ -1986,7 +1978,7 @@ const GolfShotGuide = () => {
       )}
 
       {/* Regular padded content for other tabs */}
-      <div className={`px-5 py-6 ${(activeTab === "shots" || activeTab === "calculator" || activeTab === "putting" || activeTab === "learn" || activeTab === "pagecurl") ? 'hidden' : ''}`}>
+      <div className={`px-5 py-6 pt-16 ${(activeTab === "shots" || activeTab === "calculator" || activeTab === "putting" || activeTab === "learn" || activeTab === "pagecurl") ? 'hidden' : ''}`}>
         {/* Distance Calculator Tab - OLD VERSION (for reference) */}
         {false && activeTab === "calculator" && (
           <div className="space-y-6">
