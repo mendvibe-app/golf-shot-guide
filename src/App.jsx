@@ -2680,7 +2680,7 @@ const GolfShotGuide = () => {
 
       {/* Bottom Navigation */}
       <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-slate-200/60 z-50 shadow-2xl shadow-slate-900/10">
-        <div className="grid grid-cols-7 px-1 py-1">
+        <div className="grid grid-cols-6 px-1 py-1">
           {tabs.map(tab => {
             const IconComponent = tab.icon;
             return (
