@@ -23,7 +23,7 @@ import {
   FaWater,
   FaRuler
 } from "react-icons/fa";
-import MobilePageCurlTest from "./components/MobilePageCurlTest";
+
 import ContextAwarePageCurl from "./components/ContextAwarePageCurl";
 import { 
   MdGolfCourse,
@@ -1924,7 +1924,6 @@ const GolfShotGuide = () => {
     { id: "calculator", name: "Distance", icon: FaCalculator },
     { id: "putting", name: "Putting", icon: FaGolfBall },
     { id: "ballselection", name: "Balls", icon: TbGolf },
-    { id: "pagecurl", name: "Page Curl", icon: FaFire },
     { id: "mydata", name: "Data", icon: FaUser },
     { id: "learn", name: "Learn", icon: FaBook }
   ];
@@ -1941,7 +1940,7 @@ const GolfShotGuide = () => {
       </div>
 
       {/* Full-screen page curl tabs */}
-      {(activeTab === "shots" || activeTab === "calculator" || activeTab === "putting" || activeTab === "learn" || activeTab === "pagecurl") && (
+      {(activeTab === "shots" || activeTab === "calculator" || activeTab === "putting" || activeTab === "learn") && (
         <div className="fixed inset-0 top-12 bottom-24 z-30">
           {activeTab === "shots" && (
             <ContextAwarePageCurl 
@@ -1971,14 +1970,12 @@ const GolfShotGuide = () => {
               tabIcon={FaBook}
             />
           )}
-          {activeTab === "pagecurl" && (
-            <MobilePageCurlTest />
-          )}
+
         </div>
       )}
 
       {/* Regular padded content for other tabs */}
-      <div className={`px-5 py-6 pt-16 ${(activeTab === "shots" || activeTab === "calculator" || activeTab === "putting" || activeTab === "learn" || activeTab === "pagecurl") ? 'hidden' : ''}`}>
+      <div className={`px-5 py-6 pt-16 ${(activeTab === "shots" || activeTab === "calculator" || activeTab === "putting" || activeTab === "learn") ? 'hidden' : ''}`}>
         {/* Distance Calculator Tab - OLD VERSION (for reference) */}
         {false && activeTab === "calculator" && (
           <div className="space-y-6">

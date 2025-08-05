@@ -974,12 +974,11 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
 
 
           {/* Page indicator */}
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-1 z-20">
             {pages.map((_, index) => (
-              <button
+              <div
                 key={index}
-                onClick={() => onPageChange(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                className={`w-1.5 h-1.5 rounded-full ${
                   index === currentPage 
                     ? 'bg-gray-600' 
                     : 'bg-gray-300'
