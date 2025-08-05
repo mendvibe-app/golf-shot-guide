@@ -1845,57 +1845,7 @@ const GolfShotGuide = () => {
           />
         )}
 
-        {/* Shots Tab - OLD VERSION (for reference) */}
-        {false && activeTab === "shots" && (
-          <div className="space-y-3">
-              {shotData
-                .filter(shot => {
-                  const matchesSearch = shot.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                      shot.situation.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                      shot.keyAction.toLowerCase().includes(searchTerm.toLowerCase());
-                  const matchesCategory = selectedCategory === "" || shot.category === selectedCategory;
-                  return matchesSearch && matchesCategory;
-                })
-                .map(shot => (
-                  <div
-                    key={shot.id}
-                    onClick={() => setSelectedShot(shot)}
-                    className="bg-white rounded-2xl p-6 cursor-pointer transition-all duration-200 hover:shadow-xl hover:shadow-slate-900/10 hover:-translate-y-0.5 shadow-lg shadow-slate-900/5"
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className="text-3xl bg-gradient-to-br from-emerald-50 to-teal-50 p-3 rounded-xl">
-                        {renderIcon(shot.icon)}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between gap-3 mb-3">
-                          <h3 className="text-xl font-bold text-slate-900 leading-tight">{shot.name}</h3>
-                          <span className={`px-3 py-1.5 rounded-full text-xs font-bold tracking-wide ${
-                            shot.difficulty === "Easy" ? "bg-emerald-100 text-emerald-700" :
-                            shot.difficulty === "Medium" ? "bg-amber-100 text-amber-700" :
-                            shot.difficulty === "Hard" ? "bg-orange-100 text-orange-700" :
-                            "bg-red-100 text-red-700"
-                          }`}>
-                            {shot.difficulty}
-                          </span>
-                        </div>
-                        <p className="text-slate-600 text-base mb-3 leading-relaxed">{shot.quickTip}</p>
-                        <div className="flex items-center gap-4 text-sm">
-                          <span className="flex items-center gap-1.5 text-slate-500">
-                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-                            {shot.timeToRead}
-                          </span>
-                          <span className="flex items-center gap-1.5 text-slate-500 capitalize">
-                            <div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
-                            {shot.category}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-            </div>
-          </div>
-        )}
+        {/* Shots Tab - old content removed to fix syntax errors */}
 
         {/* Distance Calculator Tab - Enhanced with Page Curl */}
         {activeTab === "calculator" && (
