@@ -583,9 +583,7 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
     }
   }, [currentPage, onPageChange]);
 
-  const resetToFirstPage = useCallback(() => {
-    onPageChange(0);
-  }, [onPageChange]);
+
 
   return (
     <>
@@ -1135,13 +1133,7 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
           )}
         </div>
 
-        {/* Reset button */}
-        <button
-          onClick={resetToFirstPage}
-          className="absolute top-4 right-4 bg-white/20 hover:bg-white/30 text-white px-3 py-1 rounded-lg text-sm font-medium transition-all duration-200 z-30"
-        >
-          Reset
-        </button>
+
       </div>
     </>
   );
