@@ -1835,27 +1835,45 @@ const GolfShotGuide = () => {
         </div>
       </header>
 
-      <div className="px-5 py-6">
-        {/* Shots Tab - Enhanced with Page Curl */}
-        {activeTab === "shots" && (
-          <ContextAwarePageCurl 
-            tabId="shots"
-            tabName="Shot Selection"
-            tabIcon={FaBullseye}
-          />
-        )}
+      {/* Full-screen page curl tabs */}
+      {(activeTab === "shots" || activeTab === "calculator" || activeTab === "putting" || activeTab === "learn" || activeTab === "pagecurl") && (
+        <div className="fixed inset-0 top-20 bottom-24 z-30">
+          {activeTab === "shots" && (
+            <ContextAwarePageCurl 
+              tabId="shots"
+              tabName="Shot Selection"
+              tabIcon={FaBullseye}
+            />
+          )}
+          {activeTab === "calculator" && (
+            <ContextAwarePageCurl 
+              tabId="calculator"
+              tabName="Distance Calculator"
+              tabIcon={FaCalculator}
+            />
+          )}
+          {activeTab === "putting" && (
+            <ContextAwarePageCurl 
+              tabId="putting"
+              tabName="Putting Mastery"
+              tabIcon={FaGolfBall}
+            />
+          )}
+          {activeTab === "learn" && (
+            <ContextAwarePageCurl 
+              tabId="learn"
+              tabName="Golf Fundamentals"
+              tabIcon={FaBook}
+            />
+          )}
+          {activeTab === "pagecurl" && (
+            <MobilePageCurlTest />
+          )}
+        </div>
+      )}
 
-        {/* Shots Tab - old content removed to fix syntax errors */}
-
-        {/* Distance Calculator Tab - Enhanced with Page Curl */}
-        {activeTab === "calculator" && (
-          <ContextAwarePageCurl 
-            tabId="calculator"
-            tabName="Distance Calculator"
-            tabIcon={FaCalculator}
-          />
-        )}
-
+      {/* Regular padded content for other tabs */}
+      <div className={`px-5 py-6 ${(activeTab === "shots" || activeTab === "calculator" || activeTab === "putting" || activeTab === "learn" || activeTab === "pagecurl") ? 'hidden' : ''}`}>
         {/* Distance Calculator Tab - OLD VERSION (for reference) */}
         {false && activeTab === "calculator" && (
           <div className="space-y-6">
@@ -1926,14 +1944,7 @@ const GolfShotGuide = () => {
           </div>
         )}
 
-        {/* Putting Tab - Enhanced with Page Curl */}
-        {activeTab === "putting" && (
-          <ContextAwarePageCurl 
-            tabId="putting"
-            tabName="Putting Mastery"
-            tabIcon={FaGolfBall}
-          />
-        )}
+        {/* Putting Tab - now handled in full-screen section */}
 
         {/* Putting Tab - OLD VERSION (for reference) */}
         {false && activeTab === "putting" && (
@@ -2258,10 +2269,7 @@ const GolfShotGuide = () => {
           </div>
         )}
 
-        {/* Page Curl Test Tab */}
-        {activeTab === "pagecurl" && (
-          <MobilePageCurlTest />
-        )}
+        {/* Page Curl Test Tab - now handled in full-screen section */}
 
         {/* My Data Tab */}
         {activeTab === "mydata" && (
@@ -2469,14 +2477,7 @@ const GolfShotGuide = () => {
           </div>
         )}
 
-        {/* Learn Tab - Enhanced with Page Curl */}
-        {activeTab === "learn" && (
-          <ContextAwarePageCurl 
-            tabId="learn"
-            tabName="Golf Fundamentals"
-            tabIcon={FaBook}
-          />
-        )}
+        {/* Learn Tab - now handled in full-screen section */}
 
         {/* Learn Tab - OLD VERSION (for reference) */}
         {false && activeTab === "learn" && (
