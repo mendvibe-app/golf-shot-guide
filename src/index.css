@@ -101,6 +101,23 @@ button, input, select, textarea, a {
   button, input, select, a {
     min-height: 44px;
   }
+  
+  /* Improve mobile scrolling performance */
+  .mobile-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+  
+  /* Prevent horizontal scrolling on mobile */
+  body {
+    overflow-x: hidden;
+  }
+  
+  /* Better mobile tap targets */
+  .tap-target {
+    min-height: 48px;
+    min-width: 48px;
+  }
 }
 
 /* Enhanced typography scale */

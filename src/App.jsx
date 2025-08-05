@@ -1962,8 +1962,9 @@ const GolfShotGuide = () => {
         </div>
       )}
 
-      {/* Regular padded content for other tabs */}
-      <div className={`px-5 py-6 pt-16 ${(activeTab === "shots") ? 'hidden' : ''}`}>
+      {/* Regular padded content for other tabs - with mobile scrolling */}
+      <div className={`fixed inset-0 top-12 bottom-24 overflow-y-auto mobile-scroll ${(activeTab === "shots") ? 'hidden' : ''}`}>
+        <div className="px-5 py-6 pb-8">
         {/* Distance Calculator Tab - Full Interactive Version */}
         {activeTab === "calculator" && (
           <div className="space-y-6">
@@ -2122,7 +2123,7 @@ const GolfShotGuide = () => {
                   </div>
 
                   {/* Content */}
-                  <div className="p-6 space-y-5 overflow-y-auto">
+                  <div className="p-6 space-y-5 overflow-y-auto max-h-[70vh]">
                     <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-2xl p-5">
                       <h3 className="font-bold text-blue-900 mb-4 text-lg">🎯 Essential Information</h3>
                       <div className="space-y-3">
@@ -2664,6 +2665,7 @@ const GolfShotGuide = () => {
             )}
           </div>
         )}
+        </div>
       </div>
 
       {/* Bottom Navigation */}
@@ -2734,8 +2736,8 @@ const GolfShotGuide = () => {
             </div>
 
             {/* Content */}
-            <div className="p-6 space-y-5 overflow-y-auto">
-              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-2xl p-5">
+                              <div className="p-6 space-y-5 overflow-y-auto max-h-[70vh]">
+                    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-2xl p-5">
                 <h3 className="font-bold text-blue-900 mb-4 text-lg">🎯 Essential Information</h3>
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">

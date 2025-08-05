@@ -13,54 +13,160 @@ const triggerHapticFeedback = (intensity: 'light' | 'medium' | 'heavy' = 'medium
   }
 };
 
-// Paper sound effects using Web Audio API
+// Ultra-realistic paper sound effects - completely organic approach
 const playPaperSound = (type: 'flip' | 'rustle' = 'rustle') => {
   try {
-    // Create audio context if it doesn't exist
     const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
     
     if (type === 'flip') {
-      // Page flip sound - quick high-low sweep
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
+      // Real paper flip - complex multi-layer organic sound
+      const duration = 0.25 + Math.random() * 0.1;
       
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
+      // Layer 1: Subtle air displacement (very low frequency)
+      const airOsc = audioContext.createOscillator();
+      const airGain = audioContext.createGain();
+      const airFilter = audioContext.createBiquadFilter();
       
-      oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
-      oscillator.frequency.exponentialRampToValueAtTime(200, audioContext.currentTime + 0.1);
+      airOsc.type = 'sine';
+      airFilter.type = 'lowpass';
+      airFilter.frequency.value = 120;
+      airFilter.Q.value = 0.3;
       
-      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+      airOsc.connect(airFilter);
+      airFilter.connect(airGain);
+      airGain.connect(audioContext.destination);
       
-      oscillator.start(audioContext.currentTime);
-      oscillator.stop(audioContext.currentTime + 0.1);
+      airOsc.frequency.setValueAtTime(45 + Math.random() * 15, audioContext.currentTime);
+      airOsc.frequency.exponentialRampToValueAtTime(25 + Math.random() * 10, audioContext.currentTime + duration);
+      
+      airGain.gain.setValueAtTime(0, audioContext.currentTime);
+      airGain.gain.linearRampToValueAtTime(0.08, audioContext.currentTime + 0.02);
+      airGain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
+      
+      // Layer 2: Paper fiber friction - ultra-subtle texture
+      const createOrganicNoise = (size: number, shaping: (i: number, size: number) => number) => {
+        const buffer = audioContext.createBuffer(1, size, audioContext.sampleRate);
+        const output = buffer.getChannelData(0);
+        let prevValue = 0;
+        
+        for (let i = 0; i < size; i++) {
+          // Create organic noise with memory (brown-ish)
+          const rawNoise = (Math.random() * 2 - 1) * 0.3;
+          const smoothed = prevValue * 0.85 + rawNoise * 0.15; // Heavy smoothing
+          prevValue = smoothed;
+          output[i] = smoothed * shaping(i, size);
+        }
+        return buffer;
+      };
+      
+      const fiberBuffer = createOrganicNoise(4096, (i, size) => {
+        const progress = i / size;
+        // Gentle fade in/out with slight mid-emphasis
+        return Math.sin(progress * Math.PI) * (0.5 + 0.5 * Math.sin(progress * Math.PI * 3));
+      });
+      
+      const fiberSource = audioContext.createBufferSource();
+      const fiberGain = audioContext.createGain();
+      const fiberFilter = audioContext.createBiquadFilter();
+      
+      fiberFilter.type = 'bandpass';
+      fiberFilter.frequency.value = 800 + Math.random() * 300;
+      fiberFilter.Q.value = 0.8; // Very gentle filtering
+      
+      fiberSource.buffer = fiberBuffer;
+      fiberSource.connect(fiberFilter);
+      fiberFilter.connect(fiberGain);
+      fiberGain.connect(audioContext.destination);
+      
+      fiberGain.gain.setValueAtTime(0.04, audioContext.currentTime);
+      fiberGain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration * 0.8);
+      
+      // Layer 3: Ultra-subtle high frequency paper texture
+      const textureBuffer = createOrganicNoise(2048, (i, size) => {
+        const progress = i / size;
+        return Math.pow(1 - progress, 2) * (0.3 + 0.7 * Math.sin(progress * Math.PI * 7));
+      });
+      
+      const textureSource = audioContext.createBufferSource();
+      const textureGain = audioContext.createGain();
+      const textureFilter = audioContext.createBiquadFilter();
+      
+      textureFilter.type = 'highpass';
+      textureFilter.frequency.value = 2000;
+      textureFilter.Q.value = 0.4;
+      
+      textureSource.buffer = textureBuffer;
+      textureSource.connect(textureFilter);
+      textureFilter.connect(textureGain);
+      textureGain.connect(audioContext.destination);
+      
+      textureGain.gain.setValueAtTime(0.02, audioContext.currentTime);
+      textureGain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration * 0.4);
+      
+      // Start all layers with realistic timing
+      airOsc.start(audioContext.currentTime);
+      airOsc.stop(audioContext.currentTime + duration);
+      fiberSource.start(audioContext.currentTime + 0.01);
+      fiberSource.stop(audioContext.currentTime + duration);
+      textureSource.start(audioContext.currentTime + 0.005);
+      textureSource.stop(audioContext.currentTime + duration * 0.4);
+      
     } else {
-      // Rustle sound - white noise burst
-      const bufferSize = 4096;
-      const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
-      const output = buffer.getChannelData(0);
+      // Ultra-subtle paper rustle - barely audible organic texture
+      const duration = 0.12 + Math.random() * 0.06;
       
-      for (let i = 0; i < bufferSize; i++) {
-        output[i] = Math.random() * 2 - 1;
-      }
+      // Single layer of extremely gentle organic noise
+      const createSoftPaperNoise = () => {
+        const bufferSize = 1024;
+        const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+        const output = buffer.getChannelData(0);
+        let smoothValue = 0;
+        
+        for (let i = 0; i < bufferSize; i++) {
+          // Ultra-smooth organic noise generation
+          const randomStep = (Math.random() - 0.5) * 0.05; // Very small steps
+          smoothValue += randomStep;
+          smoothValue *= 0.98; // Gentle decay to prevent drift
+          
+          const progress = i / bufferSize;
+          const envelope = Math.sin(progress * Math.PI); // Natural fade in/out
+          
+          output[i] = smoothValue * envelope * (0.5 + 0.5 * Math.random()); // Add subtle variation
+        }
+        return buffer;
+      };
       
-      const whiteNoise = audioContext.createBufferSource();
-      const gainNode = audioContext.createGain();
+      const rustleBuffer = createSoftPaperNoise();
+      const rustleSource = audioContext.createBufferSource();
+      const rustleGain = audioContext.createGain();
+      const rustleFilter1 = audioContext.createBiquadFilter();
+      const rustleFilter2 = audioContext.createBiquadFilter();
       
-      whiteNoise.buffer = buffer;
-      whiteNoise.connect(gainNode);
-      gainNode.connect(audioContext.destination);
+      // Multiple gentle filters to remove any harshness
+      rustleFilter1.type = 'lowpass';
+      rustleFilter1.frequency.value = 1500 + Math.random() * 500;
+      rustleFilter1.Q.value = 0.3;
       
-      gainNode.gain.setValueAtTime(0.05, audioContext.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.05);
+      rustleFilter2.type = 'highpass';
+      rustleFilter2.frequency.value = 300 + Math.random() * 200;
+      rustleFilter2.Q.value = 0.3;
       
-      whiteNoise.start(audioContext.currentTime);
-      whiteNoise.stop(audioContext.currentTime + 0.05);
+      rustleSource.buffer = rustleBuffer;
+      rustleSource.connect(rustleFilter1);
+      rustleFilter1.connect(rustleFilter2);
+      rustleFilter2.connect(rustleGain);
+      rustleGain.connect(audioContext.destination);
+      
+      // Audible but gentle volume
+      rustleGain.gain.setValueAtTime(0.05, audioContext.currentTime);
+      rustleGain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
+      
+      rustleSource.start(audioContext.currentTime);
+      rustleSource.stop(audioContext.currentTime + duration);
     }
   } catch (error) {
-    // Fallback to console log if audio fails
-    console.log(`🔊 Playing ${type} sound effect (audio failed: ${error})`);
+    // Ultra-quiet fallback - almost no sound
+    console.log(`🔊 Organic ${type} sound (${error})`);
   }
 };
 
@@ -245,6 +351,9 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
     curlAmount: 0,
     cornerGrabbed: null
   });
+
+  // Navigation state
+  const [showQuickTOC, setShowQuickTOC] = useState(false);
 
   // Refs
   const containerRef = useRef<HTMLDivElement>(null);
@@ -930,6 +1039,84 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
       `}</style>
 
       <div className="w-full h-full bg-white overflow-hidden relative page-curl-flip">
+        {/* Subtle Navigation Button - Top Right */}
+        <button
+          onClick={() => setShowQuickTOC(!showQuickTOC)}
+          className="absolute top-4 right-4 w-8 h-8 bg-black/10 hover:bg-black/20 rounded-full 
+                     flex items-center justify-center transition-all duration-200 z-40
+                     backdrop-blur-sm border border-white/20 shadow-sm
+                     active:scale-95"
+        >
+          <div className="flex flex-col gap-0.5">
+            <div className="w-3 h-0.5 bg-gray-700 rounded-full"></div>
+            <div className="w-3 h-0.5 bg-gray-700 rounded-full"></div>
+            <div className="w-3 h-0.5 bg-gray-700 rounded-full"></div>
+          </div>
+        </button>
+
+        {/* Quick Table of Contents Overlay */}
+        {showQuickTOC && (
+          <div className="absolute inset-0 bg-black/50 z-50 flex items-center justify-center" onClick={() => setShowQuickTOC(false)}>
+            <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full mx-4 max-h-[80vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-xl font-bold text-gray-800">Quick Navigation</h3>
+                  <button 
+                    onClick={() => setShowQuickTOC(false)}
+                    className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center"
+                  >
+                    ✕
+                  </button>
+                </div>
+                
+                <div className="space-y-2">
+                  {[
+                    { category: 'intro', name: 'Introduction', icon: '📖', color: 'bg-gray-500', page: 0 },
+                    { category: 'lies', name: 'Bad Lies', icon: '⛰️', color: 'bg-amber-500', page: 1, description: 'Uphill, Downhill, Sidehill shots' },
+                    { category: 'bunker', name: 'Bunker Shots', icon: '🏖️', color: 'bg-yellow-500', page: 5, description: 'Sand play techniques' },
+                    { category: 'trouble', name: 'Trouble Shots', icon: '🌲', color: 'bg-green-500', page: 9, description: 'Trees, obstacles, recovery' },
+                    { category: 'wind', name: 'Wind Play', icon: '💨', color: 'bg-blue-500', page: 11, description: 'Into, with, and crosswinds' },
+                    { category: 'shots', name: 'Shot Shaping', icon: '🎯', color: 'bg-purple-500', page: 15, description: 'Draws, fades, specialty shots' },
+                    { category: 'short', name: 'Short Game', icon: '⛳', color: 'bg-pink-500', page: 19, description: 'Pitching and chipping' }
+                  ].map((section, index) => (
+                    <button
+                      key={section.category}
+                      onClick={() => {
+                        playPaperSound('flip');
+                        triggerHapticFeedback('light');
+                        onPageChange(section.page);
+                        setShowQuickTOC(false);
+                      }}
+                      className="w-full p-3 rounded-lg border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all duration-200 text-left"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className={`w-8 h-8 ${section.color} rounded-lg flex items-center justify-center text-white text-sm shrink-0`}>
+                          {section.icon}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="font-medium text-gray-800 text-sm">{section.name}</div>
+                          {section.description && (
+                            <div className="text-xs text-gray-500 truncate">{section.description}</div>
+                          )}
+                        </div>
+                        <div className="text-xs text-gray-400">
+                          Page {section.page}
+                        </div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+                
+                <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+                  <div className="text-xs text-gray-600 text-center">
+                    💡 <strong>Tip:</strong> Grab bottom corners to flip forward, top corners to flip back
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Page container - Full height */}
         <div 
           ref={containerRef}
@@ -973,18 +1160,36 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
 
 
 
-          {/* Page indicator */}
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-1 z-20">
-            {pages.map((_, index) => (
-              <div
-                key={index}
-                className={`w-1.5 h-1.5 rounded-full ${
-                  index === currentPage 
-                    ? 'bg-gray-600' 
-                    : 'bg-gray-300'
-                }`}
-              />
-            ))}
+          {/* Clean page indicators with distance-based opacity */}
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
+            {pages.map((_, index) => {
+              // Calculate opacity based on distance from current page
+              const distance = Math.abs(index - currentPage);
+              const getOpacity = (dist: number) => {
+                if (dist === 0) return 'opacity-100'; // Current page - most visible
+                if (dist === 1) return 'opacity-75';  // Adjacent pages
+                if (dist === 2) return 'opacity-50';  // Two pages away
+                if (dist === 3) return 'opacity-25';  // Three pages away
+                return 'opacity-10';                  // Far away pages - barely visible
+              };
+              
+              return (
+                <button
+                  key={index}
+                  onClick={() => onPageChange(index)}
+                  className={`rounded-full bg-gray-600 transition-all duration-300 
+                             hover:opacity-100 hover:scale-125 ${getOpacity(distance)}
+                             ${index === currentPage ? 'scale-125' : 'scale-100'}`}
+                  style={{
+                    width: '8px',
+                    height: '8px',
+                    minWidth: '8px',
+                    minHeight: '8px'
+                  }}
+                  title={`Page ${index}`}
+                />
+              );
+            })}
           </div>
 
 
