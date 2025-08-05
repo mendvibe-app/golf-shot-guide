@@ -1089,18 +1089,18 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
         }
       `}</style>
 
-      <div className="max-w-md mx-auto bg-white rounded-3xl shadow-2xl shadow-gray-900/25 overflow-hidden relative page-curl-flip" style={{ height: '600px' }}>
-        {/* Header */}
-        <div className="bg-gradient-to-r from-orange-600 to-red-600 text-white p-4 relative z-10">
-          <h1 className="text-xl font-bold text-center">Golf Yardage Book</h1>
-          <p className="text-center text-orange-100 text-sm">Page Curl Version</p>
+      <div className="w-full h-full bg-white overflow-hidden relative page-curl-flip">
+        {/* Header - Spiral binding */}
+        <div className="bg-gradient-to-r from-orange-600 to-red-600 text-white p-3 relative z-10">
+          <h1 className="text-lg font-bold text-center">Golf Yardage Book</h1>
+          <p className="text-center text-orange-100 text-xs">Page Curl Version</p>
         </div>
 
-        {/* Page container */}
+        {/* Page container - Full height minus header */}
         <div 
           ref={containerRef}
-          className="page-curl-container relative h-full bg-gradient-to-br from-gray-50 to-gray-100"
-          style={{ height: 'calc(100% - 80px)' }}
+          className="page-curl-container relative bg-gradient-to-br from-gray-50 to-gray-100"
+          style={{ height: 'calc(100% - 56px)' }}
           data-can-go-back={currentPage > 0 ? "true" : "false"}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
