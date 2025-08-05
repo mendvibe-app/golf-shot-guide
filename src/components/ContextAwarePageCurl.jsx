@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import PageFlipDemo from '../prototypes/page-curl-flip/PageFlipDemo';
-import { getTabContentSet } from './TabContentSets';
+import { getTabContent } from './TabContentSets';
 
 const ContextAwarePageCurl = ({ 
   tabId, 
@@ -11,7 +11,7 @@ const ContextAwarePageCurl = ({
   initialPage = 0 
 }) => {
   // Get content set for the current tab
-  const contentSet = useMemo(() => getTabContentSet(tabId), [tabId]);
+  const contentSet = useMemo(() => getTabContent(tabId), [tabId]);
   const [currentPage, setCurrentPage] = useState(initialPage);
 
   // Handle page changes
