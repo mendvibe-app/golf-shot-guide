@@ -816,7 +816,7 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
           overflow-y: auto;
           overflow-x: hidden;
           padding: 1.5rem;
-          margin: 60px 8px 80px 60px; /* Less right margin for scrollbar space */
+          margin: 60px 8px 80px 20px; /* Balanced margins - smaller left margin */
           -webkit-overflow-scrolling: touch;
           overscroll-behavior: contain;
           touch-action: pan-y;
