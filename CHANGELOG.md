@@ -2,6 +2,44 @@
 
 All notable changes to the Golf Shot Guide App will be documented in this file.
 
+## [2.1.0] - 2025-01-15 🎯
+
+### 🚀 Major Enhancement: Complete Shot Selection Overhaul
+
+#### **Beautiful Page Flipping Experience**
+- **Restored Page Curl Physics**: Beautiful, satisfying page flipping that feels like real paper
+- **Full-Screen Experience**: Page curl now takes up the entire screen for immersive yardage book feel
+- **Bidirectional Navigation**: Swipe up for next page, grab top corners to go back
+- **Realistic Visual Effects**: Paper texture, coffee stains, spiral binding at the top
+
+#### **Comprehensive Shot Library (20 Shot Types)**
+- **4 Lie Situations**: Uphill lie, downhill lie, ball above feet, ball below feet
+- **4 Bunker Shots**: Fairway bunker, greenside bunker, deep bunker, wet sand bunker  
+- **2 Trouble Shots**: Trees/obstacles escape, low punch shots
+- **4 Wind Conditions**: Into wind, with wind, crosswind left-to-right, crosswind right-to-left
+- **4 Specialty Shots**: Fade shot, draw shot, flop shot, bump and run
+- **2 Short Game**: Pitch shots, chip shots
+
+#### **Enhanced Shot Details**
+- **Complete Technique Breakdown**: Key action, club adjustment, ball position, stance
+- **Swing Thoughts**: Mental cues for each shot type
+- **Memorable Quotes**: Easy-to-remember tips for on-course use
+- **Pro Tips**: Expert advice from professionals
+- **Difficulty Ratings**: Easy/Medium/Hard/Expert classification
+- **Visual Icons**: Clear representation of each shot scenario
+
+#### **Technical Improvements**
+- **Fixed Import Issues**: Resolved blank page problems with proper component imports
+- **Optimized Performance**: Clean component structure for smooth page flipping
+- **Enhanced Spiral Binding**: Realistic metal binding design at app header
+- **Simple Page Indicators**: Clean circle indicators for page navigation
+
+### 🎨 User Experience Enhancements
+- **Landing Page**: Beautiful "Golf Shot Guide" intro page for each section
+- **Full Content Integration**: Page flipping works seamlessly with comprehensive data
+- **Mobile-First Design**: Optimized for touch devices and mobile testing
+- **Clean Interface**: Removed debug overlays and testing elements
+
 ## [2.0.0] - 2025-01-15
 
 ### 🎉 Major Features Added
