@@ -711,23 +711,29 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
           overflow: hidden;
         }
         
-        /* Custom scrollbar for page content */
+        /* Custom scrollbar for page content - wider and positioned at edge */
         .page-curl-scrollable::-webkit-scrollbar {
-          width: 4px;
+          width: 6px;
         }
         
         .page-curl-scrollable::-webkit-scrollbar-track {
-          background: rgba(0,0,0,0.1);
-          border-radius: 2px;
+          background: rgba(0,0,0,0.05);
+          border-radius: 3px;
+          margin: 10px 0; /* Add some margin from top/bottom */
         }
         
         .page-curl-scrollable::-webkit-scrollbar-thumb {
-          background: rgba(0,0,0,0.3);
-          border-radius: 2px;
+          background: rgba(139,69,19,0.4); /* Match paper theme */
+          border-radius: 3px;
+          border: 1px solid rgba(255,255,255,0.3); /* Subtle border */
         }
         
         .page-curl-scrollable::-webkit-scrollbar-thumb:hover {
-          background: rgba(0,0,0,0.5);
+          background: rgba(139,69,19,0.6);
+        }
+        
+        .page-curl-scrollable::-webkit-scrollbar-thumb:active {
+          background: rgba(139,69,19,0.8);
         }
 
         .page-curl-stack {
@@ -810,7 +816,7 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
           overflow-y: auto;
           overflow-x: hidden;
           padding: 1.5rem;
-          margin: 60px 60px 80px 60px; /* Avoid corner areas */
+          margin: 60px 8px 80px 60px; /* Less right margin for scrollbar space */
           -webkit-overflow-scrolling: touch;
           overscroll-behavior: contain;
           touch-action: pan-y;
