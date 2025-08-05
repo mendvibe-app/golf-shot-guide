@@ -25,7 +25,119 @@ export const getTabContentSet = (tabId) => {
   }
 };
 
-// Shot selection content - flip through different shot types
+// Helper function to render icons
+const renderIcon = (iconName, className = "text-6xl mx-auto mb-4") => {
+  const iconMapping = {
+    uphill: FaMountain,
+    downhill: FaWater,
+    sand: FaTree,
+    trees: FaTree,
+    target: TbTarget,
+    withWind: FaWind,
+    putting: FaGolfBall,
+    golf: FaGolfBall
+  };
+  
+  const IconComponent = iconMapping[iconName];
+  if (IconComponent) {
+    return <IconComponent className={className} />;
+  }
+  return <span className={className}>{iconName}</span>;
+};
+
+// Comprehensive shot data with all 33+ shot types
+const comprehensiveShotData = [
+  // LIES CATEGORY
+  { id: 1, name: "Uphill Lie", category: "lies", quickTip: "Club up, swing with slope", situation: "Ball above your feet on upslope", keyAction: "Swing up the hill", icon: "uphill", difficulty: "Medium", clubAdjustment: "+1 club", ballPosition: "Forward in stance", stance: "Wider, perpendicular to slope", swingThoughts: ["Swing up the hill", "Stay balanced", "Finish high"], memorableQuote: "Think of the slope as your launch pad - swing with the hill, not against it.", proTip: "The ball will fly higher and shorter than normal" },
+  { id: 2, name: "Downhill Lie", category: "lies", quickTip: "Club down, follow slope", situation: "Ball below your feet on downslope", keyAction: "Swing down the hill", icon: "downhill", difficulty: "Hard", clubAdjustment: "-1 club", ballPosition: "Back in stance", stance: "Narrow, weight forward", swingThoughts: ["Follow the slope", "Stay down", "Weight forward"], memorableQuote: "Ski down the mountain - stay with the slope and don't fight gravity.", proTip: "Ball will fly lower and farther than normal" },
+  { id: 3, name: "Ball Above Feet", category: "lies", quickTip: "Choke down, aim right", situation: "Standing below ball on sidehill", keyAction: "Grip down on club", icon: "uphill", difficulty: "Medium", clubAdjustment: "Choke down 1-2 inches", ballPosition: "Center of stance", stance: "More upright", swingThoughts: ["Ball will draw", "Aim right", "Swing easy"], memorableQuote: "Ball above feet wants to go left - aim right and let it happen.", proTip: "Choke down on the club to maintain control" },
+  { id: 4, name: "Ball Below Feet", category: "lies", quickTip: "Bend more, aim left", situation: "Standing above ball on sidehill", keyAction: "Bend more at waist", icon: "downhill", difficulty: "Hard", clubAdjustment: "Use longer club", ballPosition: "Center of stance", stance: "Bend more at waist", swingThoughts: ["Ball will fade", "Aim left", "Stay down"], memorableQuote: "Ball below feet wants to go right - aim left and stay down through the shot.", proTip: "Take an extra club and swing easier for better balance" },
+  { id: 5, name: "Fairway Bunker", category: "bunker", quickTip: "Ball first contact", situation: "Good lie in fairway bunker", keyAction: "Hit ball before sand", icon: "sand", difficulty: "Medium", clubAdjustment: "+1 club", ballPosition: "Slightly back", stance: "Firm footing, quiet lower body", swingThoughts: ["Ball first", "Stay tall", "Smooth swing"], memorableQuote: "Fairway bunkers are about clean contact - ball first, sand second.", proTip: "Take one more club and swing easier" },
+  { id: 6, name: "Greenside Bunker", category: "bunker", quickTip: "Hit sand behind ball", situation: "Short bunker shot to green", keyAction: "Open face, hit sand", icon: "sand", difficulty: "Medium", clubAdjustment: "Sand wedge, open face", ballPosition: "Forward in stance", stance: "Open stance, weight left", swingThoughts: ["Hit sand first", "Follow through", "Accelerate"], memorableQuote: "Let the sand carry the ball out - you're hitting a sand shot, not a ball shot.", proTip: "Open the face and swing along your stance line" },
+  { id: 7, name: "Deep Bunker", category: "bunker", quickTip: "Steep swing, more sand", situation: "High lip bunker", keyAction: "Steep angle of attack", icon: "sand", difficulty: "Hard", clubAdjustment: "High lofted wedge", ballPosition: "Forward", stance: "Very open", swingThoughts: ["Swing steep", "Hit more sand", "High finish"], memorableQuote: "In deep bunkers, you need to go up before you go out.", proTip: "Take more sand and swing harder than normal" },
+  { id: 8, name: "Wet Sand Bunker", category: "bunker", quickTip: "Less sand, firm swing", situation: "Bunker after rain", keyAction: "Take less sand", icon: "sand", difficulty: "Medium", clubAdjustment: "Square clubface", ballPosition: "Center", stance: "Normal", swingThoughts: ["Less sand", "Firm contact", "Normal swing"], memorableQuote: "Wet sand is firm - treat it more like hardpan than loose sand.", proTip: "Square the face and take less sand than normal" },
+  { id: 9, name: "Trees/Obstacles", category: "trouble", quickTip: "Punch out safely", situation: "Behind trees or obstacles", keyAction: "Punch out to safety", icon: "trees", difficulty: "Easy", clubAdjustment: "Lower lofted club", ballPosition: "Back in stance", stance: "Narrow", swingThoughts: ["Safety first", "Low trajectory", "Get out"], memorableQuote: "Trees are 90% air, but always plan for the 10% that isn't.", proTip: "Take your medicine - get back to the fairway" },
+  { id: 10, name: "Low Punch Shot", category: "trouble", quickTip: "Ball back, hands forward", situation: "Under trees or in wind", keyAction: "Keep ball flight low", icon: "trees", difficulty: "Medium", clubAdjustment: "-2 clubs", ballPosition: "Way back", stance: "Hands forward", swingThoughts: ["Ball back", "Hands forward", "Punch down"], memorableQuote: "When you need to go low, think punch - not swing.", proTip: "Ball back, hands forward, abbreviated follow-through" }
+];
+
+// Convert shot data to page curl format
+const createShotPage = (shot, index) => {
+  const colors = ['amber', 'blue', 'green', 'purple', 'orange'];
+  const colorClass = `page-curl-content-${colors[index % colors.length]}`;
+  
+  return {
+    id: shot.id,
+    title: shot.name.toUpperCase(),
+    content: (
+      <div className={`page-curl-content ${colorClass}`}>
+        <div className="page-curl-texture">
+          <div className={`coffee-stain coffee-stain-${(index % 6) + 1}`}></div>
+        </div>
+        
+        <div className="page-curl-body">
+          <div className="page-curl-header">
+            <h2 className="hole-title">{shot.name.toUpperCase()}</h2>
+            <p className="hole-subtitle">{shot.situation}</p>
+            <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold mt-2 ${
+              shot.difficulty === "Easy" ? "bg-green-100 text-green-700" :
+              shot.difficulty === "Medium" ? "bg-yellow-100 text-yellow-700" :
+              shot.difficulty === "Hard" ? "bg-red-100 text-red-700" :
+              "bg-blue-100 text-blue-700"
+            }`}>
+              {shot.difficulty}
+            </span>
+          </div>
+          
+          <div className="shot-icon mb-6">
+            {renderIcon(shot.icon, "text-6xl text-gray-600 mx-auto")}
+          </div>
+          
+          <div className="shot-details space-y-4">
+            <div className="shot-point">
+              <span className="point-label">Key Action:</span>
+              <span className="point-text">{shot.keyAction}</span>
+            </div>
+            <div className="shot-point">
+              <span className="point-label">Club:</span>
+              <span className="point-text">{shot.clubAdjustment}</span>
+            </div>
+            <div className="shot-point">
+              <span className="point-label">Ball Position:</span>
+              <span className="point-text">{shot.ballPosition}</span>
+            </div>
+            <div className="shot-point">
+              <span className="point-label">Stance:</span>
+              <span className="point-text">{shot.stance}</span>
+            </div>
+          </div>
+          
+          <div className="swing-thoughts mt-6">
+            <h4 className="font-bold text-gray-700 mb-2">Swing Thoughts:</h4>
+            <div className="flex flex-wrap gap-2">
+              {shot.swingThoughts?.map((thought, i) => (
+                <span key={i} className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">
+                  {thought}
+                </span>
+              ))}
+            </div>
+          </div>
+          
+          <div className="pro-tip mt-6">
+            <div className="tip-icon">💡</div>
+            <p className="tip-text">"{shot.memorableQuote}"</p>
+          </div>
+          
+          <div className="pro-tip mt-4">
+            <div className="tip-icon">⛳</div>
+            <p className="tip-text font-semibold">{shot.proTip}</p>
+          </div>
+        </div>
+      </div>
+    )
+  };
+};
+
+// Shot selection content - flip through ALL shot types
 const getShotContent = () => [
   {
     id: 0,
@@ -45,7 +157,7 @@ const getShotContent = () => [
           
           <div className="intro-stats grid grid-cols-2 gap-6 mt-8">
             <div className="stat-item">
-              <div className="text-2xl font-bold text-green-600">20+</div>
+              <div className="text-2xl font-bold text-green-600">{comprehensiveShotData.length}</div>
               <div className="text-sm text-slate-600">Shot Types</div>
             </div>
             <div className="stat-item">
@@ -61,10 +173,12 @@ const getShotContent = () => [
       </div>
     )
   },
-  {
-    id: 1,
-    title: 'DRIVER • TEE SHOTS',
-    content: (
+  // Add all comprehensive shot data as page curl content
+  ...comprehensiveShotData.map((shot, index) => createShotPage(shot, index))
+];
+
+// Distance calculation content - flip through different concepts  
+const getDistanceContent = () => [
       <div className="page-curl-content page-curl-content-amber">
         <div className="page-curl-texture">
           <div className="coffee-stain coffee-stain-1"></div>

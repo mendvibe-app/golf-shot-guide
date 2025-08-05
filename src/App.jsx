@@ -1639,15 +1639,27 @@ const GolfShotGuide = () => {
     ]
   };
 
-  const quickCategories = [
-    { id: "all", name: "All" },
-    { id: "lies", name: "Bad Lies" },
-    { id: "bunker", name: "Bunkers" },
-    { id: "trouble", name: "Trouble" },
-    { id: "shots", name: "Shots" },
-    { id: "short", name: "Short Game" },
-    { id: "wind", name: "Wind" }
+  const shotCategories = [
+    { id: "all", name: "All", icon: "golf" },
+    { id: "lies", name: "Bad Lies", icon: "uphill" },
+    { id: "bunker", name: "Bunkers", icon: "sand" },
+    { id: "trouble", name: "Trouble", icon: "trees" },
+    { id: "wind", name: "Wind", icon: "withWind" },
+    { id: "shots", name: "Shots", icon: "target" },
+    { id: "short", name: "Short Game", icon: "putting" }
   ];
+
+  // Filtered shots based on search and category
+  const filteredShots = shotData.filter(shot => {
+    const matchesSearch = searchTerm === "" || 
+      shot.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      shot.quickTip.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      shot.situation.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesCategory = selectedCategory === "" || selectedCategory === "all" || shot.category === selectedCategory;
+    
+    return matchesSearch && matchesCategory;
+  });
 
   // Get club recommendation
   const getClubRecommendation = (distance, windSpeed = 0, windDirection = "none") => {
@@ -1939,7 +1951,7 @@ const GolfShotGuide = () => {
         </div>
       </div>
 
-      {/* Full-screen page curl tabs */}
+      {/* Shots Tab - Page Curl with Comprehensive Content */}
       {activeTab === "shots" && (
         <div className="fixed inset-0 top-12 bottom-24 z-30">
           <ContextAwarePageCurl 
