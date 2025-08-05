@@ -88,74 +88,100 @@ const createShotPage = (shot, index) => {
         </div>
         
         <div className="page-curl-scrollable">
-          <div className="page-curl-header">
-            <h2 className="hole-title">{shot.name.toUpperCase()}</h2>
-            <p className="hole-subtitle">{shot.situation}</p>
-            <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold mt-2 ${
-              shot.difficulty === "Easy" ? "bg-green-100 text-green-700" :
-              shot.difficulty === "Medium" ? "bg-yellow-100 text-yellow-700" :
-              shot.difficulty === "Hard" ? "bg-red-100 text-red-700" :
-              "bg-purple-100 text-purple-700"
-            }`}>
-              {shot.difficulty}
-            </span>
+          {/* HERO SECTION - Clean, prominent shot identification */}
+          <div className="shot-hero mb-8">
+            <div className="flex items-start justify-between mb-3">
+              <div className="flex-1">
+                <h1 className="text-2xl font-bold text-gray-900 leading-tight mb-2">{shot.name}</h1>
+                <p className="text-gray-600 text-base leading-relaxed">{shot.situation}</p>
+              </div>
+              <div className="flex items-center gap-2 ml-4">
+                {renderIcon(shot.icon, "w-8 h-8 text-gray-500")}
+                <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                  shot.difficulty === "Easy" ? "bg-emerald-100 text-emerald-700" :
+                  shot.difficulty === "Medium" ? "bg-amber-100 text-amber-700" :
+                  shot.difficulty === "Hard" ? "bg-red-100 text-red-700" :
+                  "bg-purple-100 text-purple-700"
+                }`}>
+                  {shot.difficulty}
+                </span>
+              </div>
+            </div>
           </div>
-          
-          <div className="shot-icon mb-6">
-            {renderIcon(shot.icon, "text-6xl text-gray-600 mx-auto")}
-          </div>
-          
-          {/* When to Use - Prominent Strategic Info */}
+
+          {/* STRATEGIC CONTEXT - Most important for decision-making */}
           {shot.whenToUse && (
-            <div className="when-to-use mb-6">
-              <h4 className="font-bold text-emerald-700 mb-3 flex items-center gap-2">
-                <span className="text-lg">🎯</span>
-                When to Use This Shot
-              </h4>
-              <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
-                <p className="text-emerald-800 font-medium leading-relaxed">{shot.whenToUse}</p>
+            <div className="strategy-card mb-8">
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-5">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
+                    <span className="text-blue-600 text-sm">🎯</span>
+                  </div>
+                  <h3 className="font-semibold text-blue-900">When to Use</h3>
+                </div>
+                <p className="text-blue-800 leading-relaxed">{shot.whenToUse}</p>
               </div>
             </div>
           )}
 
-          <div className="shot-details space-y-4">
-            <div className="shot-point">
-              <span className="point-label">Key Action:</span>
-              <span className="point-text">{shot.keyAction}</span>
-            </div>
-            <div className="shot-point">
-              <span className="point-label">Club:</span>
-              <span className="point-text">{shot.clubAdjustment}</span>
-            </div>
-            <div className="shot-point">
-              <span className="point-label">Ball Position:</span>
-              <span className="point-text">{shot.ballPosition}</span>
-            </div>
-            <div className="shot-point">
-              <span className="point-label">Stance:</span>
-              <span className="point-text">{shot.stance}</span>
+          {/* SETUP GRID - Clean technical specifications */}
+          <div className="setup-section mb-8">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Setup & Execution</h3>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="setup-card bg-white border border-gray-200 rounded-lg p-4">
+                <div className="text-sm font-medium text-gray-500 mb-1">Key Action</div>
+                <div className="text-gray-900 font-medium">{shot.keyAction}</div>
+              </div>
+              <div className="setup-card bg-white border border-gray-200 rounded-lg p-4">
+                <div className="text-sm font-medium text-gray-500 mb-1">Club</div>
+                <div className="text-gray-900 font-medium">{shot.clubAdjustment}</div>
+              </div>
+              <div className="setup-card bg-white border border-gray-200 rounded-lg p-4">
+                <div className="text-sm font-medium text-gray-500 mb-1">Ball Position</div>
+                <div className="text-gray-900 font-medium">{shot.ballPosition}</div>
+              </div>
+              <div className="setup-card bg-white border border-gray-200 rounded-lg p-4">
+                <div className="text-sm font-medium text-gray-500 mb-1">Stance</div>
+                <div className="text-gray-900 font-medium">{shot.stance}</div>
+              </div>
             </div>
           </div>
-          
-          <div className="swing-thoughts mt-6">
-            <h4 className="font-bold text-gray-700 mb-2">Swing Thoughts:</h4>
+
+          {/* SWING THOUGHTS - Mental game */}
+          <div className="thoughts-section mb-8">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Swing Thoughts</h3>
             <div className="flex flex-wrap gap-2">
               {shot.swingThoughts?.map((thought, i) => (
-                <span key={i} className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">
+                <span key={i} className="bg-gray-100 text-gray-700 px-3 py-2 rounded-full text-sm font-medium border">
                   {thought}
                 </span>
               ))}
             </div>
           </div>
-          
-          <div className="pro-tip mt-6">
-            <div className="tip-icon">💡</div>
-            <p className="tip-text">"{shot.memorableQuote}"</p>
-          </div>
-          
-          <div className="pro-tip mt-4">
-            <div className="tip-icon">⛳</div>
-            <p className="tip-text font-semibold">{shot.proTip}</p>
+
+          {/* MEMORY AIDS - Quotes and tips */}
+          <div className="memory-section space-y-4">
+            <div className="memory-card bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r-lg">
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-amber-600 text-sm">💭</span>
+                </div>
+                <div>
+                  <div className="text-amber-800 font-medium italic leading-relaxed">"{shot.memorableQuote}"</div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="memory-card bg-green-50 border-l-4 border-green-400 p-4 rounded-r-lg">
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-green-600 text-sm">⛳</span>
+                </div>
+                <div>
+                  <div className="text-green-800 font-medium leading-relaxed">{shot.proTip}</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
