@@ -49,6 +49,110 @@ import {
 } from "react-icons/tb";
 
 const GolfShotGuide = () => {
+  // Add spiral binding styles to the document
+  React.useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      /* Realistic Metal Spiral Binding */
+      .spiral-binding {
+        position: relative;
+        height: 3rem;
+        background: linear-gradient(to bottom, 
+          #f8f9fa 0%, 
+          #e9ecef 20%, 
+          #dee2e6 40%, 
+          #ced4da 60%, 
+          #adb5bd 80%, 
+          #6c757d 100%
+        );
+        border-bottom: 1px solid #495057;
+        box-shadow: 
+          0 2px 8px rgba(0, 0, 0, 0.15),
+          inset 0 1px 0 rgba(255, 255, 255, 0.8),
+          inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+        pointer-events: none;
+      }
+
+      .spiral-holes {
+        display: flex; 
+        justify-content: space-evenly; 
+        align-items: center;
+        height: 100%; 
+        padding: 0 2rem;
+        pointer-events: none;
+      }
+
+      .spiral-hole {
+        position: relative;
+        width: 1rem; 
+        height: 1rem; 
+        background: radial-gradient(circle at 30% 30%, 
+          #2d3748, 
+          #1a202c 30%, 
+          #0d1117 60%,
+          #000000 100%
+        );
+        border-radius: 50%; 
+        box-shadow: 
+          inset 0 3px 6px rgba(0, 0, 0, 0.8),
+          inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+          0 1px 2px rgba(0, 0, 0, 0.3);
+        pointer-events: none;
+      }
+
+      .spiral-hole::before {
+        content: '';
+        position: absolute;
+        top: -8px; bottom: -8px;
+        left: 50%; 
+        transform: translateX(-50%);
+        width: 6px;
+        background: linear-gradient(to right,
+          #8e9aaf 0%,
+          #cbc0d3 25%,
+          #fdedf4 50%,
+          #cbc0d3 75%,
+          #8e9aaf 100%
+        );
+        border-radius: 3px;
+        box-shadow: 
+          inset 1px 0 0 rgba(255, 255, 255, 0.6),
+          inset -1px 0 0 rgba(0, 0, 0, 0.3),
+          2px 0 4px rgba(0, 0, 0, 0.2);
+        z-index: -1;
+      }
+
+      .spiral-hole::after {
+        content: '';
+        position: absolute;
+        top: -12px; bottom: -12px;
+        left: 50%; 
+        transform: translateX(-50%) rotate(0deg);
+        width: 4px;
+        background: linear-gradient(45deg,
+          #6c757d 0%,
+          #adb5bd 25%,
+          #e9ecef 50%,
+          #adb5bd 75%,
+          #6c757d 100%
+        );
+        border-radius: 2px;
+        box-shadow: 
+          1px 0 2px rgba(0, 0, 0, 0.3),
+          inset 0.5px 0 0 rgba(255, 255, 255, 0.4);
+        z-index: -2;
+        animation: subtleShimmer 4s ease-in-out infinite;
+      }
+
+      @keyframes subtleShimmer {
+        0%, 100% { opacity: 0.8; }
+        50% { opacity: 1; }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => document.head.removeChild(style);
+  }, []);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedShot, setSelectedShot] = useState(null);
   const [showCalculator, setShowCalculator] = useState(false);
@@ -1835,9 +1939,18 @@ const GolfShotGuide = () => {
         </div>
       </header>
 
+      {/* Spiral Binding - Always visible at top */}
+      <div className="fixed top-20 left-0 right-0 z-40 spiral-binding">
+        <div className="spiral-holes">
+          {[...Array(8)].map((_, i) => (
+            <div key={i} className="spiral-hole"></div>
+          ))}
+        </div>
+      </div>
+
       {/* Full-screen page curl tabs */}
       {(activeTab === "shots" || activeTab === "calculator" || activeTab === "putting" || activeTab === "learn" || activeTab === "pagecurl") && (
-        <div className="fixed inset-0 top-20 bottom-24 z-30">
+        <div className="fixed inset-0 top-32 bottom-24 z-30">
           {activeTab === "shots" && (
             <ContextAwarePageCurl 
               tabId="shots"

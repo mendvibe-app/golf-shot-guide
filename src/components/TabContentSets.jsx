@@ -28,6 +28,40 @@ export const getTabContentSet = (tabId) => {
 // Shot selection content - flip through different shot types
 const getShotContent = () => [
   {
+    id: 0,
+    title: 'Golf Shot Guide',
+    content: (
+      <div className="page-curl-content page-curl-content-intro">
+        <div className="page-curl-texture">
+          <div className="coffee-stain coffee-stain-1"></div>
+        </div>
+        
+        <div className="page-curl-body flex flex-col items-center justify-center h-full text-center">
+          <div className="app-logo mb-8">
+            <TbGolf className="text-8xl text-green-600 mx-auto mb-4" />
+            <h1 className="text-4xl font-bold text-slate-800 mb-2">Golf Shot Guide</h1>
+            <p className="text-lg text-slate-600">Professional Shot Selection</p>
+          </div>
+          
+          <div className="intro-stats grid grid-cols-2 gap-6 mt-8">
+            <div className="stat-item">
+              <div className="text-2xl font-bold text-green-600">20+</div>
+              <div className="text-sm text-slate-600">Shot Types</div>
+            </div>
+            <div className="stat-item">
+              <div className="text-2xl font-bold text-blue-600">Pro</div>
+              <div className="text-sm text-slate-600">Techniques</div>
+            </div>
+          </div>
+          
+          <div className="intro-hint mt-12 text-center">
+            <div className="text-gray-500 text-sm">Swipe up to begin →</div>
+          </div>
+        </div>
+      </div>
+    )
+  },
+  {
     id: 1,
     title: 'DRIVER • TEE SHOTS',
     content: (
@@ -36,13 +70,7 @@ const getShotContent = () => [
           <div className="coffee-stain coffee-stain-1"></div>
         </div>
         
-        <div className="spiral-binding">
-          <div className="spiral-holes">
-            {[...Array(8)].map((_, i) => (
-              <div key={i} className="spiral-hole"></div>
-            ))}
-          </div>
-        </div>
+
         
         <div className="page-curl-body">
           <div className="page-curl-header">
@@ -86,13 +114,7 @@ const getShotContent = () => [
           <div className="coffee-stain coffee-stain-3"></div>
         </div>
         
-        <div className="spiral-binding">
-          <div className="spiral-holes">
-            {[...Array(8)].map((_, i) => (
-              <div key={i} className="spiral-hole"></div>
-            ))}
-          </div>
-        </div>
+
         
         <div className="page-curl-body">
           <div className="page-curl-header">
@@ -136,13 +158,7 @@ const getShotContent = () => [
           <div className="coffee-stain coffee-stain-5"></div>
         </div>
         
-        <div className="spiral-binding">
-          <div className="spiral-holes">
-            {[...Array(8)].map((_, i) => (
-              <div key={i} className="spiral-hole"></div>
-            ))}
-          </div>
-        </div>
+
         
         <div className="page-curl-body">
           <div className="page-curl-header">
@@ -186,13 +202,7 @@ const getShotContent = () => [
           <div className="coffee-stain coffee-stain-2"></div>
         </div>
         
-        <div className="spiral-binding">
-          <div className="spiral-holes">
-            {[...Array(8)].map((_, i) => (
-              <div key={i} className="spiral-hole"></div>
-            ))}
-          </div>
-        </div>
+
         
         <div className="page-curl-body">
           <div className="page-curl-header">
@@ -240,13 +250,7 @@ const getDistanceContent = () => [
           <div className="coffee-stain coffee-stain-3"></div>
         </div>
         
-        <div className="spiral-binding">
-          <div className="spiral-holes">
-            {[...Array(8)].map((_, i) => (
-              <div key={i} className="spiral-hole"></div>
-            ))}
-          </div>
-        </div>
+
         
         <div className="page-curl-body">
           <div className="page-curl-header">
@@ -290,13 +294,7 @@ const getDistanceContent = () => [
           <div className="coffee-stain coffee-stain-5"></div>
         </div>
         
-        <div className="spiral-binding">
-          <div className="spiral-holes">
-            {[...Array(8)].map((_, i) => (
-              <div key={i} className="spiral-hole"></div>
-            ))}
-          </div>
-        </div>
+
         
         <div className="page-curl-body">
           <div className="page-curl-header">
@@ -344,13 +342,7 @@ const getPuttingContent = () => [
           <div className="coffee-stain coffee-stain-5"></div>
         </div>
         
-        <div className="spiral-binding">
-          <div className="spiral-holes">
-            {[...Array(8)].map((_, i) => (
-              <div key={i} className="spiral-hole"></div>
-            ))}
-          </div>
-        </div>
+
         
         <div className="page-curl-body">
           <div className="page-curl-header">
@@ -394,13 +386,7 @@ const getPuttingContent = () => [
           <div className="coffee-stain coffee-stain-3"></div>
         </div>
         
-        <div className="spiral-binding">
-          <div className="spiral-holes">
-            {[...Array(8)].map((_, i) => (
-              <div key={i} className="spiral-hole"></div>
-            ))}
-          </div>
-        </div>
+
         
         <div className="page-curl-body">
           <div className="page-curl-header">
@@ -448,13 +434,7 @@ const getBallContent = () => [
           <div className="coffee-stain coffee-stain-1"></div>
         </div>
         
-        <div className="spiral-binding">
-          <div className="spiral-holes">
-            {[...Array(8)].map((_, i) => (
-              <div key={i} className="spiral-hole"></div>
-            ))}
-          </div>
-        </div>
+
         
         <div className="page-curl-body">
           <div className="page-curl-header">
@@ -502,13 +482,7 @@ const getDataContent = () => [
           <div className="coffee-stain coffee-stain-3"></div>
         </div>
         
-        <div className="spiral-binding">
-          <div className="spiral-holes">
-            {[...Array(8)].map((_, i) => (
-              <div key={i} className="spiral-hole"></div>
-            ))}
-          </div>
-        </div>
+
         
         <div className="page-curl-body">
           <div className="page-curl-header">
@@ -556,13 +530,7 @@ const getLearningContent = () => [
           <div className="coffee-stain coffee-stain-5"></div>
         </div>
         
-        <div className="spiral-binding">
-          <div className="spiral-holes">
-            {[...Array(8)].map((_, i) => (
-              <div key={i} className="spiral-hole"></div>
-            ))}
-          </div>
-        </div>
+
         
         <div className="page-curl-body">
           <div className="page-curl-header">
@@ -606,13 +574,7 @@ const getLearningContent = () => [
           <div className="coffee-stain coffee-stain-1"></div>
         </div>
         
-        <div className="spiral-binding">
-          <div className="spiral-holes">
-            {[...Array(8)].map((_, i) => (
-              <div key={i} className="spiral-hole"></div>
-            ))}
-          </div>
-        </div>
+
         
         <div className="page-curl-body">
           <div className="page-curl-header">
