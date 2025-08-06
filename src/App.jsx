@@ -21,7 +21,8 @@ import {
   FaHome,
   FaMountain,
   FaWater,
-  FaRuler
+  FaRuler,
+  FaFlag
 } from "react-icons/fa";
 
 import ContextAwarePageCurl from "./components/ContextAwarePageCurl";
@@ -162,7 +163,7 @@ const GolfShotGuide = () => {
 
   // Putting mastery states
   const [selectedPuttingSection, setSelectedPuttingSection] = useState(null);
-  const [selectedPuttingItem, setSelectedPuttingItem] = useState(null);
+
 
   // Personal settings
   const [personalSettings, setPersonalSettings] = useState({
@@ -312,9 +313,9 @@ const GolfShotGuide = () => {
       id: 1,
       name: "Uphill Lie",
       category: "lies",
-      quickTip: "Club up, swing with slope",
-      situation: "Ball above your feet on upslope",
-      keyAction: "Swing up the hill",
+      quickTip: "Club up, swing with the slope",
+      situation: "Standing below the ball - classic uphill lie",
+      keyAction: "Swing WITH the slope - let it help you",
       icon: "uphill",
       difficulty: "Medium",
       timeToRead: "30s",
@@ -322,16 +323,16 @@ const GolfShotGuide = () => {
       ballPosition: "Forward in stance",
       stance: "Wider, perpendicular to slope",
       swingThoughts: ["Swing up the hill", "Stay balanced", "Finish high"],
-      memorableQuote: "Think of the slope as your launch pad - swing with the hill, not against it.",
+      memorableQuote: "Like Tiger always says - use the slope as your friend, not your enemy.",
       proTip: "The ball will fly higher and shorter than normal"
     },
     {
       id: 2,
-      name: "Downhill Lie",
+      name: "Downhill Lie", 
       category: "lies",
-      quickTip: "Club down, follow slope",
-      situation: "Ball below your feet on downslope",
-      keyAction: "Swing down the hill",
+      quickTip: "Less club, stay down through impact",
+      situation: "Ball sitting below you on a downslope",
+      keyAction: "Chase the ball down the hill",
       icon: "downhill",
       difficulty: "Hard",
       timeToRead: "45s",
@@ -339,16 +340,16 @@ const GolfShotGuide = () => {
       ballPosition: "Back in stance",
       stance: "Narrow, weight forward",
       swingThoughts: ["Follow the slope", "Stay down", "Weight forward"],
-      memorableQuote: "Ski down the mountain - stay with the slope and don't fight gravity.",
+      memorableQuote: "Butch Harmon teaches: 'Ski down the mountain - gravity is your friend here.'",
       proTip: "Ball will fly lower and farther than normal"
     },
     {
       id: 3,
       name: "Ball Above Feet",
-      category: "lies",
-      quickTip: "Choke down, aim right",
-      situation: "Standing below ball on sidehill",
-      keyAction: "Swing more around body",
+      category: "lies", 
+      quickTip: "Grip down, aim right of target",
+      situation: "Standing below the ball on a sidehill",
+      keyAction: "Swing more around your body",
       icon: "ballAbove",
       difficulty: "Medium",
       timeToRead: "30s",
@@ -356,7 +357,7 @@ const GolfShotGuide = () => {
       ballPosition: "Center of stance",
       stance: "More upright posture",
       swingThoughts: ["Stand taller", "Swing around", "Ball will hook"],
-      memorableQuote: "Think baseball swing - more around your body, less up and down.",
+      memorableQuote: "Hogan said it best: 'When the ball's above your feet, swing like you're swinging a baseball bat.'",
       proTip: "Ball will draw significantly - aim right"
     },
     {
@@ -433,9 +434,9 @@ const GolfShotGuide = () => {
       id: 8,
       name: "Greenside Bunker",
       category: "bunker",
-      quickTip: "Open face, hit sand first",
-      situation: "Ball in sand near green",
-      keyAction: "Splash sand out",
+      quickTip: "Open the blade, splash the sand",
+      situation: "Ball sitting in the beach near the green",
+      keyAction: "Blast the sand, not the ball",
       icon: "bunker",
       difficulty: "Medium",
       timeToRead: "45s",
@@ -443,7 +444,7 @@ const GolfShotGuide = () => {
       ballPosition: "Forward in stance",
       stance: "Open stance, feet buried",
       swingThoughts: ["Open face", "Hit sand first", "Follow through high"],
-      memorableQuote: "Imagine sweeping a dollar bill from under the ball - splash the sand, not the ball.",
+      memorableQuote: "Gary Player's secret: 'Hit two inches behind the ball and accelerate like you're saving par.'",
       proTip: "Accelerate through - never decelerate"
     },
     {
@@ -518,11 +519,11 @@ const GolfShotGuide = () => {
     // TROUBLE CATEGORY
     {
       id: 13,
-      name: "Punch Shot",
+      name: "Punch Shot", 
       category: "trouble",
-      quickTip: "Ball back, hands forward",
-      situation: "Under trees or in wind",
-      keyAction: "Keep ball low",
+      quickTip: "Ball back, hands ahead, punch and hold",
+      situation: "Stuck under the lumber or fighting wind",
+      keyAction: "Keep it under the radar",
       icon: "punch",
       difficulty: "Easy",
       timeToRead: "20s",
@@ -530,7 +531,7 @@ const GolfShotGuide = () => {
       ballPosition: "Back of stance",
       stance: "Narrow, weight left",
       swingThoughts: ["Ball back", "Hands ahead", "Low finish"],
-      memorableQuote: "Trees are 90% air - slam on the brakes after impact to keep it low.",
+      memorableQuote: "Seve Ballesteros: 'Trees are 90% air - hit it low and trust your hands.'",
       proTip: "Ball will release more than normal"
     },
     {
@@ -1941,7 +1942,7 @@ const GolfShotGuide = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 pb-24">
+    <div className="min-h-screen pb-24">
       {/* Spiral Binding - Always visible at very top */}
       <div className="fixed top-0 left-0 right-0 z-50 spiral-binding">
         <div className="spiral-holes">
@@ -1953,7 +1954,7 @@ const GolfShotGuide = () => {
 
       {/* Shots Tab - Page Curl with Comprehensive Content */}
       {activeTab === "shots" && (
-        <div className="fixed inset-0 top-12 bottom-24 z-30">
+        <div className="fixed inset-0 top-16 bottom-24 z-20">
           <ContextAwarePageCurl 
             tabId="shots"
             tabName="Shot Selection"
@@ -1962,255 +1963,153 @@ const GolfShotGuide = () => {
         </div>
       )}
 
+      {/* Putting Tab - Page Curl Experience */}
+      {activeTab === "putting" && (
+        <div className="fixed inset-0 top-16 bottom-24 z-20">
+          <ContextAwarePageCurl 
+            tabId="putting"
+            tabName="Putting Mastery"
+            tabIcon={FaFlag}
+          />
+        </div>
+      )}
+
       {/* Regular padded content for other tabs - with mobile scrolling */}
-      <div className={`fixed inset-0 top-12 bottom-24 overflow-y-auto mobile-scroll ${(activeTab === "shots") ? 'hidden' : ''}`}>
-        <div className="px-5 py-6 pb-8">
+      <div className={`fixed inset-0 top-16 bottom-24 overflow-y-auto mobile-scroll ${(activeTab === "shots" || activeTab === "putting") ? 'hidden' : ''}`}>
+        <div className="px-5 py-6 pb-8 golf-spacing">
         {/* Distance Calculator Tab - Full Interactive Version */}
         {activeTab === "calculator" && (
           <div className="space-y-6">
-            <div className="text-center">
-              <FaCalculator className="text-4xl mb-2 mx-auto text-emerald-600" />
-              <h2 className="text-2xl font-bold text-slate-900">Distance Calculator</h2>
+            <div className="course-header text-center">
+              <FaCalculator className="text-4xl mb-2 mx-auto golf-icon-bounce" />
+              <h2 className="text-2xl font-serif">Yardage Calculator</h2>
+              <p className="font-handwritten text-sm opacity-90 mt-1">"Like having a caddie in your pocket"</p>
             </div>
             
-            <div className="space-y-4">
+            <div className="golf-card-stack space-y-4">
               <div>
-                <label className="block text-lg font-semibold text-slate-700 mb-3">
-                  Distance to Target
+                <label className="block text-lg font-serif font-semibold mb-3" style={{ color: 'var(--leather-brown-dark)' }}>
+                  Distance to Pin
                 </label>
                 <input
                   type="number"
                   value={distance === 0 ? "" : distance}
                   onChange={(e) => setDistance(e.target.value === "" ? 0 : parseInt(e.target.value))}
-                  className="w-full p-4 border border-slate-300 rounded-xl text-2xl font-bold text-center"
-                  placeholder="Enter yards"
+                  className="w-full p-4 border-2 yardage-card rounded-xl text-2xl font-yardages font-bold text-center"
+                  placeholder="Enter yardage"
+                  style={{ borderColor: 'var(--golf-green-medium)', color: 'var(--leather-brown-dark)' }}
                 />
+                <div className="pencil-note mt-2 text-center">
+                  Remember to factor in the wind!
+                </div>
               </div>
               
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-lg font-semibold text-slate-700 mb-3">Wind</label>
+                  <label className="block text-lg font-serif font-semibold mb-3" style={{ color: 'var(--leather-brown-dark)' }}>Wind Direction</label>
                   <select 
                     value={wind}
                     onChange={(e) => setWind(e.target.value)}
-                    className="w-full p-4 border border-slate-300 rounded-xl text-lg"
+                    className="w-full p-4 yardage-card border-2 rounded-xl text-lg font-clean"
+                    style={{ borderColor: 'var(--golf-green-medium)' }}
                   >
-                    <option value="none">No Wind</option>
-                    <option value="into">Into Wind</option>
-                    <option value="with">With Wind</option>
+                    <option value="none">Dead Calm</option>
+                    <option value="into">Into the Wind</option>
+                    <option value="with">Helping Wind</option>
                   </select>
                 </div>
                 
                 <div>
-                  <label className="block text-lg font-semibold text-slate-700 mb-3">Speed (mph)</label>
+                  <label className="block text-lg font-serif font-semibold mb-3" style={{ color: 'var(--leather-brown-dark)' }}>Wind Speed</label>
                   <input
                     type="number"
                     value={windSpeed}
                     onChange={(e) => setWindSpeed(parseInt(e.target.value) || 0)}
-                    className="w-full p-4 border border-slate-300 rounded-xl text-lg"
+                    className="w-full p-4 yardage-card border-2 rounded-xl text-lg font-yardages"
+                    style={{ borderColor: 'var(--golf-green-medium)' }}
                     min="0"
                     max="30"
                     disabled={wind === "none"}
+                    placeholder="mph"
                   />
                 </div>
               </div>
               
+              {wind !== "none" && windSpeed > 0 && (
+                <div className="wind-conditions">
+                  <div className="font-handwritten text-center">
+                    {wind === "into" && windSpeed >= 15 && "Strong headwind - take 2-3 more clubs"}
+                    {wind === "into" && windSpeed < 15 && "Light headwind - club up one"}
+                    {wind === "with" && windSpeed >= 15 && "Strong tailwind - less club, watch the roll"}
+                    {wind === "with" && windSpeed < 15 && "Helping wind - take one less club"}
+                  </div>
+                </div>
+              )}
+              
               {distance > 0 && (
-                <div className="bg-blue-600 text-white rounded-xl p-6 text-center">
-                  <h3 className="text-lg font-semibold mb-2">Recommended Club</h3>
-                  <div className="text-4xl font-bold mb-2">
+                <div className="course-header text-center">
+                  <h3 className="text-lg font-serif font-semibold mb-3">Your Club Selection</h3>
+                  <div className="yardage-marker text-4xl mb-4">
                     {getClubRecommendation(distance, windSpeed, wind).club.toUpperCase()}
                   </div>
-                  <div className="text-lg opacity-90">
+                  <div className="font-serif text-lg mb-2">
                     Your {getClubRecommendation(distance, windSpeed, wind).club}: {getClubRecommendation(distance, windSpeed, wind).distance} yards
                   </div>
                   {getClubRecommendation(distance, windSpeed, wind).adjustment !== 0 && (
-                    <div className="text-sm opacity-75 mt-2">
-                      Wind adjustment: {getClubRecommendation(distance, windSpeed, wind).adjustment > 0 ? "+" : ""}{Math.round(getClubRecommendation(distance, windSpeed, wind).adjustment)} yards
+                    <div className="font-handwritten text-sm mt-3 opacity-90">
+                      Wind adds {getClubRecommendation(distance, windSpeed, wind).adjustment > 0 ? "+" : ""}{Math.round(getClubRecommendation(distance, windSpeed, wind).adjustment)} yards to play
                     </div>
                   )}
+                  
+                  {/* Simple Hole Diagram */}
+                  <div className="hole-diagram mt-4">
+                    <div className="hole-fairway">
+                      <div className="hole-tee"></div>
+                      <div className="hole-green"></div>
+                      <div className="hole-flag flag-wave"></div>
+                      <div className="yardage-label">{distance}y</div>
+                    </div>
+                    <div className="pencil-note mt-2 text-xs">
+                      Account for pin position and green slope
+                    </div>
+                  </div>
+                  
+                  <div className="pro-tip mt-4">
+                    Trust your yardage and commit to the swing - doubt leads to poor contact
+                  </div>
                 </div>
               )}
             </div>
           </div>
         )}
 
-        {/* Putting Tab - now handled in full-screen section */}
-
-        {/* Putting Tab - Full Interactive Version */}
-        {activeTab === "putting" && (
-          <div className="space-y-6">
-            <div className="text-center">
-              <FaGolfBall className="text-4xl mb-2 mx-auto text-emerald-600" />
-              <h2 className="text-2xl font-bold text-slate-900">Putting Mastery</h2>
-              <p className="text-slate-600">Lower your scores where it matters most</p>
-            </div>
-
-            {/* Putting Mastery Sections */}
-            <div className="space-y-4">
-              {puttingMasteryData.sections.map(section => (
-                <div key={section.id} className="bg-white rounded-xl p-4">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="text-3xl">{renderIcon(section.icon)}</div>
-                    <div>
-                      <h3 className="text-xl font-bold">{section.name}</h3>
-                      <p className="text-slate-600">{section.description}</p>
-                    </div>
-                  </div>
-
-                  <div className="space-y-3">
-                    {section.items.map(item => (
-                      <div
-                        key={item.id}
-                        onClick={() => setSelectedPuttingItem(item)}
-                        className="bg-slate-50 rounded-lg p-4 cursor-pointer hover:bg-slate-100 transition-colors"
-                      >
-                        <div className="flex items-center justify-between mb-2">
-                          <h4 className="font-bold text-slate-900">{item.name}</h4>
-                          <span className={`px-2 py-1 rounded-full text-xs font-bold tracking-wide ${
-                            item.difficulty === "Easy" ? "bg-emerald-100 text-emerald-700" :
-                            item.difficulty === "Medium" ? "bg-amber-100 text-amber-700" :
-                            item.difficulty === "Hard" ? "bg-orange-100 text-orange-700" :
-                            "bg-red-100 text-red-700"
-                          }`}>
-                            {item.difficulty}
-                          </span>
-                        </div>
-                        <p className="text-slate-600 text-sm">{item.quickTip}</p>
-                        <p className="text-slate-500 text-xs mt-1">Situation: {item.situation}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Putting Item Detail Modal */}
-            {selectedPuttingItem && (
-              <div className="fixed inset-0 bg-slate-900/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-4 z-50">
-                <div className="bg-white rounded-t-3xl sm:rounded-3xl w-full max-w-lg max-h-[95vh] overflow-hidden shadow-2xl shadow-slate-900/25">
-                  {/* Header */}
-                  <div className="bg-gradient-to-r from-emerald-50 to-teal-50 px-6 py-5 border-b border-slate-100">
-                    <div className="flex items-center justify-between mb-4">
-                      <button 
-                        onClick={() => setSelectedPuttingItem(null)} 
-                        className="flex items-center gap-2 text-slate-600 hover:text-slate-800 font-medium transition-colors"
-                      >
-                        ← Back
-                      </button>
-                      <div className="flex items-center gap-3">
-                        <span className="text-sm text-slate-500 font-medium">{selectedPuttingItem.timeToRead}</span>
-                        <span className={`px-3 py-1.5 rounded-full text-xs font-bold tracking-wide ${
-                          selectedPuttingItem.difficulty === "Easy" ? "bg-emerald-100 text-emerald-700" :
-                          selectedPuttingItem.difficulty === "Medium" ? "bg-amber-100 text-amber-700" :
-                          selectedPuttingItem.difficulty === "Hard" ? "bg-orange-100 text-orange-700" :
-                          "bg-red-100 text-red-700"
-                        }`}>
-                          {selectedPuttingItem.difficulty}
-                        </span>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center gap-4">
-                      <div className="text-4xl bg-white p-3 rounded-2xl shadow-sm">
-                        {renderIcon(selectedPuttingItem.icon)}
-                      </div>
-                      <div className="flex-1">
-                        <h2 className="text-2xl font-bold text-slate-900 leading-tight mb-1">{selectedPuttingItem.name}</h2>
-                        <p className="text-slate-600 text-base leading-relaxed">{selectedPuttingItem.quickTip}</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-6 space-y-5 overflow-y-auto max-h-[70vh]">
-                    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-2xl p-5">
-                      <h3 className="font-bold text-blue-900 mb-4 text-lg">🎯 Essential Information</h3>
-                      <div className="space-y-3">
-                        <div className="flex items-start gap-3">
-                          <div className="w-2 h-2 rounded-full bg-blue-500 mt-2.5"></div>
-                          <div><span className="font-semibold text-blue-900">When:</span> <span className="text-blue-800">{selectedPuttingItem.situation}</span></div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <div className="w-2 h-2 rounded-full bg-blue-500 mt-2.5"></div>
-                          <div><span className="font-semibold text-blue-900">Action:</span> <span className="text-blue-800">{selectedPuttingItem.keyAction}</span></div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <div className="w-2 h-2 rounded-full bg-blue-500 mt-2.5"></div>
-                          <div><span className="font-semibold text-blue-900">Club:</span> <span className="text-blue-800">{selectedPuttingItem.clubAdjustment}</span></div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="bg-gradient-to-r from-slate-50 to-gray-50 border border-slate-200 rounded-2xl p-5">
-                      <h3 className="font-bold text-slate-900 mb-4 text-lg">⚙️ Setup</h3>
-                      <div className="space-y-3">
-                        <div className="flex items-start gap-3">
-                          <div className="w-2 h-2 rounded-full bg-slate-500 mt-2.5"></div>
-                          <div><span className="font-semibold text-slate-900">Ball Position:</span> <span className="text-slate-700">{selectedPuttingItem.ballPosition}</span></div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <div className="w-2 h-2 rounded-full bg-slate-500 mt-2.5"></div>
-                          <div><span className="font-semibold text-slate-900">Stance:</span> <span className="text-slate-700">{selectedPuttingItem.stance}</span></div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-200 rounded-2xl p-5">
-                      <h3 className="font-bold text-emerald-900 mb-4 text-lg">💭 Swing Thoughts</h3>
-                      <div className="space-y-2">
-                        {selectedPuttingItem.swingThoughts.map((thought, index) => (
-                          <div key={index} className="flex items-start gap-3">
-                            <div className="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center text-white text-xs font-bold mt-0.5">
-                              {index + 1}
-                            </div>
-                            <span className="text-emerald-800 font-medium">{thought}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200 rounded-2xl p-5">
-                      <h3 className="font-bold text-amber-900 mb-3 text-lg">💡 Pro Tip</h3>
-                      <p className="text-amber-800 leading-relaxed font-medium">{selectedPuttingItem.proTip}</p>
-                    </div>
-
-                    <div className="bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-2xl p-5">
-                      <h3 className="font-bold text-purple-900 mb-3 text-lg">✨ Remember This</h3>
-                      <p className="text-purple-800 italic text-lg leading-relaxed font-medium">"{selectedPuttingItem.memorableQuote}"</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
+        {/* Putting Tab - now using the same page-curl experience as shots */}
 
         {/* Ball Selection Tab */}
         {activeTab === "ballselection" && (
           <div className="space-y-6">
-            <div className="text-center">
-              <TbGolf className="text-4xl mb-2 mx-auto text-emerald-600" />
-              <h2 className="text-2xl font-bold text-slate-900">Smart Ball Selection</h2>
-              <p className="text-slate-600">Find your perfect golf ball match</p>
+            <div className="course-header text-center">
+              <TbGolf className="text-4xl mb-2 mx-auto golf-icon-bounce" />
+              <h2 className="text-2xl font-serif">Smart Ball Selection</h2>
+              <p className="font-handwritten text-sm opacity-90 mt-1">"The right ball for your game"</p>
             </div>
 
             {/* Ball Selection Options */}
             <div className="space-y-4">
               {/* Quick Picker */}
-              <div className="bg-white rounded-xl p-6">
-                <h3 className="text-xl font-bold text-slate-900 mb-4">Quick Picker</h3>
-                <p className="text-slate-600 mb-4">Choose your player type for instant recommendation</p>
+              <div className="golf-card-stack">
+                <h3 className="text-xl font-serif font-bold mb-4" style={{ color: 'var(--leather-brown-dark)' }}>Quick Picker</h3>
+                <p className="font-serif mb-4" style={{ color: 'var(--leather-brown-medium)' }}>Choose your player type for instant recommendation</p>
                 <div className="grid grid-cols-1 gap-3">
                   {ballSelectionData.quickPicker.map((picker, index) => (
                     <button
                       key={index}
                       onClick={() => setBallRecommendation(ballSelectionData.recommendations[picker.recommendation])}
-                      className="bg-slate-50 hover:bg-slate-100 rounded-lg p-4 text-left transition-colors"
+                      className="yardage-card hover:shadow-lg rounded-lg p-4 text-left transition-all transform hover:-translate-y-1"
                     >
-                      <div className="font-bold text-slate-900">{picker.playerType}</div>
-                      <div className="text-sm text-slate-600">{picker.description}</div>
-                      <div className="text-xs text-emerald-600 mt-1">→ {picker.ballSuggestion}</div>
+                      <div className="font-serif font-bold" style={{ color: 'var(--leather-brown-dark)' }}>{picker.playerType}</div>
+                      <div className="text-sm font-serif" style={{ color: 'var(--leather-brown-medium)' }}>{picker.description}</div>
+                      <div className="text-xs font-handwritten mt-1" style={{ color: 'var(--golf-green-dark)' }}>→ {picker.ballSuggestion}</div>
                     </button>
                   ))}
                 </div>
@@ -2668,34 +2567,47 @@ const GolfShotGuide = () => {
         </div>
       </div>
 
-      {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-slate-200/60 z-50 shadow-2xl shadow-slate-900/10">
-        <div className="grid grid-cols-6 px-1 py-1">
+      {/* Bottom Navigation - Golf-Themed */}
+      <div className="fixed bottom-0 left-0 right-0 z-30" style={{ 
+        background: 'linear-gradient(180deg, var(--weathered-cream) 0%, var(--weathered-beige) 100%)',
+        borderTop: '2px solid var(--leather-brown-light)',
+        boxShadow: 'var(--shadow-floating)',
+        padding: '0.5rem'
+      }}>
+        <div className="grid grid-cols-6 gap-1 px-2 py-2">
           {tabs.map(tab => {
             const IconComponent = tab.icon;
             return (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`relative p-2 text-center transition-all duration-200 rounded-xl mx-0.5 my-1 ${
+                className={`relative flex flex-col items-center justify-center p-2 text-center transition-all duration-200 rounded-xl ${
                   activeTab === tab.id
-                    ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/25 scale-105"
-                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                    ? "golf-button-primary scale-105"
+                    : "hover:bg-white hover:shadow-md transform hover:scale-102"
                 }`}
+                style={{
+                  color: activeTab === tab.id ? 'var(--weathered-white)' : 'var(--leather-brown-dark)',
+                  minHeight: '60px'
+                }}
               >
-                <IconComponent className="h-4 w-4 mx-auto mb-1" />
-                <div className={`text-xs font-semibold tracking-tight leading-tight ${
+                <IconComponent className={`h-5 w-5 mb-1 ${activeTab === tab.id ? 'golf-icon-bounce' : ''}`} />
+                <div className={`text-xs font-serif font-semibold tracking-tight leading-tight ${
                   activeTab === tab.id ? "text-white" : ""
                 }`}>
                   {tab.name}
                 </div>
                 {activeTab === tab.id && (
-                  <div className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 bg-white rounded-full"></div>
+                  <div className="absolute -top-1 -right-1 w-2 h-2 rounded-full" style={{ 
+                    background: 'var(--golf-green-accent)' 
+                  }}></div>
                 )}
               </button>
             );
           })}
         </div>
+        
+
       </div>
 
       {/* Shot Detail Modal */}

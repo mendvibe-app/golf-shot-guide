@@ -267,7 +267,134 @@ const getDistanceContent = () => [
   }
 ];
 
-// Putting content
+// Putting techniques data - structured like shots
+const puttingTechniques = [
+  { id: 1, name: "Straight Putt", category: "fundamental", quickTip: "Square face, smooth stroke", situation: "Ball directly in line with hole", keyAction: "Keep putter face square", icon: "putting", difficulty: "Easy", clubAdjustment: "Putter", ballPosition: "Eyes over ball", stance: "Shoulder-width, parallel to target", swingThoughts: ["Pendulum motion", "Equal back and through", "Head still"], memorableQuote: "Straight putts are about trust - trust your read, trust your stroke, trust the ball to go in.", proTip: "Use alignment sticks to check square face", whenToUse: "When ball is directly in line with hole with minimal break. Perfect for practicing fundamentals and building confidence. Choose this read when green appears flat between ball and hole." },
+  { id: 2, name: "Uphill Putt", category: "slope", quickTip: "Hit it firmer, less break", situation: "Putting uphill to the hole", keyAction: "Add speed for slope", icon: "uphill", difficulty: "Medium", clubAdjustment: "Firmer stroke", ballPosition: "Slightly more forward", stance: "Firm stance for stability", swingThoughts: ["Firmer stroke", "Ball will slow down", "Trust the line"], memorableQuote: "Uphill putts are like running uphill - you need more energy to get there.", proTip: "Practice with tees to feel uphill resistance", whenToUse: "When putting uphill to hole. Ball will slow down quickly due to gravity. Play less break than flat putt since speed keeps ball straighter. Never leave uphill putts short." },
+  { id: 3, name: "Downhill Putt", category: "slope", quickTip: "Gentle touch, more break", situation: "Putting downhill to the hole", keyAction: "Control speed carefully", icon: "downhill", difficulty: "Hard", clubAdjustment: "Gentler stroke", ballPosition: "Ball slightly back", stance: "Lighter grip pressure", swingThoughts: ["Shorter backstroke", "Gentle follow-through", "Speed control"], memorableQuote: "Downhill putts are like rolling a ball down a hill - let the slope do the work.", proTip: "Practice with different slopes to feel speed control", whenToUse: "When putting downhill to hole. Most challenging putt - requires perfect speed control. Play more break since slower speed allows gravity to move ball more. Death putts if you're not careful." },
+  { id: 4, name: "Breaking Putt", category: "reading", quickTip: "Read the slope, trust your line", situation: "Green has significant slope between ball and hole", keyAction: "Pick line and commit", icon: "withWind", difficulty: "Hard", clubAdjustment: "Speed determines break", ballPosition: "Square to start line", stance: "Aim at apex point", swingThoughts: ["Trust your read", "Smooth stroke on line", "Speed controls break"], memorableQuote: "Never up, never in - but on breaking putts, the right line beats pure speed every time.", proTip: "Walk around putt to see break from multiple angles", whenToUse: "When green has visible slope between ball and hole. Most common putt on course. Speed determines how much ball breaks - faster = less break, slower = more break. Commit to your read." },
+  { id: 5, name: "Long Lag Putt", category: "distance", quickTip: "Focus on speed over line", situation: "Long putts (20+ feet) where goal is getting close", keyAction: "Distance control priority", icon: "target", difficulty: "Medium", clubAdjustment: "Longer stroke", ballPosition: "Eyes over ball", stance: "Wider stance for stability", swingThoughts: ["Smooth rhythm", "Think rolling to hole", "Speed over precision"], memorableQuote: "Lag putting is like throwing darts - get it in the neighborhood and clean up.", proTip: "Practice to 3-foot circle around hole", whenToUse: "From 20+ feet where making it is bonus, not expectation. Goal is two-putt territory. Focus 80% on speed, 20% on line. Better to be hole-high and 3 feet right than pin-high and 6 feet short." },
+  { id: 6, name: "Short Pressure Putt", category: "pressure", quickTip: "Routine and commitment", situation: "3-6 foot putts that matter", keyAction: "Trust your routine", icon: "putting", difficulty: "Hard", clubAdjustment: "Normal stroke", ballPosition: "Eyes over ball", stance: "Comfortable, repeatable", swingThoughts: ["Same routine", "Accelerate through", "See it go in"], memorableQuote: "Short putts are made before you stand over them - in your mind and your routine.", proTip: "Never change routine under pressure", whenToUse: "The 'must-make' putts from short range. More about mental game than technique. Stick to exact same routine you use in practice. These putts win and lose rounds." }
+];
+
+// Convert putting data to page curl format using the same structure as shots
+const createPuttingPage = (putt, index) => {
+  const colors = ['green', 'blue', 'amber', 'purple', 'orange'];
+  const colorClass = `page-curl-content-${colors[index % colors.length]}`;
+  
+  return {
+    id: putt.id,
+    title: putt.name.toUpperCase(),
+    content: (
+      <div className={`page-curl-content ${colorClass}`}>
+        <div className="page-curl-texture">
+          <div className={`coffee-stain coffee-stain-${(index % 6) + 1}`}></div>
+        </div>
+        
+        <div className="page-curl-scrollable">
+          {/* HERO SECTION - Clean, prominent putt identification */}
+          <div className="shot-hero mb-8">
+            <div className="flex items-start justify-between mb-3">
+              <div className="flex-1">
+                <h1 className="text-2xl font-bold text-gray-900 leading-tight mb-2">{putt.name}</h1>
+                <p className="text-gray-600 text-base leading-relaxed">{putt.situation}</p>
+              </div>
+              <div className="flex items-center gap-2 ml-4">
+                {renderIcon(putt.icon, "w-8 h-8 text-gray-500")}
+                <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                  putt.difficulty === "Easy" ? "bg-emerald-100 text-emerald-700" :
+                  putt.difficulty === "Medium" ? "bg-amber-100 text-amber-700" :
+                  putt.difficulty === "Hard" ? "bg-red-100 text-red-700" :
+                  "bg-purple-100 text-purple-700"
+                }`}>
+                  {putt.difficulty}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* STRATEGIC CONTEXT - Most important for decision-making */}
+          {putt.whenToUse && (
+            <div className="strategy-card mb-8">
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-5">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
+                    <span className="text-blue-600 text-sm">🎯</span>
+                  </div>
+                  <h3 className="font-semibold text-blue-900">When to Use</h3>
+                </div>
+                <p className="text-blue-800 leading-relaxed">{putt.whenToUse}</p>
+              </div>
+            </div>
+          )}
+
+          {/* SETUP GRID - Clean technical specifications */}
+          <div className="setup-section mb-8">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Setup & Execution</h3>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="setup-card bg-white border border-gray-200 rounded-lg p-4">
+                <div className="text-sm font-medium text-gray-500 mb-1">Key Action</div>
+                <div className="text-gray-900 font-medium">{putt.keyAction}</div>
+              </div>
+              <div className="setup-card bg-white border border-gray-200 rounded-lg p-4">
+                <div className="text-sm font-medium text-gray-500 mb-1">Stroke</div>
+                <div className="text-gray-900 font-medium">{putt.clubAdjustment}</div>
+              </div>
+              <div className="setup-card bg-white border border-gray-200 rounded-lg p-4">
+                <div className="text-sm font-medium text-gray-500 mb-1">Ball Position</div>
+                <div className="text-gray-900 font-medium">{putt.ballPosition}</div>
+              </div>
+              <div className="setup-card bg-white border border-gray-200 rounded-lg p-4">
+                <div className="text-sm font-medium text-gray-500 mb-1">Stance</div>
+                <div className="text-gray-900 font-medium">{putt.stance}</div>
+              </div>
+            </div>
+          </div>
+
+          {/* SWING THOUGHTS - Mental game */}
+          <div className="thoughts-section mb-8">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Key Thoughts</h3>
+            <div className="flex flex-wrap gap-2">
+              {putt.swingThoughts?.map((thought, i) => (
+                <span key={i} className="bg-gray-100 text-gray-700 px-3 py-2 rounded-full text-sm font-medium border">
+                  {thought}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* MEMORY AIDS - Quotes and tips */}
+          <div className="memory-section space-y-4">
+            <div className="memory-card bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r-lg">
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-amber-600 text-sm">💭</span>
+                </div>
+                <div>
+                  <div className="text-amber-800 font-medium italic leading-relaxed">"{putt.memorableQuote}"</div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="memory-card bg-green-50 border-l-4 border-green-400 p-4 rounded-r-lg">
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-green-600 text-sm">⛳</span>
+                </div>
+                <div>
+                  <div className="text-green-700 font-medium text-sm">Pro Tip</div>
+                  <div className="text-green-800 leading-relaxed">{putt.proTip}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  };
+};
+
+// Putting content with proper structure
 const getPuttingContent = () => [
   {
     id: 0,
@@ -282,7 +409,7 @@ const getPuttingContent = () => [
           <div className="app-logo mb-8">
             <FaGolfBall className="text-8xl text-green-600 mx-auto mb-4" />
             <h1 className="text-4xl font-bold text-slate-800 mb-2">Putting Mastery</h1>
-            <p className="text-lg text-slate-600">Read Greens Like a Pro</p>
+            <p className="text-lg text-slate-600">"Drive for show, putt for dough"</p>
           </div>
           
           <div className="intro-stats grid grid-cols-2 gap-6 mt-8">
@@ -302,7 +429,8 @@ const getPuttingContent = () => [
         </div>
       </div>
     )
-  }
+  },
+  ...puttingTechniques.map((putt, index) => createPuttingPage(putt, index))
 ];
 
 // Learn content
