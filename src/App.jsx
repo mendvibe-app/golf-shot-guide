@@ -54,23 +54,23 @@ const GolfShotGuide = () => {
   React.useEffect(() => {
     const style = document.createElement('style');
     style.textContent = `
-      /* Realistic Metal Spiral Binding */
+      /* Weathered Metal Spiral Binding - Pro Tour Authentic */
       .spiral-binding {
         position: relative;
         height: 3rem;
         background: linear-gradient(to bottom, 
-          #f8f9fa 0%, 
-          #e9ecef 20%, 
-          #dee2e6 40%, 
-          #ced4da 60%, 
-          #adb5bd 80%, 
-          #6c757d 100%
+          var(--aged-white) 0%,
+          var(--coffee-stain) 20%, 
+          var(--leather-brown) 40%, 
+          rgba(139, 69, 19, 0.8) 60%, 
+          rgba(101, 67, 33, 0.9) 80%, 
+          var(--leather-brown) 100%
         );
-        border-bottom: 1px solid #495057;
+        border-bottom: 2px solid var(--golf-green);
         box-shadow: 
-          0 2px 8px rgba(0, 0, 0, 0.15),
-          inset 0 1px 0 rgba(255, 255, 255, 0.8),
-          inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+          0 3px 12px rgba(0, 0, 0, 0.25),
+          inset 0 1px 0 rgba(255, 255, 255, 0.4),
+          inset 0 -2px 0 rgba(0, 0, 0, 0.2);
         pointer-events: none;
       }
 
@@ -87,17 +87,19 @@ const GolfShotGuide = () => {
         position: relative;
         width: 1rem; 
         height: 1rem; 
-        background: radial-gradient(circle at 30% 30%, 
-          #2d3748, 
-          #1a202c 30%, 
-          #0d1117 60%,
-          #000000 100%
+        background: radial-gradient(circle at 35% 25%, 
+          var(--aged-white) 0%, 
+          var(--coffee-stain) 25%, 
+          var(--leather-brown) 50%, 
+          rgba(45, 80, 22, 0.8) 75%, 
+          var(--golf-green) 100%
         );
         border-radius: 50%; 
         box-shadow: 
-          inset 0 3px 6px rgba(0, 0, 0, 0.8),
-          inset 0 -1px 0 rgba(255, 255, 255, 0.1),
-          0 1px 2px rgba(0, 0, 0, 0.3);
+          inset 0 4px 8px rgba(0, 0, 0, 0.6),
+          inset 0 -2px 0 rgba(255, 255, 255, 0.2),
+          0 2px 4px rgba(0, 0, 0, 0.4);
+        border: 1px solid var(--golf-green);
         pointer-events: none;
       }
 
@@ -107,19 +109,19 @@ const GolfShotGuide = () => {
         top: -8px; bottom: -8px;
         left: 50%; 
         transform: translateX(-50%);
-        width: 6px;
+        width: 5px;
         background: linear-gradient(to right,
-          #8e9aaf 0%,
-          #cbc0d3 25%,
-          #fdedf4 50%,
-          #cbc0d3 75%,
-          #8e9aaf 100%
+          var(--leather-brown) 0%,
+          var(--aged-white) 25%,
+          var(--coffee-stain) 50%,
+          var(--aged-white) 75%,
+          var(--leather-brown) 100%
         );
-        border-radius: 3px;
+        border-radius: 2px;
         box-shadow: 
-          inset 1px 0 0 rgba(255, 255, 255, 0.6),
-          inset -1px 0 0 rgba(0, 0, 0, 0.3),
-          2px 0 4px rgba(0, 0, 0, 0.2);
+          inset 1px 0 0 rgba(255, 255, 255, 0.4),
+          inset -1px 0 0 rgba(0, 0, 0, 0.4),
+          2px 0 6px rgba(0, 0, 0, 0.3);
         z-index: -1;
       }
 
@@ -2228,12 +2230,14 @@ const GolfShotGuide = () => {
   };
 
   const tabs = [
+    // Page Curl Experiences - Pro Tour Yardage Book Feel
     { id: "shots", name: "Shots", icon: FaBullseye },
-    { id: "calculator", name: "Distance", icon: FaCalculator },
     { id: "putting", name: "Putting", icon: FaGolfBall },
+    { id: "learn", name: "Learn", icon: FaBook },
+    // Interactive Tools - Different Experiences
+    { id: "calculator", name: "Distance", icon: FaCalculator },
     { id: "ballselection", name: "Balls", icon: TbGolf },
-    { id: "mydata", name: "Data", icon: FaUser },
-    { id: "learn", name: "Learn", icon: FaBook }
+    { id: "mydata", name: "Data", icon: FaUser }
   ];
 
   return (
@@ -2286,157 +2290,146 @@ const GolfShotGuide = () => {
         {/* Distance Calculator Tab - Full Interactive Version */}
         {activeTab === "calculator" && (
           <div className="space-y-6">
-            <div className="course-header text-center">
-              <FaCalculator className="text-4xl mb-2 mx-auto golf-icon-bounce" />
-              <h2 className="text-2xl font-serif">Yardage Calculator</h2>
-              <p className="font-handwritten text-sm opacity-90 mt-1">"Like having a caddie in your pocket"</p>
+            <div className="learn-page-header">
+              <div className="learn-title-section">
+                <div className="learn-icon-container">
+                  <FaCalculator className="learn-icon golf-icon-bounce" />
+                </div>
+                <div className="learn-title-content">
+                  <h1 className="learn-page-title">Yardage Calculator</h1>
+                  <p className="learn-page-subtitle">"Like having a caddie in your pocket"</p>
+                </div>
+              </div>
+              <div className="learn-page-divider"></div>
             </div>
             
-            <div className="golf-card-stack space-y-4">
-              <div>
-                <label className="block text-lg font-serif font-semibold mb-3" style={{ color: 'var(--leather-brown-dark)' }}>
-                  Distance to Pin
-                </label>
+            <div className="learn-section key-points-section">
+              <div className="learn-section-header">
+                <span className="learn-section-icon">📏</span>
+                <h3 className="learn-section-title">Distance to Pin</h3>
+              </div>
+              <div className="space-y-4">
                 <input
                   type="number"
                   value={distance === 0 ? "" : distance}
                   onChange={(e) => setDistance(e.target.value === "" ? 0 : parseInt(e.target.value))}
-                  className="w-full p-4 border-2 yardage-card rounded-xl text-2xl font-yardages font-bold text-center"
+                  className="w-full p-6 border-2 border-leather-brown bg-aged-white rounded-lg text-3xl font-data text-center placeholder-pencil-gray"
                   placeholder="Enter yardage"
-                  style={{ borderColor: 'var(--golf-green-medium)', color: 'var(--leather-brown-dark)' }}
+                  style={{ color: 'var(--pencil-gray)' }}
                 />
-                <div className="pencil-note mt-2 text-center">
-                  Remember to factor in the wind!
-                </div>
+                <p className="handwritten-tip font-handwritten text-golf-green text-center">
+                  "GPS yardage to pin center - trust your number!"
+                </p>
               </div>
+            </div>
               
-              <div className="grid grid-cols-2 gap-4">
+            <div className="learn-section drills-section">
+              <div className="learn-section-header">
+                <span className="learn-section-icon">💨</span>
+                <h3 className="learn-section-title">Wind Conditions</h3>
+              </div>
+              <div className="space-y-4">
                 <div>
-                  <label className="block text-lg font-serif font-semibold mb-3" style={{ color: 'var(--leather-brown-dark)' }}>Wind Direction</label>
+                  <label className="block font-headers text-golf-green mb-2 text-lg">Wind Direction</label>
                   <select 
                     value={wind}
                     onChange={(e) => setWind(e.target.value)}
-                    className="w-full p-4 yardage-card border-2 rounded-xl text-lg font-clean"
-                    style={{ borderColor: 'var(--golf-green-medium)' }}
+                    className="w-full p-4 border-2 border-leather-brown bg-aged-white rounded-lg text-lg font-body"
+                    style={{ color: 'var(--pencil-gray)' }}
                   >
-                    <option value="none">Dead Calm</option>
-                    <option value="into">Into the Wind</option>
-                    <option value="with">Helping Wind</option>
+                    <option value="none">🌾 Dead Calm</option>
+                    <option value="into">⬆️ Into the Wind</option>
+                    <option value="with">⬇️ Helping Wind</option>
                   </select>
                 </div>
                 
                 <div>
-                  <label className="block text-lg font-serif font-semibold mb-3" style={{ color: 'var(--leather-brown-dark)' }}>Wind Speed</label>
-                  <input
-                    type="number"
-                    value={windSpeed}
-                    onChange={(e) => setWindSpeed(parseInt(e.target.value) || 0)}
-                    className="w-full p-4 yardage-card border-2 rounded-xl text-lg font-yardages"
-                    style={{ borderColor: 'var(--golf-green-medium)' }}
-                    min="0"
-                    max="30"
-                    disabled={wind === "none"}
-                    placeholder="mph"
-                  />
+                  <label className="block font-headers text-golf-green mb-2 text-lg">Wind Speed</label>
+                  <div className="relative">
+                    <input
+                      type="number"
+                      value={windSpeed === 0 ? "" : windSpeed}
+                      onChange={(e) => setWindSpeed(e.target.value === "" ? 0 : parseInt(e.target.value) || 0)}
+                      className="w-full p-4 border-2 border-leather-brown bg-aged-white rounded-lg text-lg font-data pr-16"
+                      style={{ color: 'var(--pencil-gray)' }}
+                      min="0"
+                      max="30"
+                      disabled={wind === "none"}
+                      placeholder="Enter wind speed"
+                    />
+                    <span className="absolute right-4 top-4 font-body text-pencil-gray text-lg">mph</span>
+                  </div>
                 </div>
               </div>
+            </div>
               
-              {wind !== "none" && windSpeed > 0 && (
-                <div className="wind-conditions">
-                  <div className="font-handwritten text-center">
-                    {wind === "into" && windSpeed >= 15 && "Strong headwind - take 2-3 more clubs"}
-                    {wind === "into" && windSpeed < 15 && "Light headwind - club up one"}
-                    {wind === "with" && windSpeed >= 15 && "Strong tailwind - less club, watch the roll"}
-                    {wind === "with" && windSpeed < 15 && "Helping wind - take one less club"}
-                  </div>
+            {wind !== "none" && windSpeed > 0 && (
+              <div className="learn-insight-card mental-cue-card">
+                <div className="insight-header">
+                  <span className="insight-emoji">💨</span>
+                  <h4 className="insight-title">Wind Strategy</h4>
                 </div>
-              )}
+                <p className="insight-quote memorable">
+                  {wind === "into" && windSpeed >= 15 && "\"Strong headwind - take 2-3 more clubs and swing smooth\""}
+                  {wind === "into" && windSpeed < 15 && "\"Light headwind - club up one and trust your swing\""}
+                  {wind === "with" && windSpeed >= 15 && "\"Strong tailwind - less club, watch the roll out\""}
+                  {wind === "with" && windSpeed < 15 && "\"Helping wind - take one less club, normal swing\""}
+                </p>
+              </div>
+            )}
               
-              {distance > 0 && (
-                <div className="course-header text-center">
-                  <h3 className="text-lg font-serif font-semibold mb-3">Your Club Selection</h3>
-                  <div className="yardage-marker text-4xl mb-4">
-                    {getClubRecommendation(distance, windSpeed, wind).club.toUpperCase()}
-                  </div>
-                  <div className="font-serif text-lg mb-2">
-                    Your {getClubRecommendation(distance, windSpeed, wind).club}: {getClubRecommendation(distance, windSpeed, wind).distance} yards
-                  </div>
-                  {getClubRecommendation(distance, windSpeed, wind).adjustment !== 0 && (
-                    <div className="font-handwritten text-sm mt-3 opacity-90">
-                      Wind adds {getClubRecommendation(distance, windSpeed, wind).adjustment > 0 ? "+" : ""}{Math.round(getClubRecommendation(distance, windSpeed, wind).adjustment)} yards to play
+            {distance > 0 && (
+              <div className="learn-insight-card pro-tip-card">
+                <div className="insight-header">
+                  <span className="insight-emoji">🏌️</span>
+                  <h4 className="insight-title">Club Recommendation</h4>
+                </div>
+                <div className="text-center space-y-4">
+                  <div className="club-recommendation">
+                    <div className="text-5xl font-data text-golf-green font-bold mb-2">
+                      {getClubRecommendation(distance, windSpeed, wind).club.toUpperCase()}
                     </div>
-                  )}
-                  
-                  {/* Simple Hole Diagram */}
-                  <div className="hole-diagram mt-4">
-                    <div className="hole-fairway">
-                      <div className="hole-tee"></div>
-                      <div className="hole-green"></div>
-                      <div className="hole-flag flag-wave"></div>
-                      <div className="yardage-label">{distance}y</div>
+                    <div className="font-body text-pencil-gray text-lg">
+                      Normal carry: <span className="font-data text-golf-green font-semibold">{getClubRecommendation(distance, windSpeed, wind).distance} yards</span>
                     </div>
-                    <div className="pencil-note mt-2 text-xs">
-                      Account for pin position and green slope
-                    </div>
-                  </div>
-                  
-                  <div className="pro-tip mt-4">
-                    Trust your yardage and commit to the swing - doubt leads to poor contact
-                  </div>
-
-                  {/* Sample Hand-Drawn Diagram */}
-                  <div className="golf-diagram mt-6">
-                    <div className="ground-texture"></div>
-                    
-                    {/* Stick Figure Golfer */}
-                    <div className="stick-golfer" style={{ position: 'absolute', left: '20%', bottom: '50px' }}>
-                      <div className="golfer-head"></div>
-                      <div className="golfer-body"></div>
-                      <div className="golfer-arms"></div>
-                      <div className="golfer-legs"></div>
-                      <div className="golf-club"></div>
-                      
-                      {/* Stance Indicators */}
-                      <div className="stance-feet square-stance">
-                        <div className="foot left-foot"></div>
-                        <div className="foot right-foot"></div>
-                      </div>
-                    </div>
-                    
-                    {/* Ball Position */}
-                    <div className="ball-position" style={{ bottom: '45px', left: '35%' }}></div>
-                    
-                    {/* Target Line */}
-                    <div className="target-line" style={{ 
-                      bottom: '47px', 
-                      left: '35%', 
-                      width: '45%' 
-                    }}></div>
-                    
-                    {/* Distance Markers */}
-                    <div className="distance-marker" style={{ 
-                      bottom: '60px', 
-                      right: '15%' 
-                    }}>{distance}</div>
-                    
-                    {/* Wind Indicators */}
-                    {wind !== "none" && (
-                      <div className="wind-arrows" style={{ top: '20px', right: '20px' }}>
-                        <div className="wind-arrow"></div>
-                        <div className="wind-arrow"></div>
-                        <div className="wind-arrow"></div>
+                    {getClubRecommendation(distance, windSpeed, wind).adjustment !== 0 && (
+                      <div className="handwritten-tip font-handwritten text-golf-green mt-3">
+                        "Wind effect: {getClubRecommendation(distance, windSpeed, wind).adjustment > 0 ? "+" : ""}{Math.round(getClubRecommendation(distance, windSpeed, wind).adjustment)} yards to account for"
                       </div>
                     )}
-                    
-                    {/* Club Recommendation Visual */}
-                    <div className="club-visual" style={{ 
-                      position: 'absolute', 
-                      top: '20px', 
-                      left: '20px' 
-                    }} data-club={getClubRecommendation(distance, windSpeed, wind).club.toUpperCase()}></div>
                   </div>
                 </div>
-              )}
+              </div>
+            )}
+            
+            {distance > 0 && (
+              <div className="learn-section mistakes-section">
+                <div className="learn-section-header">
+                  <span className="learn-section-icon">🎯</span>
+                  <h3 className="learn-section-title">Shot Visualization</h3>
+                </div>
+                <div className="hole-diagram">
+                  <div className="hole-fairway">
+                    <div className="hole-tee"></div>
+                    <div className="hole-green"></div>
+                    <div className="hole-flag flag-wave"></div>
+                    <div className="yardage-label">{distance}y</div>
+                  </div>
+                </div>
+                <p className="handwritten-tip font-handwritten text-golf-green text-center mt-3">
+                  "Account for pin position and green slope - play smart!"
+                </p>
+              </div>
+            )}
+
+            <div className="learn-insight-card mental-cue-card">
+              <div className="insight-header">
+                <span className="insight-emoji">🎯</span>
+                <h4 className="insight-title">Mental Game</h4>
+              </div>
+              <p className="insight-quote memorable">
+                "Trust your yardage and commit to the swing - doubt leads to poor contact"
+              </p>
             </div>
           </div>
         )}
@@ -2504,9 +2497,9 @@ const GolfShotGuide = () => {
                             <button
                               key={index}
                               onClick={() => handleWizardAnswer(ballSelectionData.wizard.questions[ballWizardStep].id, option)}
-                              className="w-full bg-slate-50 hover:bg-emerald-50 border-2 border-transparent hover:border-emerald-200 rounded-lg p-4 text-left transition-all"
+                              className="w-full authentic-card hover:bg-grass-stain border-2 border-leather-brown hover:border-golf-green p-4 text-left transition-all"
                             >
-                              <div className="font-semibold text-slate-900">{option.label}</div>
+                              <div className="font-headers text-golf-green">{option.label}</div>
                             </button>
                           ))}
                         </div>
@@ -2516,7 +2509,7 @@ const GolfShotGuide = () => {
                     {ballWizardStep > 0 && (
                       <button
                         onClick={() => setBallWizardStep(Math.max(0, ballWizardStep - 1))}
-                        className="text-emerald-600 hover:text-emerald-800 font-semibold"
+                        className="font-headers text-golf-green hover:text-leather-brown"
                       >
                         ← Back
                       </button>
@@ -2525,45 +2518,45 @@ const GolfShotGuide = () => {
                 ) : null}
 
                 {ballRecommendation && (
-                  <div className="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-xl p-6">
+                  <div className="page-section">
                     <div className="flex items-center gap-4 mb-4">
                       <div className="text-4xl">{renderIcon(ballRecommendation.icon)}</div>
                       <div>
-                        <h4 className="text-2xl font-bold text-emerald-900">{ballRecommendation.name}</h4>
-                        <p className="text-emerald-700">{ballRecommendation.description}</p>
+                        <h4 className="text-2xl font-headers text-golf-green">{ballRecommendation.name}</h4>
+                        <p className="font-body text-pencil-gray">{ballRecommendation.description}</p>
                       </div>
                     </div>
                     
                     <div className="space-y-4">
-                      <div>
-                        <h5 className="font-bold text-emerald-900 mb-2">Characteristics:</h5>
-                        <ul className="space-y-1">
+                      <div className="instruction-section">
+                        <div className="section-header">Characteristics</div>
+                        <div className="bullet-points">
                           {ballRecommendation.characteristics.map((char, index) => (
-                            <li key={index} className="flex items-start gap-2">
-                              <div className="w-2 h-2 rounded-full bg-emerald-500 mt-2"></div>
-                              <span className="text-emerald-800">{char}</span>
-                            </li>
+                            <div key={index} className="flex items-start gap-2 mb-2">
+                              <span className="text-golf-green">•</span>
+                              <span className="font-body text-pencil-gray">{char}</span>
+                            </div>
                           ))}
-                        </ul>
+                        </div>
                       </div>
                       
-                      <div>
-                        <h5 className="font-bold text-emerald-900 mb-2">Best For:</h5>
-                        <ul className="space-y-1">
+                      <div className="instruction-section">
+                        <div className="section-header">Best For</div>
+                        <div className="bullet-points">
                           {ballRecommendation.bestFor.map((best, index) => (
-                            <li key={index} className="flex items-start gap-2">
-                              <div className="w-2 h-2 rounded-full bg-emerald-500 mt-2"></div>
-                              <span className="text-emerald-800">{best}</span>
-                            </li>
+                            <div key={index} className="flex items-start gap-2 mb-2">
+                              <span className="text-golf-green">•</span>
+                              <span className="font-body text-pencil-gray">{best}</span>
+                            </div>
                           ))}
-                        </ul>
+                        </div>
                       </div>
                       
-                      <div>
-                        <h5 className="font-bold text-emerald-900 mb-2">Recommended Balls:</h5>
+                      <div className="instruction-section">
+                        <div className="section-header">Recommended Balls</div>
                         <div className="flex flex-wrap gap-2">
                           {ballRecommendation.examples.map((example, index) => (
-                            <span key={index} className="bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full text-sm font-medium">
+                            <span key={index} className="bg-coffee-stain text-pencil-gray px-3 py-1 rounded-md text-sm font-data border border-leather-brown">
                               {example}
                             </span>
                           ))}
@@ -2573,7 +2566,7 @@ const GolfShotGuide = () => {
                     
                     <button
                       onClick={resetBallWizard}
-                      className="mt-6 w-full bg-emerald-600 text-white py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors"
+                      className="mt-6 w-full golf-button-primary py-3 font-headers"
                     >
                       Take Quiz Again
                     </button>
@@ -2582,31 +2575,31 @@ const GolfShotGuide = () => {
               </div>
 
               {/* Mixed Ball Management */}
-              <div className="bg-white rounded-xl p-6">
-                <h3 className="text-xl font-bold text-slate-900 mb-4">Mixed Ball Management</h3>
-                <p className="text-slate-600 mb-4">Got random balls? Here's how to manage them</p>
+              <div className="page-section">
+                <h3 className="text-xl font-headers text-golf-green mb-4">Mixed Ball Management</h3>
+                <p className="font-body text-pencil-gray mb-4">Got random balls? Here's how to manage them</p>
                 
                 <div className="space-y-4">
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                    <h4 className="font-bold text-blue-900 mb-2">Ball Identification</h4>
-                    <div className="space-y-2 text-sm">
+                  <div className="instruction-section">
+                    <div className="section-header">Ball Identification</div>
+                    <div className="bullet-points">
                       {ballSelectionData.mixedBallSystem.identification[0].tests.map((test, index) => (
-                        <div key={index} className="flex items-start gap-2">
-                          <div className="w-2 h-2 rounded-full bg-blue-500 mt-1.5"></div>
-                          <span className="text-blue-800">{test}</span>
+                        <div key={index} className="flex items-start gap-2 mb-2">
+                          <span className="text-golf-green">•</span>
+                          <span className="font-body text-pencil-gray text-sm">{test}</span>
                         </div>
                       ))}
                     </div>
                   </div>
                   
-                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
-                    <h4 className="font-bold text-amber-900 mb-2">Management Strategy</h4>
-                    <p className="text-amber-800 text-sm mb-3">{ballSelectionData.mixedBallSystem.management.strategy}</p>
+                  <div className="handwritten-tip">
+                    <div className="section-header">Management Strategy</div>
+                    <p className="font-handwritten text-golf-green text-sm mb-3">{ballSelectionData.mixedBallSystem.management.strategy}</p>
                     <div className="space-y-2 text-sm">
                       {ballSelectionData.mixedBallSystem.management.tips.map((tip, index) => (
-                        <div key={index} className="flex items-start gap-2">
-                          <div className="w-2 h-2 rounded-full bg-amber-500 mt-1.5"></div>
-                          <span className="text-amber-800">{tip}</span>
+                        <div key={index} className="flex items-start gap-2 mb-2">
+                          <span className="text-golf-green">•</span>
+                          <span className="font-handwritten text-golf-green">{tip}</span>
                         </div>
                       ))}
                     </div>
@@ -2622,53 +2615,56 @@ const GolfShotGuide = () => {
         {/* My Data Tab */}
         {activeTab === "mydata" && (
           <div className="space-y-6">
-            <div className="text-center">
-              <FaUser className="text-4xl mb-2 mx-auto text-emerald-600" />
-              <h2 className="text-2xl font-bold text-slate-900">My Golf Data</h2>
+            <div className="course-header text-center">
+              <FaUser className="text-4xl mb-2 mx-auto golf-icon-bounce" />
+              <h2 className="text-2xl font-headers">My Golf Data</h2>
+              <p className="font-handwritten text-sm opacity-90 mt-1">"Know your game, play your game"</p>
             </div>
 
             {/* Yardage Chart by Skill Level - From Reference Image */}
-            <div className="bg-white rounded-xl p-4 mb-6">
-              <h3 className="text-lg font-bold text-slate-900 mb-4">Yardage Chart by Skill Level</h3>
-              <p className="text-sm text-slate-600 mb-4">Reference distances for different skill levels</p>
+            <div className="page-section mb-6">
+              <h3 className="text-lg font-headers text-golf-green mb-4">Yardage Chart by Skill Level</h3>
+              <p className="text-sm font-body text-pencil-gray mb-4">Reference distances for different skill levels</p>
               
               <div className="overflow-x-auto">
-                <table className="w-full text-xs">
-                  <thead>
-                    <tr className="border-b">
-                      <th className="text-left p-2 font-semibold">Club</th>
-                      <th className="text-center p-2 font-semibold text-green-600">Beginner<br/>(Male)</th>
-                      <th className="text-center p-2 font-semibold text-blue-600">Average<br/>(Male)</th>
-                      <th className="text-center p-2 font-semibold text-purple-600">Good<br/>(Women)</th>
+                <table className="w-full text-xs" style={{backgroundColor: 'var(--aged-white)', border: '1px solid var(--leather-brown)'}}>
+                  <thead style={{backgroundColor: 'var(--coffee-stain)'}}>
+                    <tr className="border-b" style={{borderColor: 'var(--leather-brown)'}}>
+                      <th className="text-left p-2 font-headers text-golf-green">Club</th>
+                      <th className="text-center p-2 font-headers text-golf-green">Beginner<br/>(Male)</th>
+                      <th className="text-center p-2 font-headers text-golf-green">Average<br/>(Male)</th>
+                      <th className="text-center p-2 font-headers text-golf-green">Good<br/>(Women)</th>
                     </tr>
                   </thead>
                   <tbody>
                     {Object.keys(yardageBySkillLevel.beginner).map(club => (
-                      <tr key={club} className="border-b border-slate-100">
-                        <td className="p-2 font-medium capitalize">{club.replace(/(\d+)/, ' $1')}</td>
-                        <td className="p-2 text-center text-green-600 font-semibold">{yardageBySkillLevel.beginner[club]}</td>
-                        <td className="p-2 text-center text-blue-600 font-semibold">{yardageBySkillLevel.average[club]}</td>
-                        <td className="p-2 text-center text-purple-600 font-semibold">{yardageBySkillLevel.good[club]}</td>
+                      <tr key={club} className="border-b" style={{borderColor: 'var(--coffee-stain)'}}>
+                        <td className="p-2 font-body text-pencil-gray capitalize">{club.replace(/(\d+)/, ' $1')}</td>
+                        <td className="p-2 text-center font-data text-pencil-gray">{yardageBySkillLevel.beginner[club]}</td>
+                        <td className="p-2 text-center font-data text-pencil-gray">{yardageBySkillLevel.average[club]}</td>
+                        <td className="p-2 text-center font-data text-pencil-gray">{yardageBySkillLevel.good[club]}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
               
-              <div className="mt-4 text-xs text-slate-500">
-                <p><strong>Note:</strong> Distances shown "in the air" for various club shots</p>
-                <p>Swing as if right foot is nailed to the ground until follow through. Good follow through. Imagine ball lies here.</p>
+              <div className="handwritten-tip mt-4">
+                <span className="font-handwritten text-golf-green text-xs">
+                  <strong>Note:</strong> Distances shown "in the air" for various club shots<br/>
+                  Swing as if right foot is nailed to the ground until follow through. Good follow through. Imagine ball lies here.
+                </span>
               </div>
             </div>
 
             {/* Club Distances Section */}
-            <div className="bg-white rounded-xl p-4">
+            <div className="page-section">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-bold text-slate-900">My Personal Club Distances</h3>
+                <h3 className="text-lg font-headers text-golf-green">My Personal Club Distances</h3>
                 {!editingDistances ? (
                   <button
                     onClick={startEditingDistances}
-                    className="px-3 py-1 bg-blue-600 text-white rounded-lg text-sm"
+                    className="golf-button-secondary px-3 py-1 text-sm"
                   >
                     Edit
                   </button>
@@ -2676,13 +2672,13 @@ const GolfShotGuide = () => {
                   <div className="flex gap-2">
                     <button
                       onClick={saveDistances}
-                      className="px-3 py-1 bg-green-600 text-white rounded-lg text-sm"
+                      className="golf-button-primary px-3 py-1 text-sm"
                     >
                       Save
                     </button>
                     <button
                       onClick={cancelEditingDistances}
-                      className="px-3 py-1 bg-gray-500 text-white rounded-lg text-sm"
+                      className="golf-button-secondary px-3 py-1 text-sm"
                     >
                       Cancel
                     </button>
@@ -2692,8 +2688,8 @@ const GolfShotGuide = () => {
               
               <div className="grid grid-cols-2 gap-3">
                 {Object.entries(editingDistances ? tempDistances : personalSettings.distances).map(([club, dist]) => (
-                  <div key={club} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
-                    <span className="font-semibold text-slate-700 capitalize">
+                  <div key={club} className="flex items-center justify-between p-3 authentic-card">
+                    <span className="font-headers text-golf-green capitalize">
                       {club.replace(/(\d)/, ' $1')}
                     </span>
                     {editingDistances ? (
@@ -2701,10 +2697,11 @@ const GolfShotGuide = () => {
                         type="number"
                         value={dist}
                         onChange={(e) => updateTempDistance(club, e.target.value)}
-                        className="w-16 p-1 border border-slate-300 rounded text-center text-sm"
+                        className="w-16 p-1 border-2 border-leather-brown bg-aged-white rounded text-center text-sm font-data"
+                        style={{color: 'var(--pencil-gray)'}}
                       />
                     ) : (
-                      <span className="text-lg font-bold text-blue-600">{dist}</span>
+                      <span className="text-lg font-data text-pencil-gray">{dist}</span>
                     )}
                   </div>
                 ))}
@@ -2712,12 +2709,12 @@ const GolfShotGuide = () => {
             </div>
 
             {/* Rounds Section */}
-            <div className="bg-white rounded-xl p-4">
+            <div className="page-section">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-bold text-slate-900">My Rounds</h3>
+                <h3 className="text-lg font-headers text-golf-green">My Rounds</h3>
                 <button
                   onClick={() => setShowAddRound(!showAddRound)}
-                  className="px-3 py-1 bg-green-600 text-white rounded-lg text-sm"
+                  className="golf-button-primary px-3 py-1 text-sm"
                 >
                   {showAddRound ? "Cancel" : "Add Round"}
                 </button>
@@ -2725,20 +2722,22 @@ const GolfShotGuide = () => {
 
               {/* Add Round Form */}
               {showAddRound && (
-                <div className="bg-slate-50 rounded-lg p-4 mb-4 space-y-3">
+                <div className="authentic-card p-4 mb-4 space-y-3">
                   <div className="grid grid-cols-2 gap-3">
                     <input
                       type="text"
                       placeholder="Course Name"
                       value={newRound.course}
                       onChange={(e) => setNewRound(prev => ({ ...prev, course: e.target.value }))}
-                      className="p-2 border border-slate-300 rounded-lg"
+                      className="p-2 border-2 border-leather-brown bg-aged-white rounded font-body"
+                      style={{color: 'var(--pencil-gray)'}}
                     />
                     <input
                       type="date"
                       value={newRound.date}
                       onChange={(e) => setNewRound(prev => ({ ...prev, date: e.target.value }))}
-                      className="p-2 border border-slate-300 rounded-lg"
+                      className="p-2 border-2 border-leather-brown bg-aged-white rounded font-data"
+                      style={{color: 'var(--pencil-gray)'}}
                     />
                   </div>
                   
@@ -2748,21 +2747,24 @@ const GolfShotGuide = () => {
                       placeholder="Score"
                       value={newRound.score}
                       onChange={(e) => setNewRound(prev => ({ ...prev, score: e.target.value }))}
-                      className="p-2 border border-slate-300 rounded-lg"
+                      className="p-2 border-2 border-leather-brown bg-aged-white rounded font-data"
+                      style={{color: 'var(--pencil-gray)'}}
                     />
                     <input
                       type="number"
                       placeholder="Front 9"
                       value={newRound.front9}
                       onChange={(e) => setNewRound(prev => ({ ...prev, front9: e.target.value }))}
-                      className="p-2 border border-slate-300 rounded-lg"
+                      className="p-2 border-2 border-leather-brown bg-aged-white rounded font-data"
+                      style={{color: 'var(--pencil-gray)'}}
                     />
                     <input
                       type="number"
                       placeholder="Back 9"
                       value={newRound.back9}
                       onChange={(e) => setNewRound(prev => ({ ...prev, back9: e.target.value }))}
-                      className="p-2 border border-slate-300 rounded-lg"
+                      className="p-2 border-2 border-leather-brown bg-aged-white rounded font-data"
+                      style={{color: 'var(--pencil-gray)'}}
                     />
                   </div>
                   
@@ -2772,21 +2774,24 @@ const GolfShotGuide = () => {
                       placeholder="Fairways"
                       value={newRound.fairways}
                       onChange={(e) => setNewRound(prev => ({ ...prev, fairways: e.target.value }))}
-                      className="p-2 border border-slate-300 rounded-lg"
+                      className="p-2 border-2 border-leather-brown bg-aged-white rounded font-data"
+                      style={{color: 'var(--pencil-gray)'}}
                     />
                     <input
                       type="number"
                       placeholder="GIR"
                       value={newRound.gir}
                       onChange={(e) => setNewRound(prev => ({ ...prev, gir: e.target.value }))}
-                      className="p-2 border border-slate-300 rounded-lg"
+                      className="p-2 border-2 border-leather-brown bg-aged-white rounded font-data"
+                      style={{color: 'var(--pencil-gray)'}}
                     />
                     <input
                       type="number"
                       placeholder="Total Putts"
                       value={newRound.totalPutts}
                       onChange={(e) => setNewRound(prev => ({ ...prev, totalPutts: e.target.value }))}
-                      className="p-2 border border-slate-300 rounded-lg"
+                      className="p-2 border-2 border-leather-brown bg-aged-white rounded font-data"
+                      style={{color: 'var(--pencil-gray)'}}
                     />
                   </div>
                   
@@ -2794,13 +2799,14 @@ const GolfShotGuide = () => {
                     placeholder="Notes about the round..."
                     value={newRound.mentalNotes}
                     onChange={(e) => setNewRound(prev => ({ ...prev, mentalNotes: e.target.value }))}
-                    className="w-full p-2 border border-slate-300 rounded-lg"
+                    className="w-full p-2 border-2 border-leather-brown bg-aged-white rounded font-handwritten"
+                    style={{color: 'var(--golf-green)'}}
                     rows="2"
                   />
                   
                   <button
                     onClick={addRound}
-                    className="w-full p-2 bg-blue-600 text-white rounded-lg font-semibold"
+                    className="w-full p-2 golf-button-primary font-headers"
                     disabled={!newRound.course || !newRound.score}
                   >
                     Save Round
@@ -2871,8 +2877,9 @@ const GolfShotGuide = () => {
         padding: '0.5rem'
       }}>
         <div className="grid grid-cols-6 gap-1 px-2 py-2">
-          {tabs.map(tab => {
+          {tabs.map((tab, index) => {
             const IconComponent = tab.icon;
+            const isPageCurlTab = index < 3; // First 3 tabs are page curl experiences
             return (
               <button
                 key={tab.id}
@@ -2881,10 +2888,14 @@ const GolfShotGuide = () => {
                   activeTab === tab.id
                     ? "golf-button-primary scale-105"
                     : "hover:bg-white hover:shadow-md transform hover:scale-102"
-                }`}
+                } ${isPageCurlTab ? 'page-curl-tab' : ''}`}
                 style={{
                   color: activeTab === tab.id ? 'var(--weathered-white)' : 'var(--leather-brown-dark)',
-                  minHeight: '60px'
+                  minHeight: '60px',
+                  ...(isPageCurlTab && activeTab !== tab.id ? {
+                    background: 'linear-gradient(135deg, var(--aged-white) 0%, var(--weathered-cream) 100%)',
+                    border: '1px solid var(--leather-brown-light)'
+                  } : {})
                 }}
               >
                 <IconComponent className={`h-5 w-5 mb-1 ${activeTab === tab.id ? 'golf-icon-bounce' : ''}`} />
@@ -2893,6 +2904,14 @@ const GolfShotGuide = () => {
                 }`}>
                   {tab.name}
                 </div>
+                {/* Page curl indicator for yardage book tabs */}
+                {isPageCurlTab && activeTab !== tab.id && (
+                  <div className="absolute -top-1 -right-1 text-xs" style={{ 
+                    color: 'var(--golf-green)', 
+                    fontSize: '8px',
+                    transform: 'rotate(15deg)'
+                  }}>📖</div>
+                )}
                 {activeTab === tab.id && (
                   <div className="absolute -top-1 -right-1 w-2 h-2 rounded-full" style={{ 
                     background: 'var(--golf-green-accent)' 
@@ -2906,8 +2925,8 @@ const GolfShotGuide = () => {
 
       </div>
 
-      {/* Shot Detail Modal */}
-      {selectedShot && (
+      {/* Shot Detail Modal - Disabled: Using Page Curl Interface */}
+      {false && selectedShot && (
         <div className="fixed inset-0 bg-slate-900/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-4 z-50">
           <div className="bg-white rounded-t-3xl sm:rounded-3xl w-full max-w-lg max-h-[95vh] overflow-hidden shadow-2xl shadow-slate-900/25">
             {/* Header */}
@@ -2921,84 +2940,87 @@ const GolfShotGuide = () => {
                 </button>
                 <div className="flex items-center gap-3">
                   <span className="text-sm text-slate-500 font-medium">{selectedShot.timeToRead}</span>
-                  <span className={`px-3 py-1.5 rounded-full text-xs font-bold tracking-wide ${
-                    selectedShot.difficulty === "Easy" ? "bg-emerald-100 text-emerald-700" :
-                    selectedShot.difficulty === "Medium" ? "bg-amber-100 text-amber-700" :
-                    selectedShot.difficulty === "Hard" ? "bg-orange-100 text-orange-700" :
-                    "bg-red-100 text-red-700"
-                  }`}>
+                  <span className="learn-difficulty-badge">
                     {selectedShot.difficulty}
                   </span>
                 </div>
               </div>
               
-              <div className="flex items-center gap-4">
-                <div className="text-4xl bg-white p-3 rounded-2xl shadow-sm">
-                  {renderIcon(selectedShot.icon)}
+              <div className="learn-title-section">
+                <div className="learn-icon-container">
+                  {renderIcon(selectedShot.icon, "learn-icon")}
                 </div>
-                <div className="flex-1">
-                  <h2 className="text-2xl font-bold text-slate-900 leading-tight mb-1">{selectedShot.name}</h2>
-                  <p className="text-slate-600 text-base leading-relaxed">{selectedShot.quickTip}</p>
+                <div className="learn-title-content">
+                  <h1 className="learn-page-title">{selectedShot.name}</h1>
+                  <p className="learn-page-subtitle">"{selectedShot.quickTip}"</p>
                 </div>
               </div>
             </div>
 
             {/* Content */}
-                              <div className="p-6 space-y-5 overflow-y-auto max-h-[70vh]">
-                    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-2xl p-5">
-                <h3 className="font-bold text-blue-900 mb-4 text-lg">🎯 Essential Information</h3>
-                <div className="space-y-3">
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-blue-500 mt-2.5"></div>
-                    <div><span className="font-semibold text-blue-900">When:</span> <span className="text-blue-800">{selectedShot.situation}</span></div>
+            <div className="p-6 space-y-5 overflow-y-auto max-h-[70vh]">
+              <div className="learn-section key-points-section">
+                <div className="learn-section-header">
+                  <span className="learn-section-icon">🎯</span>
+                  <h3 className="learn-section-title">When to Use</h3>
+                </div>
+                <p className="learn-text">{selectedShot.whenToUse || selectedShot.situation}</p>
+              </div>
+
+              <div className="learn-section drills-section">
+                <div className="learn-section-header">
+                  <span className="learn-section-icon">⚙️</span>
+                  <h3 className="learn-section-title">Setup & Execution</h3>
+                </div>
+                <div className="learn-list">
+                  <div className="learn-item">
+                    <span className="learn-bullet green">•</span>
+                    <span className="learn-text"><strong>Key Action:</strong> {selectedShot.keyAction}</span>
                   </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-blue-500 mt-2.5"></div>
-                    <div><span className="font-semibold text-blue-900">Action:</span> <span className="text-blue-800">{selectedShot.keyAction}</span></div>
+                  <div className="learn-item">
+                    <span className="learn-bullet green">•</span>
+                    <span className="learn-text"><strong>Club:</strong> {selectedShot.clubAdjustment}</span>
                   </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-blue-500 mt-2.5"></div>
-                    <div><span className="font-semibold text-blue-900">Club:</span> <span className="text-blue-800">{selectedShot.clubAdjustment}</span></div>
+                  <div className="learn-item">
+                    <span className="learn-bullet green">•</span>
+                    <span className="learn-text"><strong>Ball Position:</strong> {selectedShot.ballPosition}</span>
+                  </div>
+                  <div className="learn-item">
+                    <span className="learn-bullet green">•</span>
+                    <span className="learn-text"><strong>Stance:</strong> {selectedShot.stance}</span>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-slate-50 to-gray-50 border border-slate-200 rounded-2xl p-5">
-                <h3 className="font-bold text-slate-900 mb-4 text-lg">⚙️ Setup</h3>
-                <div className="space-y-3">
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-slate-500 mt-2.5"></div>
-                    <div><span className="font-semibold text-slate-900">Ball Position:</span> <span className="text-slate-700">{selectedShot.ballPosition}</span></div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-slate-500 mt-2.5"></div>
-                    <div><span className="font-semibold text-slate-900">Stance:</span> <span className="text-slate-700">{selectedShot.stance}</span></div>
-                  </div>
+              <div className="learn-section mistakes-section">
+                <div className="learn-section-header">
+                  <span className="learn-section-icon">🧠</span>
+                  <h3 className="learn-section-title">Swing Thoughts</h3>
                 </div>
-              </div>
-
-              <div className="bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-200 rounded-2xl p-5">
-                <h3 className="font-bold text-emerald-900 mb-4 text-lg">💭 Swing Thoughts</h3>
-                <div className="space-y-2">
+                <div className="learn-list">
                   {selectedShot.swingThoughts.map((thought, index) => (
-                    <div key={index} className="flex items-start gap-3">
-                      <div className="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center text-white text-xs font-bold mt-0.5">
-                        {index + 1}
-                      </div>
-                      <span className="text-emerald-800 font-medium">{thought}</span>
+                    <div key={index} className="learn-item">
+                      <span className="learn-number">{index + 1}</span>
+                      <span className="learn-text">{thought}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200 rounded-2xl p-5">
-                <h3 className="font-bold text-amber-900 mb-3 text-lg">💡 Pro Tip</h3>
-                <p className="text-amber-800 leading-relaxed font-medium">{selectedShot.proTip}</p>
+              <div className="learn-insight-card pro-tip-card">
+                <div className="insight-header">
+                  <span className="insight-emoji">💡</span>
+                  <h4 className="insight-title">Pro Tip</h4>
+                </div>
+                <p className="insight-text">{selectedShot.proTip}</p>
               </div>
 
-              <div className="bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-2xl p-5">
-                <h3 className="font-bold text-purple-900 mb-3 text-lg">✨ Remember This</h3>
-                <p className="text-purple-800 italic text-lg leading-relaxed font-medium">"{selectedShot.memorableQuote}"</p>
+              <div className="learn-insight-card mental-cue-card">
+                <div className="insight-header">
+                  <span className="insight-emoji">💭</span>
+                  <h4 className="insight-title">Remember This</h4>
+                </div>
+                <p className="insight-quote memorable">"{selectedShot.memorableQuote}"</p>
               </div>
             </div>
           </div>

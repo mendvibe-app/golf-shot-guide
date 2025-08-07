@@ -191,7 +191,7 @@ const createGolfContent = (): PageContent[] => [
           <div className="hole-diagram">
             <div className="diagram-bg"></div>
             <div className="fairway"></div>
-            <div className="green"></div>
+            <div className="hole-green"></div>
             <div className="bunker"></div>
             <div className="pin"></div>
             <div className="flag"></div>
@@ -816,7 +816,7 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
           overflow-y: auto;
           overflow-x: hidden;
           padding: 1.5rem;
-          margin: 60px 8px 80px 20px; /* Balanced margins - smaller left margin */
+          margin: 60px 8px 140px 20px; /* Extra bottom margin for safe scrolling on all devices */
           -webkit-overflow-scrolling: touch;
           overscroll-behavior: contain;
           touch-action: pan-y;
@@ -827,21 +827,28 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
           background: 
             radial-gradient(circle at 20% 20%, rgba(255,255,255,0.3) 0%, transparent 50%),
             radial-gradient(circle at 80% 80%, rgba(139,69,19,0.1) 0%, transparent 50%),
-            linear-gradient(135deg, #fef3c7 0%, #fed7aa 60%, #f5f5dc 100%);
+            linear-gradient(135deg, var(--paper-cream) 0%, var(--aged-white) 60%, var(--weathered-cream) 100%);
         }
 
         .page-curl-content-blue {
           background: 
             radial-gradient(circle at 20% 20%, rgba(255,255,255,0.3) 0%, transparent 50%),
-            radial-gradient(circle at 80% 80%, rgba(30,64,175,0.1) 0%, transparent 50%),
-            linear-gradient(135deg, #dbeafe 0%, #e0e7ff 60%, #f0f9ff 100%);
+            radial-gradient(circle at 80% 80%, rgba(139,69,19,0.1) 0%, transparent 50%),
+            linear-gradient(135deg, var(--paper-cream) 0%, var(--aged-white) 60%, var(--weathered-cream) 100%);
         }
 
         .page-curl-content-green {
           background: 
             radial-gradient(circle at 20% 20%, rgba(255,255,255,0.3) 0%, transparent 50%),
-            radial-gradient(circle at 80% 80%, rgba(5,150,105,0.1) 0%, transparent 50%),
-            linear-gradient(135deg, #d1fae5 0%, #a7f3d0 60%, #ecfdf5 100%);
+            radial-gradient(circle at 80% 80%, rgba(139,69,19,0.1) 0%, transparent 50%),
+            linear-gradient(135deg, var(--paper-cream) 0%, var(--aged-white) 60%, var(--weathered-cream) 100%);
+        }
+
+        .page-curl-content-learn {
+          background: 
+            radial-gradient(circle at 20% 20%, rgba(255,255,255,0.3) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(139,69,19,0.1) 0%, transparent 50%),
+            linear-gradient(135deg, var(--paper-cream) 0%, var(--aged-white) 60%, var(--weathered-cream) 100%);
         }
 
         .page-curl-content {
@@ -950,19 +957,19 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
           bottom: 3rem; left: 1.5rem; width: 2rem; height: 1.5rem; background: #a16207;
         }
         .coffee-stain-3 {
-          top: 2rem; left: 3rem; width: 2.5rem; height: 1.5rem; background: #1e40af;
+          top: 2rem; left: 3rem; width: 2.5rem; height: 1.5rem; background: #a16207;
         }
         .coffee-stain-4 {
-          bottom: 4rem; right: 2rem; width: 1.5rem; height: 2rem; background: #1e40af;
+          bottom: 4rem; right: 2rem; width: 1.5rem; height: 2rem; background: #a16207;
         }
         .coffee-stain-5 {
-          top: 1.5rem; right: 1rem; width: 2rem; height: 2.5rem; background: #059669;
+          top: 1.5rem; right: 1rem; width: 2rem; height: 2.5rem; background: #a16207;
         }
         .coffee-stain-6 {
-          bottom: 2rem; left: 2rem; width: 1.5rem; height: 1rem; background: #059669;
+          bottom: 2rem; left: 2rem; width: 1.5rem; height: 1rem; background: #a16207;
         }
 
-        .page-curl-body { margin-top: 1rem; flex: 1; }
+        .page-curl-body { margin-top: 1rem; margin-bottom: 140px; flex: 1; /* Extra bottom margin for safe scrolling on all devices */ }
         .page-curl-header { text-align: center; margin-bottom: 1.5rem; }
         .hole-title { font-size: 1.5rem; font-weight: bold; color: #374151; margin-bottom: 0.5rem; }
         .hole-subtitle { color: #6b7280; font-weight: 500; }
@@ -973,7 +980,7 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
         }
         .diagram-bg { position: absolute; inset: 0; background: linear-gradient(135deg, #bbf7d0, #a7f3d0); opacity: 0.5; }
         .fairway { position: absolute; bottom: 0.5rem; left: 1rem; right: 1rem; height: 4rem; background: #4ade80; border-radius: 0.5rem; opacity: 0.7; }
-        .green { position: absolute; top: 1rem; right: 2rem; width: 4rem; height: 3rem; background: #22c55e; border-radius: 50%; }
+        .hole-green { position: absolute; top: 1rem; right: 2rem; width: 4rem; height: 3rem; background: #22c55e; border-radius: 50%; }
         .bunker { position: absolute; bottom: 2rem; left: 2rem; width: 2rem; height: 1.5rem; background: #fde047; border-radius: 0.5rem; }
         .pin { position: absolute; top: 2rem; right: 3rem; width: 0.25rem; height: 2rem; background: #dc2626; }
         .flag { position: absolute; top: 1.5rem; right: 2.25rem; width: 0.75rem; height: 0.5rem; background: #dc2626; }
@@ -982,22 +989,22 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
         .yardage-notes { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1rem; }
         .yardage-item { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: rgba(255, 255, 255, 0.5); border-radius: 0.5rem; }
         .yardage-label { color: #374151; }
-        .yardage-distance { font-size: 1.25rem; color: #1d4ed8; }
+        .yardage-distance { font-size: 1.25rem; color: var(--golf-green); }
 
-        .handwritten-note { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; transform: rotate(-1deg); }
+        .handwritten-note { background: var(--aged-white); border-left: 4px solid var(--golf-green-medium); padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; transform: rotate(-1deg); }
         .note-text { color: #374151; font-style: italic; font-size: 1.125rem; font-weight: 500; }
 
         .shot-icon { text-align: center; margin-bottom: 2rem; }
         .icon-mountain { font-size: 4rem; margin-bottom: 1rem; }
 
         .shot-details { background: rgba(255, 255, 255, 0.6); border-radius: 0.5rem; padding: 1.5rem; margin-bottom: 1.5rem; }
-        .shot-title { font-size: 1.25rem; font-weight: bold; color: #1e40af; margin-bottom: 1rem; }
+        .shot-title { font-size: 1.25rem; font-weight: bold; color: var(--golf-green); margin-bottom: 1rem; }
         .shot-points { display: flex; flex-direction: column; gap: 0.75rem; }
         .shot-point { display: flex; align-items: flex-start; gap: 0.75rem; }
-        .point-label { font-weight: bold; color: #1d4ed8; min-width: fit-content; }
+        .point-label { font-weight: bold; color: var(--golf-green); min-width: fit-content; }
         .point-text { color: #374151; }
 
-        .pro-tip { background: linear-gradient(to right, #fef3c7, #fed7aa); border-left: 4px solid #f59e0b; padding: 1.5rem; border-radius: 0 0.5rem 0.5rem 0; display: flex; align-items: center; gap: 0.75rem; }
+        .pro-tip { background: linear-gradient(to right, var(--aged-white), var(--weathered-cream)); border-left: 4px solid var(--golf-green-medium); padding: 1.5rem; border-radius: 0 0.5rem 0.5rem 0; display: flex; align-items: center; gap: 0.75rem; }
         .tip-icon { font-size: 2rem; }
         .tip-text { color: #374151; font-weight: 500; font-style: italic; font-size: 1.125rem; }
 

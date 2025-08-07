@@ -644,8 +644,8 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
         }
 
         .handwritten-note {
-          background: #fef3c7;
-          border-left: 4px solid #f59e0b;
+          background: var(--aged-white);
+          border-left: 4px solid var(--golf-green-medium);
           padding: 1rem;
           border-radius: 0 0.5rem 0.5rem 0;
           transform: rotate(-1deg);
@@ -705,8 +705,8 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
         }
 
         .pro-tip {
-          background: linear-gradient(to right, #fef3c7, #fed7aa);
-          border-left: 4px solid #f59e0b;
+          background: linear-gradient(to right, var(--aged-white), var(--weathered-cream));
+          border-left: 4px solid var(--golf-green-medium);
           padding: 1.5rem;
           border-radius: 0 0.5rem 0.5rem 0;
           display: flex;

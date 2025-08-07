@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Kalam:wght@300;400;700&family=Merriweather:wght@300;400;700&family=Courier+Prime:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Source+Sans+Pro:wght@300;400;500;600;700;900&family=Kalam:wght@300;400;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 :root {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   line-height: 1.6;
   font-weight: 400;
   font-synthesis: none;
@@ -9,13 +9,27 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   
-  /* Golf-Authentic Typography System */
-  --font-clean: 'Inter', -apple-system, sans-serif;
-  --font-serif: 'Merriweather', 'Times New Roman', serif;
-  --font-handwritten: 'Kalam', 'Comic Sans MS', cursive;
-  --font-yardages: 'Courier Prime', 'Courier New', monospace;
+  /* Pro Tour Authenticity Typography System */
+  --font-headers: 'Playfair Display', serif;           /* Course names, hole titles */
+  --font-body: 'Source Sans Pro', sans-serif;          /* Instructions, descriptions */
+  --font-handwritten: 'Kalam', cursive;                /* Personal tips, quotes */
+  --font-data: 'JetBrains Mono', monospace;            /* Yardages, distances */
   
-  /* Weathered Golf Color Palette */
+  /* Pro Tour Authenticity Color Palette */
+  /* Primary Colors - Golf Heritage */
+  --paper-cream: #faf8f3;           /* Main background */
+  --aged-white: #f5f2e8;            /* Page backgrounds */
+  --golf-green: #2d5016;            /* Headers, accents */
+  --leather-brown: #8b4513;         /* Binding, borders */
+  --pencil-gray: #4a4a4a;           /* Body text */
+
+  /* Accent Colors - Authenticity */  
+  --coffee-stain: rgba(139,69,19,0.1);  /* Weathering */
+  --grass-stain: rgba(45,80,22,0.08);   /* Subtle accents */
+  --pin-red: #cc0000;                   /* Important highlights */
+  --sky-blue: #87ceeb;                  /* Water hazards */
+  
+  /* Legacy color mappings for compatibility */
   --golf-green-dark: #2d5016;
   --golf-green-medium: #4a7c23;
   --golf-green-light: #6b9f35;
@@ -27,7 +41,7 @@
   --leather-brown-accent: #cd853f;
   
   --weathered-white: #faf8f3;
-  --weathered-cream: #f5f1e8;
+  --weathered-cream: #f5f2e8;
   --weathered-beige: #f0ead6;
   --weathered-tan: #e8dcc0;
   
@@ -66,35 +80,42 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  /* Realistic Weathered Paper Background */
+  /* Professional Yardage Book Background - Enhanced Authenticity */
   background: 
     /* Coffee stains and weathering */
-    radial-gradient(circle at 20% 80%, var(--coffee-stain-dark) 0%, transparent 8%),
-    radial-gradient(circle at 80% 20%, var(--coffee-stain-medium) 0%, transparent 12%),
-    radial-gradient(circle at 65% 70%, var(--coffee-stain-light) 0%, transparent 15%),
-    radial-gradient(circle at 30% 30%, var(--coffee-stain-light) 0%, transparent 10%),
-    radial-gradient(circle at 90% 85%, var(--coffee-stain-medium) 0%, transparent 7%),
+    radial-gradient(circle at 20% 80%, var(--coffee-stain) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, var(--coffee-stain) 0%, transparent 30%),
+    radial-gradient(circle at 65% 70%, rgba(139,69,19,0.05) 0%, transparent 40%),
+    radial-gradient(circle at 30% 30%, rgba(139,69,19,0.08) 0%, transparent 25%),
+    radial-gradient(circle at 90% 85%, var(--coffee-stain) 0%, transparent 35%),
     
-    /* Paper grain texture */
+    /* Paper grain texture - more subtle and authentic */
     repeating-linear-gradient(
       45deg,
       transparent,
       transparent 1px,
-      rgba(139, 69, 19, 0.02) 1px,
-      rgba(139, 69, 19, 0.02) 2px
+      rgba(139, 69, 19, 0.015) 1px,
+      rgba(139, 69, 19, 0.015) 2px
     ),
     repeating-linear-gradient(
       -45deg,
       transparent,
       transparent 1px,
-      rgba(101, 67, 33, 0.015) 1px,
-      rgba(101, 67, 33, 0.015) 3px
+      rgba(101, 67, 33, 0.01) 1px,
+      rgba(101, 67, 33, 0.01) 3px
     ),
     
-    /* Base weathered paper gradient */
-    linear-gradient(180deg, var(--weathered-white) 0%, var(--weathered-cream) 50%, var(--weathered-beige) 100%);
+    /* Dot pattern for paper texture */
+    radial-gradient(circle at 25% 25%, rgba(139, 69, 19, 0.02) 1px, transparent 1px),
     
-  color: var(--leather-brown-dark);
+    /* Base weathered paper gradient */
+    linear-gradient(180deg, var(--paper-cream) 0%, var(--aged-white) 50%, var(--aged-white) 100%);
+    
+  background-size: 
+    100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%,
+    8px 8px, 12px 12px, 20px 20px, 100% 100%;
+    
+  color: var(--pencil-gray);
   font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
   scroll-behavior: smooth;
 }
@@ -174,11 +195,35 @@ button, input, select, textarea, a {
   }
 }
 
-/* Enhanced typography scale */
+/* Pro Tour Authenticity Typography Hierarchy */
 h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-headers);
   font-weight: 700;
+  color: var(--golf-green);
   line-height: 1.25;
   letter-spacing: -0.025em;
+}
+
+/* Course names, hole titles */
+h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.875rem;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* Body text should be readable and clean */
+p, li, span, div {
+  font-family: var(--font-body);
+  color: var(--pencil-gray);
 }
 
 .text-gradient {
@@ -224,24 +269,46 @@ h1, h2, h3, h4, h5, h6 {
   animation: fadeIn 0.2s ease-out;
 }
 
-/* Golf-Authentic Typography Classes */
-.font-clean {
-  font-family: var(--font-clean);
+/* Pro Tour Authenticity Typography Classes */
+.font-headers {
+  font-family: var(--font-headers);
+  font-weight: 700;
+  color: var(--golf-green);
 }
 
-.font-serif {
-  font-family: var(--font-serif);
-  line-height: 1.7;
+.font-body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: var(--pencil-gray);
 }
 
 .font-handwritten {
   font-family: var(--font-handwritten);
   font-weight: 400;
+  color: var(--golf-green);
+  transform: rotate(-1.2deg);
   line-height: 1.4;
 }
 
+.font-data {
+  font-family: var(--font-data);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+}
+
+/* Legacy support */
+.font-clean {
+  font-family: var(--font-body);
+}
+
+.font-serif {
+  font-family: var(--font-headers);
+  line-height: 1.7;
+}
+
 .font-yardages {
-  font-family: var(--font-yardages);
+  font-family: var(--font-data);
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.05em;
 }
@@ -934,10 +1001,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .learn-page-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-headers);
   font-size: 1.8rem;
   font-weight: 700;
-  color: var(--leather-brown-dark);
+  color: var(--golf-green);
   line-height: 1.2;
   margin-bottom: 0.5rem;
 }
@@ -945,7 +1012,7 @@ h1, h2, h3, h4, h5, h6 {
 .learn-page-subtitle {
   font-family: var(--font-handwritten);
   font-size: 1.1rem;
-  color: var(--golf-green-dark);
+  color: var(--golf-green);
   margin-bottom: 0.75rem;
   line-height: 1.3;
 }
@@ -1020,10 +1087,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .learn-section-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-headers);
   font-size: 1.3rem;
   font-weight: 700;
-  color: var(--leather-brown-dark);
+  color: var(--golf-green);
   margin: 0;
 }
 
@@ -1079,24 +1146,98 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .learn-text {
-  font-family: var(--font-clean);
+  font-family: var(--font-body);
   font-size: 0.95rem;
   line-height: 1.5;
-  color: var(--leather-brown-dark);
+  color: var(--pencil-gray);
   flex: 1;
 }
 
-/* Section-specific styling */
-.key-points-section {
-  border-left: 4px solid var(--golf-green-medium);
+/* Pro Tour Authenticity - Golf Green Borders Everywhere */
+/* Strong, visible yardage book section borders */
+
+.key-points-section,
+.learn-section.key-points-section,
+div.key-points-section {
+  border-left: 5px solid #4a7c23 !important;
+  border-bottom: none !important;
+  border-top: none !important;
+  border-right: none !important;
+  background: linear-gradient(90deg, rgba(74, 124, 35, 0.08) 0%, transparent 20%) !important;
+  padding-left: 1.5rem !important;
 }
 
-.mistakes-section {
-  border-left: 4px solid #dc2626;
+.mistakes-section,
+.learn-section.mistakes-section,
+div.mistakes-section {
+  border-left: 5px solid #4a7c23 !important;
+  border-bottom: none !important;
+  border-top: none !important;
+  border-right: none !important;
+  background: linear-gradient(90deg, rgba(74, 124, 35, 0.08) 0%, transparent 20%) !important;
+  padding-left: 1.5rem !important;
 }
 
-.drills-section {
-  border-left: 4px solid #2563eb;
+.drills-section,
+.learn-section.drills-section,
+div.drills-section {
+  border-left: 5px solid #4a7c23 !important;
+  border-bottom: none !important;
+  border-top: none !important;
+  border-right: none !important;
+  background: linear-gradient(90deg, rgba(74, 124, 35, 0.08) 0%, transparent 20%) !important;
+  padding-left: 1.5rem !important;
+}
+
+/* Additional authentic section types that should have golf green borders */
+.instruction-section {
+  border-left: 4px solid #4a7c23 !important;
+}
+
+.page-section {
+  border: 1px solid rgba(139,69,19,0.2) !important;
+}
+
+/* Force golf green on any border in these sections */
+.key-points-section *,
+.mistakes-section *,
+.drills-section *,
+.instruction-section * {
+  border-color: #4a7c23 !important;
+}
+
+/* Golf green bullets for authentic yardage book feel */
+.learn-bullet.golf-green {
+  color: #4a7c23 !important;
+  font-weight: bold;
+}
+
+.learn-bullet.green {
+  color: #4a7c23 !important;
+  font-weight: bold;
+}
+
+/* Page curl tab styling - Enhanced yardage book feel */
+.page-curl-tab {
+  position: relative;
+}
+
+.page-curl-tab::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, transparent 0%, rgba(139,69,19,0.1) 50%, transparent 100%);
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.page-curl-tab:hover::before {
+  opacity: 1;
 }
 
 /* Bottom Insights */
@@ -1142,18 +1283,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .insight-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-headers);
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--leather-brown-dark);
+  color: var(--golf-green);
   margin: 0;
 }
 
 .insight-text {
-  font-family: var(--font-clean);
+  font-family: var(--font-body);
   font-size: 0.95rem;
   line-height: 1.5;
-  color: var(--leather-brown-dark);
+  color: var(--pencil-gray);
   margin: 0;
 }
 
@@ -1162,39 +1303,149 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 1.05rem;
   font-style: italic;
   line-height: 1.4;
-  color: var(--golf-green-dark);
+  color: var(--golf-green);
   margin: 0;
 }
 
 .insight-quote.memorable {
   font-size: 1.1rem;
   font-weight: 500;
-  color: var(--leather-brown-dark);
+  color: var(--golf-green);
 }
 
-/* Card-specific styling */
+/* Card-specific styling - All Pro Tour Golf Green */
 .pro-tip-card {
   background: linear-gradient(135deg, 
     var(--weathered-cream) 0%, 
     rgba(75, 124, 35, 0.1) 100%
   );
-  border-color: var(--golf-green-medium);
+  border-color: var(--golf-green-medium) !important;
 }
 
 .mental-cue-card {
   background: linear-gradient(135deg, 
     var(--weathered-cream) 0%, 
-    rgba(59, 130, 246, 0.1) 100%
+    rgba(75, 124, 35, 0.08) 100%
   );
-  border-color: #3b82f6;
+  border-color: var(--golf-green-medium) !important;
 }
 
 .quote-card {
   background: linear-gradient(135deg, 
     var(--weathered-cream) 0%, 
-    rgba(147, 51, 234, 0.1) 100%
+    rgba(75, 124, 35, 0.08) 100%
   );
-  border-color: #9333ea;
+  border-color: var(--golf-green-medium) !important;
+}
+
+/* Organic, Hand-Drawn Card Effects */
+.authentic-card {
+  background: var(--aged-white);
+  border: 2px solid var(--leather-brown);
+  border-radius: 8px 12px 12px 8px; /* Slightly imperfect corners */
+  box-shadow: 
+    inset 0 0 0 1px rgba(139,69,19,0.2),
+    0 4px 12px rgba(0,0,0,0.15);
+  position: relative;
+}
+
+.authentic-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 15% 85%, var(--coffee-stain) 0%, transparent 12%),
+    radial-gradient(circle at 85% 15%, var(--coffee-stain) 0%, transparent 8%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Page Section Styling - Like Yardage Book Pages */
+.page-section {
+  background: var(--aged-white);
+  border: 1px solid var(--leather-brown);
+  border-radius: 6px 10px 10px 6px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+}
+
+.page-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, var(--coffee-stain) 0%, transparent 10%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Instruction Section - Hand-drawn style */
+.instruction-section {
+  border: 2px solid var(--golf-green);
+  border-radius: 4px 8px 8px 4px;
+  padding: 1rem;
+  margin: 1rem 0;
+  background: rgba(245, 242, 232, 0.9);
+  position: relative;
+}
+
+.instruction-section .section-header {
+  font-family: var(--font-headers);
+  font-weight: 700;
+  color: var(--golf-green);
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid var(--golf-green);
+  padding-bottom: 0.5rem;
+}
+
+.instruction-section .bullet-points {
+  font-family: var(--font-body);
+  color: var(--pencil-gray);
+  line-height: 1.6;
+}
+
+/* Handwritten Tips and Annotations */
+.handwritten-tip {
+  font-family: var(--font-handwritten);
+  color: var(--golf-green);
+  background: rgba(245, 242, 232, 0.7);
+  padding: 0.75rem;
+  border-radius: 4px;
+  border: 1px dashed var(--leather-brown);
+  transform: rotate(-0.8deg);
+  margin: 0.5rem 0;
+  position: relative;
+}
+
+.handwritten-tip .contributor {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  font-style: italic;
+  display: block;
+  margin-top: 0.5rem;
+  text-align: right;
+}
+
+/* Weathered Edges for Modern Components */
+.weather-modern {
+  background: var(--aged-white) !important;
+  border: 1px solid var(--leather-brown) !important;
+  border-radius: 6px 10px 8px 6px !important;
+  color: var(--pencil-gray) !important;
+}
+
+.weather-modern h1, .weather-modern h2, .weather-modern h3 {
+  color: var(--golf-green) !important;
+  font-family: var(--font-headers) !important;
 }
 
 /* Mobile optimizations */
@@ -1225,5 +1476,14 @@ h1, h2, h3, h4, h5, h6 {
   
   .learn-insight-card {
     padding: 1rem;
+  }
+  
+  .page-section {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .instruction-section {
+    padding: 0.75rem;
   }
 } 

@@ -100,99 +100,90 @@ const createShotPage = (shot, index) => {
         </div>
         
         <div className="page-curl-scrollable">
-          {/* HERO SECTION - Clean, prominent shot identification */}
-          <div className="shot-hero mb-8">
-            <div className="flex items-start justify-between mb-3">
-              <div className="flex-1">
-                <h1 className="text-2xl font-bold text-gray-900 leading-tight mb-2">{shot.name}</h1>
-                <p className="text-gray-600 text-base leading-relaxed">{shot.situation}</p>
+          {/* HERO SECTION - Pro Tour Authenticity shot identification */}
+          <div className="learn-page-header">
+            <div className="learn-title-section">
+              <div className="learn-icon-container">
+                {renderIcon(shot.icon, "learn-icon")}
               </div>
-              <div className="flex items-center gap-2 ml-4">
-                {renderIcon(shot.icon, "w-8 h-8 text-gray-500")}
-                <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                  shot.difficulty === "Easy" ? "bg-emerald-100 text-emerald-700" :
-                  shot.difficulty === "Medium" ? "bg-amber-100 text-amber-700" :
-                  shot.difficulty === "Hard" ? "bg-red-100 text-red-700" :
-                  "bg-purple-100 text-purple-700"
-                }`}>
-                  {shot.difficulty}
-                </span>
+              <div className="learn-title-content">
+                <h1 className="learn-page-title">{shot.name}</h1>
+                <p className="learn-page-subtitle">{shot.situation}</p>
+                <span className="learn-difficulty-badge">{shot.difficulty}</span>
               </div>
             </div>
+            <div className="learn-page-divider"></div>
           </div>
 
           {/* STRATEGIC CONTEXT - Most important for decision-making */}
           {shot.whenToUse && (
-            <div className="strategy-card mb-8">
-              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-5">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
-                    <span className="text-blue-600 text-sm">🎯</span>
-                  </div>
-                  <h3 className="font-semibold text-blue-900">When to Use</h3>
-                </div>
-                <p className="text-blue-800 leading-relaxed">{shot.whenToUse}</p>
+            <div className="learn-section key-points-section mb-8">
+              <div className="learn-section-header">
+                <span className="learn-section-icon">🎯</span>
+                <h3 className="learn-section-title">When to Use</h3>
               </div>
+              <p className="learn-text">{shot.whenToUse}</p>
             </div>
           )}
 
-          {/* SETUP GRID - Clean technical specifications */}
-          <div className="setup-section mb-8">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Setup & Execution</h3>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="setup-card bg-white border border-gray-200 rounded-lg p-4">
-                <div className="text-sm font-medium text-gray-500 mb-1">Key Action</div>
-                <div className="text-gray-900 font-medium">{shot.keyAction}</div>
+          {/* SETUP GRID - Pro Tour technical specifications */}
+          <div className="learn-section drills-section mb-8">
+            <div className="learn-section-header">
+              <span className="learn-section-icon">⚙️</span>
+              <h3 className="learn-section-title">Setup & Execution</h3>
+            </div>
+            <div className="learn-list">
+              <div className="learn-item">
+                <span className="learn-bullet green">•</span>
+                <span className="learn-text"><strong>Key Action:</strong> {shot.keyAction}</span>
               </div>
-              <div className="setup-card bg-white border border-gray-200 rounded-lg p-4">
-                <div className="text-sm font-medium text-gray-500 mb-1">Club</div>
-                <div className="text-gray-900 font-medium">{shot.clubAdjustment}</div>
+              <div className="learn-item">
+                <span className="learn-bullet green">•</span>
+                <span className="learn-text"><strong>Club:</strong> {shot.clubAdjustment}</span>
               </div>
-              <div className="setup-card bg-white border border-gray-200 rounded-lg p-4">
-                <div className="text-sm font-medium text-gray-500 mb-1">Ball Position</div>
-                <div className="text-gray-900 font-medium">{shot.ballPosition}</div>
+              <div className="learn-item">
+                <span className="learn-bullet green">•</span>
+                <span className="learn-text"><strong>Ball Position:</strong> {shot.ballPosition}</span>
               </div>
-              <div className="setup-card bg-white border border-gray-200 rounded-lg p-4">
-                <div className="text-sm font-medium text-gray-500 mb-1">Stance</div>
-                <div className="text-gray-900 font-medium">{shot.stance}</div>
+              <div className="learn-item">
+                <span className="learn-bullet green">•</span>
+                <span className="learn-text"><strong>Stance:</strong> {shot.stance}</span>
               </div>
             </div>
           </div>
 
           {/* SWING THOUGHTS - Mental game */}
-          <div className="thoughts-section mb-8">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Swing Thoughts</h3>
-            <div className="flex flex-wrap gap-2">
+          <div className="learn-section mistakes-section mb-8">
+            <div className="learn-section-header">
+              <span className="learn-section-icon">🧠</span>
+              <h3 className="learn-section-title">Swing Thoughts</h3>
+            </div>
+            <div className="learn-list">
               {shot.swingThoughts?.map((thought, i) => (
-                <span key={i} className="bg-gray-100 text-gray-700 px-3 py-2 rounded-full text-sm font-medium border">
-                  {thought}
-                </span>
+                <div key={i} className="learn-item">
+                  <span className="learn-number">{i + 1}</span>
+                  <span className="learn-text">{thought}</span>
+                </div>
               ))}
             </div>
           </div>
 
           {/* MEMORY AIDS - Quotes and tips */}
-          <div className="memory-section space-y-4">
-            <div className="memory-card bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r-lg">
-              <div className="flex items-start gap-3">
-                <div className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-amber-600 text-sm">💭</span>
-                </div>
-                <div>
-                  <div className="text-amber-800 font-medium italic leading-relaxed">"{shot.memorableQuote}"</div>
-                </div>
+          <div className="learn-insights">
+            <div className="learn-insight-card mental-cue-card">
+              <div className="insight-header">
+                <span className="insight-emoji">💭</span>
+                <h4 className="insight-title">Remember This</h4>
               </div>
+              <p className="insight-quote memorable">"{shot.memorableQuote}"</p>
             </div>
             
-            <div className="memory-card bg-green-50 border-l-4 border-green-400 p-4 rounded-r-lg">
-              <div className="flex items-start gap-3">
-                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-green-600 text-sm">⛳</span>
-                </div>
-                <div>
-                  <div className="text-green-800 font-medium leading-relaxed">{shot.proTip}</div>
-                </div>
+            <div className="learn-insight-card pro-tip-card">
+              <div className="insight-header">
+                <span className="insight-emoji">💡</span>
+                <h4 className="insight-title">Pro Tip</h4>
               </div>
+              <p className="insight-text">{shot.proTip}</p>
             </div>
           </div>
         </div>
@@ -214,24 +205,24 @@ const getShotContent = () => [
         
         <div className="page-curl-body flex flex-col items-center justify-center h-full text-center">
           <div className="app-logo mb-8">
-            <TbGolf className="text-8xl text-green-600 mx-auto mb-4" />
-            <h1 className="text-4xl font-bold text-slate-800 mb-2">Golf Shot Guide</h1>
-            <p className="text-lg text-slate-600">Professional Shot Selection</p>
+            <TbGolf className="text-8xl mx-auto mb-4 golf-icon-bounce" style={{color: 'var(--golf-green)'}} />
+            <h1 className="text-4xl font-headers text-golf-green mb-2">Golf Shot Guide</h1>
+            <p className="text-lg font-handwritten" style={{color: 'var(--golf-green)'}}>"Professional Shot Selection"</p>
           </div>
           
           <div className="intro-stats grid grid-cols-2 gap-6 mt-8">
             <div className="stat-item">
-              <div className="text-2xl font-bold text-green-600">{comprehensiveShotData.length}</div>
-              <div className="text-sm text-slate-600">Shot Types</div>
+              <div className="text-2xl font-data text-golf-green">{comprehensiveShotData.length}</div>
+              <div className="text-sm font-body text-pencil-gray">Shot Types</div>
             </div>
             <div className="stat-item">
-              <div className="text-2xl font-bold text-blue-600">Pro</div>
-              <div className="text-sm text-slate-600">Techniques</div>
+              <div className="text-2xl font-data text-golf-green">Pro</div>
+              <div className="text-sm font-body text-pencil-gray">Techniques</div>
             </div>
           </div>
           
           <div className="intro-hint mt-12 text-center">
-            <div className="text-gray-500 text-sm">Swipe up to begin →</div>
+            <div className="font-handwritten text-golf-green text-sm">Swipe up to begin →</div>
           </div>
         </div>
       </div>
@@ -304,100 +295,90 @@ const createPuttingPage = (putt, index) => {
         </div>
         
         <div className="page-curl-scrollable">
-          {/* HERO SECTION - Clean, prominent putt identification */}
-          <div className="shot-hero mb-8">
-            <div className="flex items-start justify-between mb-3">
-              <div className="flex-1">
-                <h1 className="text-2xl font-bold text-gray-900 leading-tight mb-2">{putt.name}</h1>
-                <p className="text-gray-600 text-base leading-relaxed">{putt.situation}</p>
+          {/* HERO SECTION - Pro Tour Authenticity putt identification */}
+          <div className="learn-page-header">
+            <div className="learn-title-section">
+              <div className="learn-icon-container">
+                {renderIcon(putt.icon, "learn-icon")}
               </div>
-              <div className="flex items-center gap-2 ml-4">
-                {renderIcon(putt.icon, "w-8 h-8 text-gray-500")}
-                <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                  putt.difficulty === "Easy" ? "bg-emerald-100 text-emerald-700" :
-                  putt.difficulty === "Medium" ? "bg-amber-100 text-amber-700" :
-                  putt.difficulty === "Hard" ? "bg-red-100 text-red-700" :
-                  "bg-purple-100 text-purple-700"
-                }`}>
-                  {putt.difficulty}
-                </span>
+              <div className="learn-title-content">
+                <h1 className="learn-page-title">{putt.name}</h1>
+                <p className="learn-page-subtitle">{putt.situation}</p>
+                <span className="learn-difficulty-badge">{putt.difficulty}</span>
               </div>
             </div>
+            <div className="learn-page-divider"></div>
           </div>
 
           {/* STRATEGIC CONTEXT - Most important for decision-making */}
           {putt.whenToUse && (
-            <div className="strategy-card mb-8">
-              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-5">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
-                    <span className="text-blue-600 text-sm">🎯</span>
-                  </div>
-                  <h3 className="font-semibold text-blue-900">When to Use</h3>
-                </div>
-                <p className="text-blue-800 leading-relaxed">{putt.whenToUse}</p>
+            <div className="learn-section key-points-section mb-8">
+              <div className="learn-section-header">
+                <span className="learn-section-icon">🎯</span>
+                <h3 className="learn-section-title">When to Use</h3>
               </div>
+              <p className="learn-text">{putt.whenToUse}</p>
             </div>
           )}
 
-          {/* SETUP GRID - Clean technical specifications */}
-          <div className="setup-section mb-8">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Setup & Execution</h3>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="setup-card bg-white border border-gray-200 rounded-lg p-4">
-                <div className="text-sm font-medium text-gray-500 mb-1">Key Action</div>
-                <div className="text-gray-900 font-medium">{putt.keyAction}</div>
+          {/* SETUP GRID - Pro Tour technical specifications */}
+          <div className="learn-section drills-section mb-8">
+            <div className="learn-section-header">
+              <span className="learn-section-icon">⚙️</span>
+              <h3 className="learn-section-title">Setup & Execution</h3>
+            </div>
+            <div className="learn-list">
+              <div className="learn-item">
+                <span className="learn-bullet green">•</span>
+                <span className="learn-text"><strong>Key Action:</strong> {putt.keyAction}</span>
               </div>
-              <div className="setup-card bg-white border border-gray-200 rounded-lg p-4">
-                <div className="text-sm font-medium text-gray-500 mb-1">Stroke</div>
-                <div className="text-gray-900 font-medium">{putt.clubAdjustment}</div>
+              <div className="learn-item">
+                <span className="learn-bullet green">•</span>
+                <span className="learn-text"><strong>Stroke:</strong> {putt.clubAdjustment}</span>
               </div>
-              <div className="setup-card bg-white border border-gray-200 rounded-lg p-4">
-                <div className="text-sm font-medium text-gray-500 mb-1">Ball Position</div>
-                <div className="text-gray-900 font-medium">{putt.ballPosition}</div>
+              <div className="learn-item">
+                <span className="learn-bullet green">•</span>
+                <span className="learn-text"><strong>Ball Position:</strong> {putt.ballPosition}</span>
               </div>
-              <div className="setup-card bg-white border border-gray-200 rounded-lg p-4">
-                <div className="text-sm font-medium text-gray-500 mb-1">Stance</div>
-                <div className="text-gray-900 font-medium">{putt.stance}</div>
+              <div className="learn-item">
+                <span className="learn-bullet green">•</span>
+                <span className="learn-text"><strong>Stance:</strong> {putt.stance}</span>
               </div>
             </div>
           </div>
 
           {/* SWING THOUGHTS - Mental game */}
-          <div className="thoughts-section mb-8">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Key Thoughts</h3>
-            <div className="flex flex-wrap gap-2">
+          <div className="learn-section mistakes-section mb-8">
+            <div className="learn-section-header">
+              <span className="learn-section-icon">🧠</span>
+              <h3 className="learn-section-title">Key Thoughts</h3>
+            </div>
+            <div className="learn-list">
               {putt.swingThoughts?.map((thought, i) => (
-                <span key={i} className="bg-gray-100 text-gray-700 px-3 py-2 rounded-full text-sm font-medium border">
-                  {thought}
-                </span>
+                <div key={i} className="learn-item">
+                  <span className="learn-number">{i + 1}</span>
+                  <span className="learn-text">{thought}</span>
+                </div>
               ))}
             </div>
           </div>
 
           {/* MEMORY AIDS - Quotes and tips */}
-          <div className="memory-section space-y-4">
-            <div className="memory-card bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r-lg">
-              <div className="flex items-start gap-3">
-                <div className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-amber-600 text-sm">💭</span>
-                </div>
-                <div>
-                  <div className="text-amber-800 font-medium italic leading-relaxed">"{putt.memorableQuote}"</div>
-                </div>
+          <div className="learn-insights">
+            <div className="learn-insight-card mental-cue-card">
+              <div className="insight-header">
+                <span className="insight-emoji">💭</span>
+                <h4 className="insight-title">Remember This</h4>
               </div>
+              <p className="insight-quote memorable">"{putt.memorableQuote}"</p>
             </div>
             
-            <div className="memory-card bg-green-50 border-l-4 border-green-400 p-4 rounded-r-lg">
-              <div className="flex items-start gap-3">
-                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-green-600 text-sm">⛳</span>
-                </div>
-                <div>
-                  <div className="text-green-700 font-medium text-sm">Pro Tip</div>
-                  <div className="text-green-800 leading-relaxed">{putt.proTip}</div>
-                </div>
+            <div className="learn-insight-card pro-tip-card">
+              <div className="insight-header">
+                <span className="insight-emoji">💡</span>
+                <h4 className="insight-title">Pro Tip</h4>
               </div>
+              <p className="insight-text">{putt.proTip}</p>
             </div>
           </div>
         </div>
@@ -419,24 +400,24 @@ const getPuttingContent = () => [
         
         <div className="page-curl-body flex flex-col items-center justify-center h-full text-center">
           <div className="app-logo mb-8">
-            <FaGolfBall className="text-8xl text-green-600 mx-auto mb-4" />
-            <h1 className="text-4xl font-bold text-slate-800 mb-2">Putting Mastery</h1>
-            <p className="text-lg text-slate-600">"Drive for show, putt for dough"</p>
+            <FaGolfBall className="text-8xl mx-auto mb-4 golf-icon-bounce" style={{color: 'var(--golf-green)'}} />
+            <h1 className="text-4xl font-headers text-golf-green mb-2">Putting Mastery</h1>
+            <p className="text-lg font-handwritten" style={{color: 'var(--golf-green)'}}>"Drive for show, putt for dough"</p>
           </div>
           
           <div className="intro-stats grid grid-cols-2 gap-6 mt-8">
             <div className="stat-item">
-              <div className="text-2xl font-bold text-green-600">Read</div>
-              <div className="text-sm text-slate-600">The Break</div>
+              <div className="text-2xl font-data text-golf-green">Read</div>
+              <div className="text-sm font-body text-pencil-gray">The Break</div>
             </div>
             <div className="stat-item">
-              <div className="text-2xl font-bold text-blue-600">Speed</div>
-              <div className="text-sm text-slate-600">Control</div>
+              <div className="text-2xl font-data text-golf-green">Speed</div>
+              <div className="text-sm font-body text-pencil-gray">Control</div>
             </div>
           </div>
           
           <div className="intro-hint mt-12 text-center">
-            <div className="text-gray-500 text-sm">Swipe up for techniques →</div>
+            <div className="font-handwritten text-golf-green text-sm">Swipe up for techniques →</div>
           </div>
         </div>
       </div>
@@ -720,7 +701,7 @@ const createFundamentalPage = (fundamental, index) => ({
         <div className="coffee-stain coffee-stain-3"></div>
       </div>
       
-      <div className="page-curl-body">
+      <div className="page-curl-scrollable">
         {/* Header Section */}
         <div className="learn-page-header">
           <div className="learn-title-section">
@@ -747,7 +728,7 @@ const createFundamentalPage = (fundamental, index) => ({
             <div className="learn-list">
               {fundamental.keyPoints.map((point, idx) => (
                 <div key={idx} className="learn-item learn-key-point">
-                  <span className="learn-bullet green">•</span>
+                  <span className="learn-bullet golf-green">•</span>
                   <span className="learn-text">{point}</span>
                 </div>
               ))}
@@ -763,7 +744,7 @@ const createFundamentalPage = (fundamental, index) => ({
             <div className="learn-list">
               {fundamental.commonMistakes.map((mistake, idx) => (
                 <div key={idx} className="learn-item learn-mistake">
-                  <span className="learn-bullet red">•</span>
+                  <span className="learn-bullet golf-green">•</span>
                   <span className="learn-text">{mistake}</span>
                 </div>
               ))}
@@ -831,24 +812,24 @@ const getLearnContent = () => [
         
         <div className="page-curl-body flex flex-col items-center justify-center h-full text-center">
           <div className="app-logo mb-8">
-            <TbGolf className="text-8xl text-purple-600 mx-auto mb-4" />
-            <h1 className="text-4xl font-bold text-slate-800 mb-2">Golf Fundamentals</h1>
-            <p className="text-lg text-slate-600">Master the Essential Skills</p>
+            <TbGolf className="text-8xl mx-auto mb-4 golf-icon-bounce" style={{color: 'var(--golf-green)'}} />
+            <h1 className="text-4xl font-headers text-golf-green mb-2">Golf Fundamentals</h1>
+            <p className="text-lg font-handwritten" style={{color: 'var(--golf-green)'}}>"Master the Essential Skills"</p>
           </div>
           
           <div className="intro-stats grid grid-cols-2 gap-6 mt-8">
             <div className="stat-item">
-              <div className="text-2xl font-bold text-purple-600">{fundamentalsData.length}</div>
-              <div className="text-sm text-slate-600">Fundamentals</div>
+              <div className="text-2xl font-data text-golf-green">{fundamentalsData.length}</div>
+              <div className="text-sm font-body text-pencil-gray">Fundamentals</div>
             </div>
             <div className="stat-item">
-              <div className="text-2xl font-bold text-blue-600">Pro</div>
-              <div className="text-sm text-slate-600">Techniques</div>
+              <div className="text-2xl font-data text-golf-green">Pro</div>
+              <div className="text-sm font-body text-pencil-gray">Techniques</div>
             </div>
           </div>
           
           <div className="intro-hint mt-12 text-center">
-            <div className="text-gray-500 text-sm">Swipe up to learn →</div>
+            <div className="font-handwritten text-golf-green text-sm">Swipe up to learn →</div>
           </div>
         </div>
       </div>
