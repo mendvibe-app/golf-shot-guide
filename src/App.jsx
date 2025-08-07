@@ -165,8 +165,28 @@ const GolfShotGuide = () => {
   const [selectedPuttingSection, setSelectedPuttingSection] = useState(null);
 
 
+  // Yardage chart by skill level - from Reference Image 8
+  const yardageBySkillLevel = {
+    beginner: {
+      driver: 200, wood3: 185, wood5: 170, wood7: 155, hybrid18: 165, hybrid21: 145,
+      hybrid24: 135, iron5: 125, iron6: 115, iron7: 110, iron8: 105, iron9: 100,
+      wedge: 90, gapWedge: 75, sandWedge: 65, lobWedge: 50
+    },
+    average: {
+      driver: 250, wood3: 225, wood5: 215, wood7: 205, hybrid18: 195, hybrid21: 185,
+      hybrid24: 175, iron5: 165, iron6: 155, iron7: 145, iron8: 135, iron9: 125,
+      wedge: 115, gapWedge: 100, sandWedge: 85, lobWedge: 70
+    },
+    good: {
+      driver: 190, wood3: 170, wood5: 155, wood7: 140, hybrid18: 135, hybrid21: 125,
+      hybrid24: 115, iron5: 105, iron6: 95, iron7: 85, iron8: 75, iron9: 65,
+      wedge: 55, gapWedge: 45, sandWedge: 35, lobWedge: 25
+    }
+  };
+
   // Personal settings
   const [personalSettings, setPersonalSettings] = useState({
+    skillLevel: "average", // beginner, average, good
     distances: {
       driver: 250, wood3: 220, wood5: 200, iron4: 180, iron5: 170,
       iron6: 160, iron7: 150, iron8: 140, iron9: 130, pw: 120,
@@ -288,6 +308,12 @@ const GolfShotGuide = () => {
     golf: FaGolfBall,
     putting: TbGolf,
     
+    // NEW CATEGORIES - from reference images
+    wood: MdGolfCourse,
+    iron: FaFire,
+    grass: MdGrass,
+    water: FaWater,
+    
     // PUTTING MASTERY ICONS
     eye: FaEye,
     ruler: FaRuler,
@@ -306,8 +332,61 @@ const GolfShotGuide = () => {
     return <span className={className}>{iconName}</span>;
   };
 
-  // Complete shotData with all 33 shot types
+  // Complete shotData with all shot types including reference book content
   const shotData = [
+    // FAIRWAY CATEGORY - From Reference Image 2
+    {
+      id: 34,
+      name: "Fairway Woods",
+      category: "fairway",
+      quickTip: "Square stance, ball back from left heel",
+      situation: "Long approach shots from fairway",
+      keyAction: "Clean contact with sweeping motion",
+      icon: "wood",
+      difficulty: "Medium", 
+      timeToRead: "35s",
+      clubAdjustment: "3-wood or 5-wood",
+      ballPosition: "Slightly back from left heel",
+      stance: "Square stance, weight evenly distributed",
+      swingThoughts: ["Sweep the ball off fairway", "Keep head behind ball", "Wide arc"],
+      memorableQuote: "Think of fairway woods as long irons with more loft - sweep don't dig.",
+      proTip: "Ball positioned back from left heel helps solid contact"
+    },
+    {
+      id: 35,
+      name: "Long Irons from Fairway",
+      category: "fairway",
+      quickTip: "Align body right of target, ball in middle",
+      situation: "Long iron approach shots, 180-220 yards",
+      keyAction: "Hit ball first, then turf",
+      icon: "iron",
+      difficulty: "Hard",
+      timeToRead: "40s",
+      clubAdjustment: "4-iron, 5-iron, or hybrid",
+      ballPosition: "Ball in middle of stance",
+      stance: "Align body slightly right of target",
+      swingThoughts: ["Hit down on ball", "Weight more on left side", "Aggressive through impact"],
+      memorableQuote: "Long irons demand respect - commit to hitting down and through.",
+      proTip: "Weight more on left side helps compress the ball"
+    },
+    {
+      id: 36,
+      name: "Under Trees",
+      category: "fairway",
+      quickTip: "Closed face, aim right of target",
+      situation: "When trees block normal shot to green",
+      keyAction: "Keep trajectory under branches",
+      icon: "underTrees",
+      difficulty: "Expert",
+      timeToRead: "45s",
+      clubAdjustment: "+2-3 clubs for distance",
+      ballPosition: "Ball back in stance",
+      stance: "Closed face at address, aim right",
+      swingThoughts: ["Close face at address", "Punch shot technique", "Follow through low"],
+      memorableQuote: "If under trees, aim right of target - let closed face bring it back.",
+      proTip: "Closed face counteracts tendency to push when aiming right"
+    },
+
     // LIES CATEGORY
     {
       id: 1,
@@ -377,6 +456,43 @@ const GolfShotGuide = () => {
       memorableQuote: "Like picking up a coin - bend and stay bent through the swing.",
       proTip: "Ball will fade significantly - aim left of target"
     },
+
+    // SIDEHILL CATEGORY - Enhanced from Reference Image 6  
+    {
+      id: 42,
+      name: "Sidehill Lies - Ball Below Feet Level",
+      category: "sidehill", 
+      quickTip: "If ball is below feet level, aim LEFT of target",
+      situation: "Ball positioned below your feet on slope",
+      keyAction: "Use one club longer, open stance",
+      icon: "ballBelow",
+      difficulty: "Hard",
+      timeToRead: "40s",
+      clubAdjustment: "Use one club longer",
+      ballPosition: "Ball 3-4\" off left heel",
+      stance: "Open stance, weight on left side", 
+      swingThoughts: ["Ball 3-4\" off left heel", "Weight on left side", "Ball 2\" back from left heel"],
+      memorableQuote: "Ball below feet makes it fade - aim left and trust the slope.",
+      proTip: "Ball will fade significantly - aim left of target"
+    },
+    {
+      id: 43,
+      name: "Sidehill Lies - Ball Higher Than Feet Level",
+      category: "sidehill",
+      quickTip: "Aim to RIGHT of target", 
+      situation: "Ball positioned above your feet on slope",
+      keyAction: "Closed stance, hands in front of ball",
+      icon: "ballAbove",
+      difficulty: "Hard",
+      timeToRead: "40s",
+      clubAdjustment: "Weight more on left side",
+      ballPosition: "Ball 2\" back from left heel",
+      stance: "Closed stance, hands in front of ball",
+      swingThoughts: ["Weight more on left side", "Ball 2\" back from left heel", "Check grip, extension left arm, turn hip"],
+      memorableQuote: "Ball above feet creates draw - aim right and let it curve back.",
+      proTip: "Ball will draw significantly due to slope angle"
+    },
+
     {
       id: 5,
       name: "Hardpan Lie",
@@ -427,6 +543,59 @@ const GolfShotGuide = () => {
       swingThoughts: ["Ball back", "Hands ahead", "Hit down"],
       memorableQuote: "Dig it out like you're angry at the person who didn't replace their divot.",
       proTip: "Ball will come out lower than normal"
+    },
+
+    // SAND CATEGORY - Enhanced from Reference Image 3
+    {
+      id: 37,
+      name: "Sand Trap - Good Lie",
+      category: "sand",
+      quickTip: "Open club face, use open stance",
+      situation: "Ball sitting cleanly in sand near green",
+      keyAction: "Hit sand behind ball, follow through",
+      icon: "bunker",
+      difficulty: "Medium",
+      timeToRead: "45s",
+      clubAdjustment: "Sand wedge",
+      ballPosition: "Ball back of left heel",
+      stance: "Open stance, weight more on left",
+      swingThoughts: ["Open club face", "Use open stance", "Hit 2\" behind ball"],
+      memorableQuote: "Good lies in sand are gifts - use open face and accelerate through.",
+      proTip: "Weight more on left, implant both feet"
+    },
+    {
+      id: 38,
+      name: "Sand Trap - Bad Lie",
+      category: "sand",
+      quickTip: "Close face, use wedge not sand wedge",
+      situation: "Ball buried or in footprint in sand",
+      keyAction: "Hit 1\" behind ball with full follow through",
+      icon: "buriedLie",
+      difficulty: "Hard",
+      timeToRead: "50s",
+      clubAdjustment: "Wedge (not Sand Wedge)",
+      ballPosition: "Hit 2\" behind ball, full follow through",
+      stance: "Closed stance, hands in front of ball",
+      swingThoughts: ["Close face", "Use wedge", "Hit closer to ball", "Arm and hand shot"],
+      memorableQuote: "Bad lies need aggression - close face and don't quit on the shot.",
+      proTip: "No body movement - all arms and hands through impact"
+    },
+    {
+      id: 39,
+      name: "Pitch Shots",
+      category: "sand",
+      quickTip: "8, 9 Iron or Wedge",
+      situation: "Short approach requiring high, soft landing",
+      keyAction: "Ball in front of right heel, hands in front",
+      icon: "pitch",
+      difficulty: "Medium",
+      timeToRead: "40s",
+      clubAdjustment: "8-iron, 9-iron, or Wedge",
+      ballPosition: "Ball in front of right heel",
+      stance: "Open stance, weight more on left side",
+      swingThoughts: ["Hands in front of ball", "No body movement", "Arm extension and cocked wrist shot"],
+      memorableQuote: "Pitch shots are about precision - quiet body, active hands.",
+      proTip: "Hit ball crisply with descending blow"
     },
 
     // BUNKER CATEGORY
@@ -690,6 +859,42 @@ const GolfShotGuide = () => {
       proTip: "Perfect for windy conditions"
     },
 
+    // CHIP CATEGORY - Enhanced from Reference Image 4
+    {
+      id: 40,
+      name: "Chip Shots - 5-6-7 Irons",
+      category: "chip",
+      quickTip: "Feet close together, square stance",
+      situation: "Short chips around green with room to run",
+      keyAction: "Ball in middle of stance, no body movement",
+      icon: "chip",
+      difficulty: "Easy",
+      timeToRead: "30s",
+      clubAdjustment: "5-iron, 6-iron, or 7-iron",
+      ballPosition: "Ball in middle of stance",
+      stance: "Feet close together (Square Stance)",
+      swingThoughts: ["Weight more on left side", "Hands in front of ball", "Hit ball in front of green and roll to target"],
+      memorableQuote: "Chip shots are about simplicity - quiet body, crisp contact.",
+      proTip: "Less lofted clubs run more predictably than wedges"
+    },
+    {
+      id: 41,
+      name: "Uphill Lies",
+      category: "chip",
+      quickTip: "Aim to RIGHT of target",
+      situation: "Ball above feet on uphill slope",
+      keyAction: "Closed stance, maintain weight throughout swing",
+      icon: "ballAbove",
+      difficulty: "Medium",
+      timeToRead: "35s",
+      clubAdjustment: "Ball about 3\" off left heel",
+      ballPosition: "Ball about 3\" off left heel",
+      stance: "Closed stance, hands in front of ball",
+      swingThoughts: ["Ball about 3\" off left heel", "Hands in front of ball", "Maintain weight more on left side throughout swing"],
+      memorableQuote: "Uphill lies make the ball draw - aim right and let slope bring it back.",
+      proTip: "Ball will draw significantly due to slope"
+    },
+
     // SHORT GAME CATEGORY
     {
       id: 23,
@@ -879,6 +1084,59 @@ const GolfShotGuide = () => {
       swingThoughts: ["Play safe", "Low trajectory", "Center of green"],
       memorableQuote: "When the wind can't make up its mind, play for the middle.",
       proTip: "Wait for a lull if possible"
+    },
+
+    // WEATHER CONDITIONS - Enhanced from Reference Image 8
+    {
+      id: 44,
+      name: "Weather - Fairway Bunkers Rough",
+      category: "weather",
+      quickTip: "If wind is behind you, open club face a little",
+      situation: "Playing from fairway bunkers in windy conditions",
+      keyAction: "Whatever you play, ball slightly more forward than normal",
+      icon: "wind",
+      difficulty: "Expert",
+      timeToRead: "45s",
+      clubAdjustment: "If wind is forward at you, close club slightly",
+      ballPosition: "Ball slightly more forward than normal",
+      stance: "Whatever the shot, play ball further back",
+      swingThoughts: ["2 clubs longer than usual", "Hit your shots and run to the side", "Drift wrist action helps"],
+      memorableQuote: "Wind is the golfer's invisible opponent - respect it and use it wisely.",
+      proTip: "Crosswind: Use a less lofted club than usual"
+    },
+    {
+      id: 45,
+      name: "Wet Grounds Conditions",
+      category: "weather",
+      quickTip: "Always hit ball to fly not turf",
+      situation: "Course conditions are wet and soft",
+      keyAction: "Try to hit just below center of ball",
+      icon: "water",
+      difficulty: "Medium",
+      timeToRead: "35s",
+      clubAdjustment: "Swing in upright vertical fashion",
+      ballPosition: "Club face open, before center line",
+      stance: "Normal stance with attention to footing",
+      swingThoughts: ["Hit just below center", "Upright swing", "All carry, no roll"],
+      memorableQuote: "Wet conditions demand precision - hit it crisp and let it fly.",
+      proTip: "No roll expected - plan for all carry distance"
+    },
+    {
+      id: 46,
+      name: "High Grass Conditions",
+      category: "weather",
+      quickTip: "Swing in upright vertical fashion with club face open",
+      situation: "Ball sitting in thick rough or high grass",
+      keyAction: "Open club face, swing upright",
+      icon: "grass",
+      difficulty: "Hard",
+      timeToRead: "40s",
+      clubAdjustment: "Higher lofted club, open face",
+      ballPosition: "Before center line",
+      stance: "Stable base, open club face",
+      swingThoughts: ["Open club face", "Upright swing", "Hit through grass"],
+      memorableQuote: "High grass calls for aggressive, upright action - commit to the swing.",
+      proTip: "Open face helps cut through grass and gets ball airborne"
     }
   ];
 
@@ -1428,6 +1686,38 @@ const GolfShotGuide = () => {
             frequency: "Weekly mental training",
             mentalCue: "Thrive when it matters most",
             memorableQuote: "Pressure is a privilege - it means you're in position to succeed."
+          },
+          {
+            id: 5,
+            name: "Putting Fundamentals Checklist",
+            description: "12-point fundamentals from reference guide",
+            setup: "Review before every round and practice session",
+            objective: "Master the fundamentals that prevent putting problems",
+            checkpoints: [
+              "1. Correct grip, hands in front of ball",
+              "2. Firm left hand grip at top of swing",
+              "3. Left arm extended and not collapsing",
+              "4. Turning of hips and not swaying",
+              "5. Keeping head steady and not lifting up",
+              "6. Standing upright and slightly flexing knees",
+              "7. Stance proper with good torso balance and weight on left side",
+              "8. Good arms and hands action follow through",
+              "9. Keeping swing in smooth rhythm",
+              "10. Bending or stooping severely in stance",
+              "11. Do not reach out or stand too far away from ball",
+              "12. Never fear your shots, regardless of who is watching"
+            ],
+            problems: [
+              "SLICING - Not staying with fundamentals",
+              "PULLING - Bad grip position",
+              "HOOKING - Standing too close",
+              "SHANKING - Ball position incorrect",
+              "TOPPING - Head movement",
+              "SKYING - Setup issues"
+            ],
+            frequency: "Before every round",
+            mentalCue: "Fundamentals prevent problems - master the basics",
+            memorableQuote: "Take that deep breath, relax, no tension and swing with good speed tempo and rhythm. Never rush a shot, life is too short."
           }
         ]
       },
@@ -1642,9 +1932,14 @@ const GolfShotGuide = () => {
 
   const shotCategories = [
     { id: "all", name: "All", icon: "golf" },
+    { id: "fairway", name: "Fairway", icon: "golf" },
+    { id: "sand", name: "Sand", icon: "bunker" }, 
+    { id: "chip", name: "Chip", icon: "chip" },
+    { id: "sidehill", name: "Sidehill", icon: "ballAbove" },
+    { id: "weather", name: "Weather", icon: "wind" },
     { id: "lies", name: "Bad Lies", icon: "uphill" },
-    { id: "bunker", name: "Bunkers", icon: "sand" },
-    { id: "trouble", name: "Trouble", icon: "trees" },
+    { id: "bunker", name: "Bunkers", icon: "bunker" },
+    { id: "trouble", name: "Trouble", icon: "underTrees" },
     { id: "wind", name: "Wind", icon: "withWind" },
     { id: "shots", name: "Shots", icon: "target" },
     { id: "short", name: "Short Game", icon: "putting" }
@@ -1974,8 +2269,19 @@ const GolfShotGuide = () => {
         </div>
       )}
 
+      {/* Learn Tab - Page Curl Experience */}
+      {activeTab === "learn" && (
+        <div className="fixed inset-0 top-16 bottom-24 z-20">
+          <ContextAwarePageCurl 
+            tabId="learn"
+            tabName="Golf Fundamentals"
+            tabIcon={FaBook}
+          />
+        </div>
+      )}
+
       {/* Regular padded content for other tabs - with mobile scrolling */}
-      <div className={`fixed inset-0 top-16 bottom-24 overflow-y-auto mobile-scroll ${(activeTab === "shots" || activeTab === "putting") ? 'hidden' : ''}`}>
+      <div className={`fixed inset-0 top-16 bottom-24 overflow-y-auto mobile-scroll ${(activeTab === "shots" || activeTab === "putting" || activeTab === "learn") ? 'hidden' : ''}`}>
         <div className="px-5 py-6 pb-8 golf-spacing">
         {/* Distance Calculator Tab - Full Interactive Version */}
         {activeTab === "calculator" && (
@@ -2076,6 +2382,58 @@ const GolfShotGuide = () => {
                   
                   <div className="pro-tip mt-4">
                     Trust your yardage and commit to the swing - doubt leads to poor contact
+                  </div>
+
+                  {/* Sample Hand-Drawn Diagram */}
+                  <div className="golf-diagram mt-6">
+                    <div className="ground-texture"></div>
+                    
+                    {/* Stick Figure Golfer */}
+                    <div className="stick-golfer" style={{ position: 'absolute', left: '20%', bottom: '50px' }}>
+                      <div className="golfer-head"></div>
+                      <div className="golfer-body"></div>
+                      <div className="golfer-arms"></div>
+                      <div className="golfer-legs"></div>
+                      <div className="golf-club"></div>
+                      
+                      {/* Stance Indicators */}
+                      <div className="stance-feet square-stance">
+                        <div className="foot left-foot"></div>
+                        <div className="foot right-foot"></div>
+                      </div>
+                    </div>
+                    
+                    {/* Ball Position */}
+                    <div className="ball-position" style={{ bottom: '45px', left: '35%' }}></div>
+                    
+                    {/* Target Line */}
+                    <div className="target-line" style={{ 
+                      bottom: '47px', 
+                      left: '35%', 
+                      width: '45%' 
+                    }}></div>
+                    
+                    {/* Distance Markers */}
+                    <div className="distance-marker" style={{ 
+                      bottom: '60px', 
+                      right: '15%' 
+                    }}>{distance}</div>
+                    
+                    {/* Wind Indicators */}
+                    {wind !== "none" && (
+                      <div className="wind-arrows" style={{ top: '20px', right: '20px' }}>
+                        <div className="wind-arrow"></div>
+                        <div className="wind-arrow"></div>
+                        <div className="wind-arrow"></div>
+                      </div>
+                    )}
+                    
+                    {/* Club Recommendation Visual */}
+                    <div className="club-visual" style={{ 
+                      position: 'absolute', 
+                      top: '20px', 
+                      left: '20px' 
+                    }} data-club={getClubRecommendation(distance, windSpeed, wind).club.toUpperCase()}></div>
                   </div>
                 </div>
               )}
@@ -2269,10 +2627,44 @@ const GolfShotGuide = () => {
               <h2 className="text-2xl font-bold text-slate-900">My Golf Data</h2>
             </div>
 
+            {/* Yardage Chart by Skill Level - From Reference Image */}
+            <div className="bg-white rounded-xl p-4 mb-6">
+              <h3 className="text-lg font-bold text-slate-900 mb-4">Yardage Chart by Skill Level</h3>
+              <p className="text-sm text-slate-600 mb-4">Reference distances for different skill levels</p>
+              
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs">
+                  <thead>
+                    <tr className="border-b">
+                      <th className="text-left p-2 font-semibold">Club</th>
+                      <th className="text-center p-2 font-semibold text-green-600">Beginner<br/>(Male)</th>
+                      <th className="text-center p-2 font-semibold text-blue-600">Average<br/>(Male)</th>
+                      <th className="text-center p-2 font-semibold text-purple-600">Good<br/>(Women)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {Object.keys(yardageBySkillLevel.beginner).map(club => (
+                      <tr key={club} className="border-b border-slate-100">
+                        <td className="p-2 font-medium capitalize">{club.replace(/(\d+)/, ' $1')}</td>
+                        <td className="p-2 text-center text-green-600 font-semibold">{yardageBySkillLevel.beginner[club]}</td>
+                        <td className="p-2 text-center text-blue-600 font-semibold">{yardageBySkillLevel.average[club]}</td>
+                        <td className="p-2 text-center text-purple-600 font-semibold">{yardageBySkillLevel.good[club]}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              
+              <div className="mt-4 text-xs text-slate-500">
+                <p><strong>Note:</strong> Distances shown "in the air" for various club shots</p>
+                <p>Swing as if right foot is nailed to the ground until follow through. Good follow through. Imagine ball lies here.</p>
+              </div>
+            </div>
+
             {/* Club Distances Section */}
             <div className="bg-white rounded-xl p-4">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-bold text-slate-900">My Club Distances</h3>
+                <h3 className="text-lg font-bold text-slate-900">My Personal Club Distances</h3>
                 {!editingDistances ? (
                   <button
                     onClick={startEditingDistances}
@@ -2467,103 +2859,7 @@ const GolfShotGuide = () => {
           </div>
         )}
 
-        {/* Learn Tab - now handled in full-screen section */}
-
-        {/* Learn Tab - Full Interactive Version */}
-        {activeTab === "learn" && (
-          <div className="space-y-6">
-            <div className="text-center">
-              <FaBook className="text-4xl mb-2 mx-auto text-emerald-600" />
-              <h2 className="text-2xl font-bold text-slate-900">Golf Fundamentals</h2>
-            </div>
-
-            {selectedFundamental ? (
-              <div className="space-y-4">
-                <button 
-                  onClick={() => setSelectedFundamental(null)}
-                  className="flex items-center gap-2 text-blue-600 hover:text-blue-800 font-semibold"
-                >
-                  ← Back to Fundamentals
-                </button>
-                
-                <div className="bg-white rounded-xl p-4">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="text-3xl">{renderIcon(selectedFundamental.icon)}</div>
-                    <div>
-                      <h3 className="text-xl font-bold">{selectedFundamental.name}</h3>
-                      <p className="text-slate-600">{selectedFundamental.description}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                      <h4 className="font-bold text-green-900 mb-2">Key Points</h4>
-                      {selectedFundamental.keyPoints.map((point, index) => (
-                        <div key={index} className="flex items-start gap-2 mb-2">
-                          <div className="w-2 h-2 rounded-full bg-green-500 mt-2"></div>
-                          <span className="text-green-800">{point}</span>
-                        </div>
-                      ))}
-                    </div>
-                    
-                    <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                      <h4 className="font-bold text-red-900 mb-2">Common Mistakes</h4>
-                      {selectedFundamental.commonMistakes.map((mistake, index) => (
-                        <div key={index} className="flex items-start gap-2 mb-1">
-                          <div className="w-2 h-2 rounded-full bg-red-500 mt-2"></div>
-                          <span className="text-red-800">{mistake}</span>
-                        </div>
-                      ))}
-                    </div>
-                    
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                      <h4 className="font-bold text-blue-900 mb-2">Practice Drills</h4>
-                      {selectedFundamental.drills.map((drill, index) => (
-                        <div key={index} className="flex items-start gap-2 mb-1">
-                          <div className="w-2 h-2 rounded-full bg-blue-500 mt-2"></div>
-                          <span className="text-blue-800">{drill}</span>
-                        </div>
-                      ))}
-                    </div>
-                    
-                    <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
-                      <h4 className="font-bold text-amber-900 mb-2">Pro Tip</h4>
-                      <p className="text-amber-800">{selectedFundamental.proTip}</p>
-                    </div>
-                    
-                    <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
-                      <h4 className="font-bold text-indigo-900 mb-2">💭 Mental Cue</h4>
-                      <p className="text-indigo-800 italic">"{selectedFundamental.mentalCue}"</p>
-                    </div>
-                    
-                    <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
-                      <h4 className="font-bold text-purple-900 mb-2">✨ Remember This</h4>
-                      <p className="text-purple-800 italic">"{selectedFundamental.memorableQuote}"</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {fundamentalsData.map(fundamental => (
-                  <div
-                    key={fundamental.id}
-                    onClick={() => setSelectedFundamental(fundamental)}
-                    className="bg-white rounded-xl p-4 cursor-pointer hover:shadow-md transition-all"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="text-2xl">{renderIcon(fundamental.icon)}</div>
-                      <div>
-                        <h3 className="font-bold text-slate-900">{fundamental.name}</h3>
-                        <p className="text-sm text-slate-600">{fundamental.description}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
+        {/* Learn Tab - now using page-curl experience */}
         </div>
       </div>
 

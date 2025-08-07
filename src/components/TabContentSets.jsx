@@ -28,7 +28,19 @@ const renderIcon = (iconName, className = "text-6xl mx-auto mb-4") => {
     target: TbTarget,
     withWind: FaWind,
     putting: FaGolfBall,
-    golf: FaGolfBall
+    golf: FaGolfBall,
+    
+    // Fundamental icons
+    setup: FaBullseye,
+    grip: FaFire,
+    tempo: FaCalculator,
+    weightTransfer: FaWind,
+    ballPosition: TbTarget,
+    alignment: FaBullseye,
+    swingPlane: FaWind,
+    impact: FaFire,
+    followThrough: FaWind,
+    routine: FaCalculator
   };
   
   const IconComponent = iconMapping[iconName];
@@ -433,32 +445,405 @@ const getPuttingContent = () => [
   ...puttingTechniques.map((putt, index) => createPuttingPage(putt, index))
 ];
 
+// Complete fundamentals data for learn section
+const fundamentalsData = [
+  {
+    id: 1,
+    name: "Proper Setup & Posture",
+    icon: "setup",
+    difficulty: "Fundamental",
+    description: "The foundation of every good golf swing",
+    keyPoints: [
+      "Stand tall, then bend from hips (not waist)",
+      "Knees slightly flexed, weight on balls of feet",
+      "Arms hang naturally from shoulders",
+      "Shoulders square to target line"
+    ],
+    commonMistakes: [
+      "Hunching over the ball",
+      "Standing too close or too far",
+      "Weight on heels or toes"
+    ],
+    drills: [
+      "Mirror work: Practice setup at home",
+      "Club across shoulders to check alignment",
+      "Balance board for weight distribution"
+    ],
+    proTip: "Good posture at setup = good posture through impact",
+    mentalCue: "Athletic position - like a shortstop ready for a ground ball",
+    memorableQuote: "Stand proud, then bow to the ball - maintain your spine angle throughout the swing."
+  },
+  {
+    id: 2,
+    name: "Proper Grip",
+    icon: "grip",
+    difficulty: "Fundamental",
+    description: "Your only connection to the club",
+    keyPoints: [
+      "Left hand: Club in fingers, thumb down shaft",
+      "Right hand: Fits like a glove over left",
+      "See 2-3 knuckles on left hand",
+      "Light pressure (5/10) - don't strangle it"
+    ],
+    commonMistakes: [
+      "Gripping in palms instead of fingers",
+      "Grip too strong or too weak",
+      "Death grip - too much tension"
+    ],
+    drills: [
+      "Grip and re-grip 10 times before each shot",
+      "Practice with alignment sticks",
+      "Hold club with just index fingers"
+    ],
+    proTip: "Grip pressure should feel like holding a small bird",
+    mentalCue: "Shake hands with the club - firm but friendly",
+    memorableQuote: "The club is your dance partner - hold it gently but don't let it lead."
+  },
+  {
+    id: 3,
+    name: "Swing Tempo",
+    icon: "tempo",
+    difficulty: "Medium",
+    description: "The rhythm that makes everything work",
+    keyPoints: [
+      "3:1 ratio - backswing takes 3x longer than downswing",
+      "Smooth transition at the top",
+      "Accelerate through impact, don't hit AT the ball",
+      "Same tempo for all clubs"
+    ],
+    commonMistakes: [
+      "Rushing the downswing",
+      "Different tempo for different clubs",
+      "Trying to kill the ball"
+    ],
+    drills: [
+      "Count '1-2-3' on backswing, '1' on downswing",
+      "Swing with eyes closed focusing on rhythm",
+      "Practice swings at 50% speed"
+    ],
+    proTip: "Ernie Els said: 'Swing as if you have all day'",
+    mentalCue: "Think 'low and slow' on the takeaway",
+    memorableQuote: "Swing like you're stirring honey - smooth, deliberate, and sweet."
+  },
+  {
+    id: 4,
+    name: "Weight Transfer",
+    icon: "weightTransfer",
+    difficulty: "Medium",
+    description: "Power comes from the ground up",
+    keyPoints: [
+      "Start 50/50, shift to right foot in backswing",
+      "Push off right foot to start downswing",
+      "Finish with 90% weight on left foot",
+      "Lower body leads, upper body follows"
+    ],
+    commonMistakes: [
+      "Reverse pivot (weight forward on backswing)",
+      "Hanging back on right side",
+      "No weight shift at all"
+    ],
+    drills: [
+      "Step drill: Step into left foot at impact",
+      "Swing without right foot on ground",
+      "Basketball dribble motion"
+    ],
+    proTip: "Think of throwing a ball - your weight naturally shifts forward",
+    mentalCue: "Push the ground away with your right foot",
+    memorableQuote: "Like a pitcher throwing a fastball - power starts from the ground up."
+  },
+  {
+    id: 5,
+    name: "Ball Position",
+    icon: "ballPosition",
+    difficulty: "Fundamental",
+    description: "Where you place the ball determines contact quality",
+    keyPoints: [
+      "Driver: Off left heel for upward strike",
+      "Irons: Move progressively back as loft increases",
+      "Wedges: Center to slightly back of center",
+      "Consistent position relative to left foot"
+    ],
+    commonMistakes: [
+      "Ball too far forward (thin shots)",
+      "Ball too far back (fat shots)",
+      "Inconsistent positioning"
+    ],
+    drills: [
+      "Use alignment stick as reference point",
+      "Practice with different clubs at driving range",
+      "Check ball position in mirror"
+    ],
+    proTip: "Ball position determines angle of attack",
+    mentalCue: "Driver sees the ball on a tee, irons hit it on the way down",
+    memorableQuote: "The ball doesn't move - you position yourself to meet it perfectly."
+  },
+  {
+    id: 6,
+    name: "Alignment",
+    icon: "alignment",
+    difficulty: "Fundamental",
+    description: "Aiming your body and club correctly",
+    keyPoints: [
+      "Clubface aims at target first",
+      "Body aligns parallel left of target line",
+      "Feet, knees, hips, shoulders all parallel",
+      "Like standing on railroad tracks"
+    ],
+    commonMistakes: [
+      "Aiming body at target instead of parallel",
+      "Clubface not square to target",
+      "Not checking alignment regularly"
+    ],
+    drills: [
+      "Use alignment sticks on ground",
+      "Practice with clubs laid down as guides",
+      "Have someone check your alignment"
+    ],
+    proTip: "Most golfers aim right of their target without knowing it",
+    mentalCue: "Body aims parallel left, like train tracks to the target",
+    memorableQuote: "Point your body where you want to walk, not where you want the ball to go."
+  },
+  {
+    id: 7,
+    name: "Swing Plane",
+    icon: "swingPlane",
+    difficulty: "Advanced",
+    description: "The path your club travels around your body",
+    keyPoints: [
+      "Club should follow same path back and through",
+      "Plane angle determined by club length and posture",
+      "Shorter clubs = more upright plane",
+      "On-plane swing is most efficient"
+    ],
+    commonMistakes: [
+      "Coming over the top (steep plane)",
+      "Getting too flat in backswing",
+      "Different planes for different clubs"
+    ],
+    drills: [
+      "Swing under a tilted hula hoop",
+      "Practice with club against wall",
+      "Video analysis from down-the-line view"
+    ],
+    proTip: "Good posture naturally creates good plane",
+    mentalCue: "Swing the club around your spine like it's a pole",
+    memorableQuote: "Imagine your swing is on an invisible ramp - stay on the ramp both ways."
+  },
+  {
+    id: 8,
+    name: "Impact Position",
+    icon: "impact",
+    difficulty: "Advanced",
+    description: "The moment of truth in every golf swing",
+    keyPoints: [
+      "Hands ahead of ball at impact",
+      "Weight shifted to left foot",
+      "Hips open, shoulders square",
+      "Clubface square to target"
+    ],
+    commonMistakes: [
+      "Flipping hands at impact",
+      "Weight hanging back",
+      "Early release of club"
+    ],
+    drills: [
+      "Impact bag training",
+      "Preset impact position practice",
+      "Slow motion swings to impact"
+    ],
+    proTip: "Impact position should look like a forward version of address",
+    mentalCue: "Shake hands with the target at impact",
+    memorableQuote: "Impact is address position moved forward - everything shifts toward the target."
+  },
+  {
+    id: 9,
+    name: "Follow Through",
+    icon: "followThrough",
+    difficulty: "Medium",
+    description: "Completing the swing with proper finish",
+    keyPoints: [
+      "Full weight transfer to left foot",
+      "Chest facing target",
+      "Club wrapped around left shoulder",
+      "Balanced finish position"
+    ],
+    commonMistakes: [
+      "Falling off balance",
+      "Not completing the turn",
+      "Decelerating through impact"
+    ],
+    drills: [
+      "Hold finish position for 3 seconds",
+      "Practice finishing in balance",
+      "Mirror work for proper positions"
+    ],
+    proTip: "Good finish indicates good swing sequence",
+    mentalCue: "Pose for the camera - show off your balanced finish",
+    memorableQuote: "Finish like you're showing off your swing to someone you want to impress."
+  },
+  {
+    id: 10,
+    name: "Pre-Shot Routine",
+    icon: "routine",
+    difficulty: "Fundamental",
+    description: "Consistent preparation for every shot",
+    keyPoints: [
+      "Same routine for every shot",
+      "Visualize the shot you want",
+      "Take practice swings with purpose",
+      "Commit fully to your decision"
+    ],
+    commonMistakes: [
+      "Rushed preparation",
+      "Different routine under pressure",
+      "Not visualizing success"
+    ],
+    drills: [
+      "Practice your routine at the range",
+      "Time your routine for consistency",
+      "Use routine for every practice shot"
+    ],
+    proTip: "Routine creates familiarity and confidence",
+    mentalCue: "Same recipe every time - it works, so stick with it",
+    memorableQuote: "Your routine is your ritual - it turns chaos into calm confidence."
+  }
+];
+
+// Helper function to create fundamental pages
+const createFundamentalPage = (fundamental, index) => ({
+  id: fundamental.id,
+  title: fundamental.name,
+  content: (
+    <div className="page-curl-content page-curl-content-learn">
+      <div className="page-curl-texture">
+        <div className="coffee-stain coffee-stain-2"></div>
+        <div className="coffee-stain coffee-stain-3"></div>
+      </div>
+      
+      <div className="page-curl-body">
+        {/* Header Section */}
+        <div className="learn-page-header">
+          <div className="learn-title-section">
+            <div className="learn-icon-container">
+              {renderIcon(fundamental.icon, "learn-icon")}
+            </div>
+            <div className="learn-title-content">
+              <h2 className="learn-page-title">{fundamental.name}</h2>
+              <p className="learn-page-subtitle">{fundamental.description}</p>
+              <span className="learn-difficulty-badge">{fundamental.difficulty}</span>
+            </div>
+          </div>
+          <div className="learn-page-divider"></div>
+        </div>
+        
+        {/* Main Content */}
+        <div className="learn-content-grid">
+          {/* Key Points Section */}
+          <div className="learn-section key-points-section">
+            <div className="learn-section-header">
+              <span className="learn-section-icon">🎯</span>
+              <h3 className="learn-section-title">Key Points</h3>
+            </div>
+            <div className="learn-list">
+              {fundamental.keyPoints.map((point, idx) => (
+                <div key={idx} className="learn-item learn-key-point">
+                  <span className="learn-bullet green">•</span>
+                  <span className="learn-text">{point}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          {/* Common Mistakes Section */}
+          <div className="learn-section mistakes-section">
+            <div className="learn-section-header">
+              <span className="learn-section-icon">❌</span>
+              <h3 className="learn-section-title">Avoid These</h3>
+            </div>
+            <div className="learn-list">
+              {fundamental.commonMistakes.map((mistake, idx) => (
+                <div key={idx} className="learn-item learn-mistake">
+                  <span className="learn-bullet red">•</span>
+                  <span className="learn-text">{mistake}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          {/* Practice Drills Section */}
+          <div className="learn-section drills-section">
+            <div className="learn-section-header">
+              <span className="learn-section-icon">🏌️</span>
+              <h3 className="learn-section-title">Practice Drills</h3>
+            </div>
+            <div className="learn-list">
+              {fundamental.drills.map((drill, idx) => (
+                <div key={idx} className="learn-item learn-drill">
+                  <span className="learn-number">{idx + 1}</span>
+                  <span className="learn-text">{drill}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        
+        {/* Bottom Insights */}
+        <div className="learn-insights">
+          <div className="learn-insight-card pro-tip-card">
+            <div className="insight-header">
+              <span className="insight-emoji">💡</span>
+              <h4 className="insight-title">Pro Tip</h4>
+            </div>
+            <p className="insight-text">{fundamental.proTip}</p>
+          </div>
+          
+          <div className="learn-insight-card mental-cue-card">
+            <div className="insight-header">
+              <span className="insight-emoji">🧠</span>
+              <h4 className="insight-title">Mental Cue</h4>
+            </div>
+            <p className="insight-quote">"{fundamental.mentalCue}"</p>
+          </div>
+          
+          <div className="learn-insight-card quote-card">
+            <div className="insight-header">
+              <span className="insight-emoji">✨</span>
+              <h4 className="insight-title">Remember This</h4>
+            </div>
+            <p className="insight-quote memorable">"{fundamental.memorableQuote}"</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+});
+
 // Learn content
 const getLearnContent = () => [
   {
     id: 0,
-    title: 'Golf Learning Center',
+    title: 'Golf Fundamentals',
     content: (
       <div className="page-curl-content page-curl-content-intro">
         <div className="page-curl-texture">
-          <div className="coffee-stain coffee-stain-4"></div>
+          <div className="coffee-stain coffee-stain-1"></div>
         </div>
         
         <div className="page-curl-body flex flex-col items-center justify-center h-full text-center">
           <div className="app-logo mb-8">
             <TbGolf className="text-8xl text-purple-600 mx-auto mb-4" />
-            <h1 className="text-4xl font-bold text-slate-800 mb-2">Learn Golf</h1>
-            <p className="text-lg text-slate-600">Master the Fundamentals</p>
+            <h1 className="text-4xl font-bold text-slate-800 mb-2">Golf Fundamentals</h1>
+            <p className="text-lg text-slate-600">Master the Essential Skills</p>
           </div>
           
           <div className="intro-stats grid grid-cols-2 gap-6 mt-8">
             <div className="stat-item">
-              <div className="text-2xl font-bold text-purple-600">Tips</div>
-              <div className="text-sm text-slate-600">From Pros</div>
+              <div className="text-2xl font-bold text-purple-600">{fundamentalsData.length}</div>
+              <div className="text-sm text-slate-600">Fundamentals</div>
             </div>
             <div className="stat-item">
-              <div className="text-2xl font-bold text-blue-600">Skills</div>
-              <div className="text-sm text-slate-600">Development</div>
+              <div className="text-2xl font-bold text-blue-600">Pro</div>
+              <div className="text-sm text-slate-600">Techniques</div>
             </div>
           </div>
           
@@ -468,5 +853,7 @@ const getLearnContent = () => [
         </div>
       </div>
     )
-  }
+  },
+  // Add all fundamental pages
+  ...fundamentalsData.map((fundamental, index) => createFundamentalPage(fundamental, index))
 ];

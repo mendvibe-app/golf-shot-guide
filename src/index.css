@@ -493,4 +493,737 @@ h1, h2, h3, h4, h5, h6 {
   padding: 2px 6px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--leather-brown-light);
+}
+
+/* Hand-Drawn Golf Diagram Styles - Inspired by Reference Books */
+.golf-diagram {
+  position: relative;
+  padding: 2rem;
+  background: var(--weathered-white);
+  border: 2px solid var(--leather-brown-light);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+/* Dotted Ground Texture - Like Reference Books */
+.ground-texture {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: 
+    /* Dotted grass pattern */
+    radial-gradient(circle at 10% 20%, var(--golf-green-dark) 1px, transparent 1px),
+    radial-gradient(circle at 30% 50%, var(--golf-green-medium) 1px, transparent 1px),
+    radial-gradient(circle at 60% 30%, var(--golf-green-dark) 1px, transparent 1px),
+    radial-gradient(circle at 80% 60%, var(--golf-green-medium) 1px, transparent 1px),
+    radial-gradient(circle at 25% 80%, var(--golf-green-dark) 1px, transparent 1px),
+    radial-gradient(circle at 70% 90%, var(--golf-green-medium) 1px, transparent 1px),
+    var(--golf-green-light);
+  background-size: 20px 20px, 15px 15px, 25px 25px, 18px 18px, 22px 22px, 16px 16px, 100% 100%;
+  border-top: 2px dashed var(--golf-green-dark);
+}
+
+/* Sand Texture for Bunkers */
+.sand-texture {
+  background: 
+    radial-gradient(circle at 15% 25%, #deb887 1px, transparent 1px),
+    radial-gradient(circle at 45% 55%, #d2b48c 1px, transparent 1px),
+    radial-gradient(circle at 75% 35%, #deb887 1px, transparent 1px),
+    radial-gradient(circle at 25% 75%, #d2b48c 1px, transparent 1px),
+    #f4e4bc;
+  background-size: 12px 12px, 18px 18px, 15px 15px, 20px 20px, 100% 100%;
+}
+
+/* Stick Figure Golfer - Hand-Drawn Style */
+.stick-golfer {
+  position: relative;
+  width: 60px;
+  height: 80px;
+  margin: 1rem auto;
+}
+
+.golfer-head {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--leather-brown-dark);
+  border-radius: 50%;
+  background: var(--weathered-white);
+}
+
+.golfer-body {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 35px;
+  background: var(--leather-brown-dark);
+}
+
+.golfer-arms {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-25deg);
+  width: 30px;
+  height: 2px;
+  background: var(--leather-brown-dark);
+  border-radius: 1px;
+}
+
+.golfer-legs {
+  position: absolute;
+  top: 47px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.golfer-legs::before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  width: 16px;
+  height: 2px;
+  background: var(--leather-brown-dark);
+  transform: rotate(15deg);
+}
+
+.golfer-legs::after {
+  content: '';
+  position: absolute;
+  right: -8px;
+  width: 16px;
+  height: 2px;
+  background: var(--leather-brown-dark);
+  transform: rotate(-15deg);
+}
+
+.golf-club {
+  position: absolute;
+  top: 10px;
+  left: 65%;
+  transform: rotate(-30deg);
+  width: 2px;
+  height: 45px;
+  background: var(--leather-brown-medium);
+}
+
+.golf-club::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -3px;
+  width: 8px;
+  height: 6px;
+  background: var(--leather-brown-dark);
+  border-radius: 2px;
+}
+
+/* Ball Position Indicators */
+.ball-position {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--weathered-white);
+  border: 2px solid var(--leather-brown-dark);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px var(--golf-green-medium);
+}
+
+/* Swing Path Arrows - Hand-Drawn Style */
+.swing-path {
+  position: absolute;
+  stroke: var(--leather-brown-dark);
+  stroke-width: 2;
+  fill: none;
+  stroke-dasharray: 5, 3;
+  stroke-linecap: round;
+}
+
+.swing-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 10px solid var(--leather-brown-dark);
+}
+
+/* Target Line Indicators */
+.target-line {
+  position: absolute;
+  border-top: 2px dashed var(--golf-green-dark);
+  opacity: 0.7;
+}
+
+.target-line::after {
+  content: '🎯';
+  position: absolute;
+  right: -15px;
+  top: -12px;
+  font-size: 16px;
+}
+
+/* Slope Indicators for Lies */
+.slope-indicator {
+  position: absolute;
+  background: linear-gradient(45deg, 
+    transparent 45%, 
+    var(--leather-brown-light) 45%, 
+    var(--leather-brown-light) 55%, 
+    transparent 55%
+  );
+  background-size: 8px 8px;
+  opacity: 0.3;
+  border-radius: var(--radius-sm);
+}
+
+.uphill-slope {
+  transform: rotate(15deg);
+}
+
+.downhill-slope {
+  transform: rotate(-15deg);
+}
+
+.sidehill-slope {
+  background: linear-gradient(90deg, 
+    transparent 45%, 
+    var(--golf-green-medium) 45%, 
+    var(--golf-green-medium) 55%, 
+    transparent 55%
+  );
+}
+
+/* Wind Indicators */
+.wind-arrows {
+  position: absolute;
+  display: flex;
+  gap: 4px;
+}
+
+.wind-arrow {
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 8px solid #0ea5e9;
+  animation: windSway 2s ease-in-out infinite;
+}
+
+@keyframes windSway {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(3px); }
+}
+
+/* Stance Guides */
+.stance-feet {
+  position: absolute;
+  bottom: 10px;
+}
+
+.foot {
+  position: absolute;
+  width: 16px;
+  height: 8px;
+  background: var(--leather-brown-dark);
+  border-radius: 4px;
+}
+
+.left-foot {
+  left: -20px;
+}
+
+.right-foot {
+  right: -20px;
+}
+
+.square-stance .foot {
+  transform: rotate(0deg);
+}
+
+.open-stance .left-foot {
+  transform: rotate(-15deg);
+}
+
+.closed-stance .right-foot {
+  transform: rotate(15deg);
+}
+
+/* Distance Markers - Like Yardage Books */
+.distance-marker {
+  position: absolute;
+  background: var(--weathered-white);
+  border: 2px solid var(--leather-brown-dark);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-yardages);
+  font-size: 10px;
+  font-weight: bold;
+  color: var(--leather-brown-dark);
+}
+
+/* Club Selection Visual */
+.club-visual {
+  position: relative;
+  display: inline-block;
+  padding: 0.5rem;
+  background: var(--weathered-cream);
+  border: 2px solid var(--leather-brown-medium);
+  border-radius: var(--radius-md);
+  margin: 0.5rem;
+}
+
+.club-visual::before {
+  content: attr(data-club);
+  font-family: var(--font-serif);
+  font-weight: bold;
+  color: var(--leather-brown-dark);
+}
+
+/* Shot Result Indicators */
+.shot-result {
+  position: absolute;
+  font-size: 12px;
+  font-family: var(--font-handwritten);
+  color: var(--golf-green-dark);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--golf-green-medium);
+}
+
+.draw-result::after {
+  content: '↺';
+  margin-left: 4px;
+  color: #dc2626;
+}
+
+.fade-result::after {
+  content: '↻';
+  margin-left: 4px;
+  color: #2563eb;
+}
+
+.high-result::after {
+  content: '↑';
+  margin-left: 4px;
+  color: #16a34a;
+}
+
+.low-result::after {
+  content: '→';
+  margin-left: 4px;
+  color: #ea580c;
+}
+
+/* Tabbed Navigation Enhancement */
+.tab-book-style {
+  position: relative;
+  background: var(--weathered-cream);
+  border: 2px solid var(--leather-brown-medium);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: 0.75rem 1.5rem 0.5rem;
+  margin-right: 2px;
+  transform: perspective(20px) rotateX(2deg);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tab-book-style.active {
+  background: var(--weathered-white);
+  border-bottom: 2px solid var(--weathered-white);
+  transform: perspective(20px) rotateX(0deg) translateY(-2px);
+  z-index: 10;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.tab-book-style::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -10px;
+  width: 10px;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    rgba(139, 69, 19, 0.1) 0%, 
+    transparent 100%
+  );
+  transform: skewX(-10deg);
+}
+
+/* Professional Tips Styling */
+.pro-insight {
+  background: linear-gradient(135deg, 
+    rgba(45, 80, 22, 0.05) 0%, 
+    rgba(75, 124, 35, 0.1) 100%
+  );
+  border: 1px solid var(--golf-green-medium);
+  border-left: 4px solid var(--golf-green-dark);
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  font-family: var(--font-serif);
+  position: relative;
+}
+
+.pro-insight::before {
+  content: '💡';
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.pro-insight-content {
+  margin-left: 2rem;
+  font-style: italic;
+  color: var(--golf-green-dark);
+}
+
+/* Enhanced Learn/Fundamentals Page Styling */
+.page-curl-content-learn {
+  background: var(--weathered-white);
+  border: 2px solid var(--leather-brown-light);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Learn Page Header */
+.learn-page-header {
+  margin-bottom: 1.5rem;
+}
+
+.learn-title-section {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.learn-icon-container {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--golf-green-light), var(--golf-green-medium));
+  border-radius: 50%;
+  border: 3px solid var(--golf-green-dark);
+  box-shadow: var(--shadow-card);
+}
+
+.learn-icon {
+  font-size: 1.8rem;
+  color: var(--weathered-white);
+}
+
+.learn-title-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.learn-page-title {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--leather-brown-dark);
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+
+.learn-page-subtitle {
+  font-family: var(--font-handwritten);
+  font-size: 1.1rem;
+  color: var(--golf-green-dark);
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.learn-difficulty-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--golf-green-medium), var(--golf-green-dark));
+  color: var(--weathered-white);
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-lg);
+  font-family: var(--font-clean);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: var(--shadow-paper);
+}
+
+.learn-page-divider {
+  height: 2px;
+  background: linear-gradient(90deg, 
+    var(--golf-green-medium) 0%, 
+    var(--golf-green-light) 50%, 
+    var(--golf-green-medium) 100%
+  );
+  border-radius: 1px;
+  margin: 1rem 0;
+}
+
+/* Content Grid */
+.learn-content-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.learn-section {
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid var(--leather-brown-light);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-paper);
+  position: relative;
+}
+
+.learn-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 85% 15%, var(--coffee-stain-light) 0%, transparent 8%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.learn-section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--golf-green-light);
+}
+
+.learn-section-icon {
+  font-size: 1.5rem;
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+.learn-section-title {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--leather-brown-dark);
+  margin: 0;
+}
+
+.learn-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.learn-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+}
+
+.learn-item:hover {
+  background: rgba(75, 124, 35, 0.05);
+  transform: translateX(2px);
+}
+
+.learn-bullet {
+  font-size: 1.2rem;
+  font-weight: bold;
+  min-width: 1.25rem;
+  margin-top: 0.1rem;
+  text-align: center;
+}
+
+.learn-bullet.green {
+  color: var(--golf-green-medium);
+}
+
+.learn-bullet.red {
+  color: #dc2626;
+}
+
+.learn-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.75rem;
+  height: 1.75rem;
+  background: var(--golf-green-medium);
+  color: var(--weathered-white);
+  border-radius: 50%;
+  font-family: var(--font-yardages);
+  font-size: 0.85rem;
+  font-weight: bold;
+  margin-top: -0.1rem;
+}
+
+.learn-text {
+  font-family: var(--font-clean);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--leather-brown-dark);
+  flex: 1;
+}
+
+/* Section-specific styling */
+.key-points-section {
+  border-left: 4px solid var(--golf-green-medium);
+}
+
+.mistakes-section {
+  border-left: 4px solid #dc2626;
+}
+
+.drills-section {
+  border-left: 4px solid #2563eb;
+}
+
+/* Bottom Insights */
+.learn-insights {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: auto;
+}
+
+.learn-insight-card {
+  background: var(--weathered-cream);
+  border: 2px solid var(--leather-brown-medium);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  position: relative;
+  box-shadow: var(--shadow-card);
+}
+
+.learn-insight-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, var(--coffee-stain-light) 0%, transparent 10%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.insight-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.insight-emoji {
+  font-size: 1.5rem;
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+.insight-title {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--leather-brown-dark);
+  margin: 0;
+}
+
+.insight-text {
+  font-family: var(--font-clean);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--leather-brown-dark);
+  margin: 0;
+}
+
+.insight-quote {
+  font-family: var(--font-handwritten);
+  font-size: 1.05rem;
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--golf-green-dark);
+  margin: 0;
+}
+
+.insight-quote.memorable {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--leather-brown-dark);
+}
+
+/* Card-specific styling */
+.pro-tip-card {
+  background: linear-gradient(135deg, 
+    var(--weathered-cream) 0%, 
+    rgba(75, 124, 35, 0.1) 100%
+  );
+  border-color: var(--golf-green-medium);
+}
+
+.mental-cue-card {
+  background: linear-gradient(135deg, 
+    var(--weathered-cream) 0%, 
+    rgba(59, 130, 246, 0.1) 100%
+  );
+  border-color: #3b82f6;
+}
+
+.quote-card {
+  background: linear-gradient(135deg, 
+    var(--weathered-cream) 0%, 
+    rgba(147, 51, 234, 0.1) 100%
+  );
+  border-color: #9333ea;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .learn-title-section {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+  }
+  
+  .learn-icon-container {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .learn-icon {
+    font-size: 1.5rem;
+  }
+  
+  .learn-page-title {
+    font-size: 1.5rem;
+  }
+  
+  .learn-section {
+    padding: 1rem;
+  }
+  
+  .learn-insight-card {
+    padding: 1rem;
+  }
 } 
