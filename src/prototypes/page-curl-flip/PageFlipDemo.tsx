@@ -1,5 +1,7 @@
 import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import type { PageContent, PageFlipProps, CurlState, CurlConfig } from './types';
+import { FaBars, FaTimes, FaGolfBall, FaBook, FaCalculator, FaUser, FaBullseye } from 'react-icons/fa';
+import { TbGolf } from 'react-icons/tb';
 
 // Web Haptic Feedback utility
 const triggerHapticFeedback = (intensity: 'light' | 'medium' | 'heavy' = 'medium') => {
@@ -261,7 +263,7 @@ const createGolfContent = (): PageContent[] => [
           </div>
           
           <div className="pro-tip">
-            <div className="tip-icon">🎯</div>
+            <div className="tip-icon">FOCUS</div>
             <p className="tip-text">
               "Swing with the hill, not against it"
             </p>
@@ -309,7 +311,7 @@ const createGolfContent = (): PageContent[] => [
           </div>
           
           <div className="pro-tip">
-            <div className="tip-icon">💡</div>
+            <div className="tip-icon">TIP</div>
             <p className="tip-text">
               "Land it on the green and let it roll to the hole"
             </p>
@@ -332,7 +334,8 @@ const curlConfig: CurlConfig = {
 const PageFlipDemo: React.FC<PageFlipProps> = ({ 
   pages: externalPages,
   currentPage: externalCurrentPage,
-  onPageChange: externalOnPageChange 
+  onPageChange: externalOnPageChange,
+  tabId = 'shots' // Add tabId prop for contextual menu
 }) => {
   // Use internal state if no external props provided
   const defaultPages = useMemo(() => createGolfContent(), []);
@@ -683,7 +686,60 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
     }
   }, [currentPage, onPageChange]);
 
+  // Contextual menu data based on tab
+  const getContextualMenuData = (tabId: string) => {
+    switch (tabId) {
+      case 'shots':
+        return [
+          { name: 'Uphill Lie', page: 1, description: 'Ball above feet on upslope' },
+          { name: 'Downhill Lie', page: 2, description: 'Ball below feet on downslope' },
+          { name: 'Ball Above Feet', page: 3, description: 'Standing below ball on sidehill' },
+          { name: 'Ball Below Feet', page: 4, description: 'Standing above ball on sidehill' },
+          { name: 'Fairway Bunker', page: 5, description: 'Good lie in fairway bunker' },
+          { name: 'Greenside Bunker', page: 6, description: 'Short bunker shot to green' },
+          { name: 'Deep Bunker', page: 7, description: 'High lip bunker' },
+          { name: 'Wet Sand Bunker', page: 8, description: 'Bunker after rain' },
+          { name: 'Trees/Obstacles', page: 9, description: 'Behind trees or obstacles' },
+          { name: 'Low Punch Shot', page: 10, description: 'Under trees or in wind' },
+          { name: 'Into the Wind', page: 11, description: 'Strong headwind' },
+          { name: 'With the Wind', page: 12, description: 'Strong tailwind' },
+          { name: 'Crosswind Left to Right', page: 13, description: 'Wind blowing left to right' },
+          { name: 'Crosswind Right to Left', page: 14, description: 'Wind blowing right to left' },
+          { name: 'Fade Shot', page: 15, description: 'Need ball to curve left to right' },
+          { name: 'Draw Shot', page: 16, description: 'Need ball to curve right to left' },
+          { name: 'Flop Shot', page: 17, description: 'Short distance over obstacle' },
+          { name: 'Bump and Run', page: 18, description: 'Lots of green to work with' },
+          { name: 'Pitch Shot', page: 19, description: '30-60 yards to pin' },
+          { name: 'Chip Shot', page: 20, description: 'Just off the green' }
+        ];
+      case 'putting':
+        return [
+          { name: 'Straight Putt', page: 1, description: 'Ball directly in line with hole' },
+          { name: 'Uphill Putt', page: 2, description: 'Putting uphill to the hole' },
+          { name: 'Downhill Putt', page: 3, description: 'Putting downhill to the hole' },
+          { name: 'Breaking Putt', page: 4, description: 'Green has significant slope' },
+          { name: 'Long Lag Putt', page: 5, description: 'Long putts (20+ feet)' },
+          { name: 'Short Pressure Putt', page: 6, description: '3-6 foot putts that matter' }
+        ];
+      case 'learn':
+        return [
+          { name: 'Proper Setup & Posture', page: 1, description: 'The foundation of every good golf swing' },
+          { name: 'Proper Grip', page: 2, description: 'Your only connection to the club' },
+          { name: 'Swing Tempo', page: 3, description: 'The rhythm that makes everything work' },
+          { name: 'Weight Transfer', page: 4, description: 'Power comes from the ground up' },
+          { name: 'Ball Position', page: 5, description: 'Where you place the ball determines contact quality' },
+          { name: 'Alignment', page: 6, description: 'Aiming your body and club correctly' },
+          { name: 'Swing Plane', page: 7, description: 'The path your club travels around your body' },
+          { name: 'Impact Position', page: 8, description: 'The moment of truth in every golf swing' },
+          { name: 'Follow Through', page: 9, description: 'Completing the swing with proper finish' },
+          { name: 'Pre-Shot Routine', page: 10, description: 'Consistent preparation for every shot' }
+        ];
+      default:
+        return [];
+    }
+  };
 
+  const menuData = getContextualMenuData(tabId);
 
   return (
     <>
@@ -1092,83 +1148,123 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
           display: none;
         }
 
+        .menu-button {
+          position: absolute;
+          top: 4rem;
+          right: 4rem;
+          width: 40px;
+          height: 40px;
+          background: rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(5px);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 40;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          transition: all 0.2s ease-in-out;
+          cursor: pointer;
+          opacity: 0.8;
+        }
 
+        .menu-button:hover {
+          background: rgba(255, 255, 255, 0.2);
+          opacity: 1;
+        }
+
+        .menu-button:active {
+          transform: scale(0.9);
+        }
+
+        .menu-button svg {
+          width: 24px;
+          height: 24px;
+        }
+
+        .menu-button.active {
+          background: rgba(255, 255, 255, 0.3);
+          opacity: 1;
+        }
+
+        .menu-button.active svg {
+          transform: rotate(90deg);
+        }
+
+        .menu-button.active:hover {
+          background: rgba(255, 255, 255, 0.4);
+        }
+
+        .menu-button.active:active {
+          transform: scale(0.9) rotate(90deg);
+        }
+
+        .menu-button.active:hover svg {
+          transform: rotate(90deg);
+        }
+
+        .menu-button.active:active svg {
+          transform: rotate(90deg);
+        }
 
 
       `}</style>
 
       <div className="w-full h-full bg-white overflow-hidden relative page-curl-flip">
-        {/* Subtle Navigation Button - Top Right */}
+        {/* Contextual Navigation Menu - Top Right */}
         <button
           onClick={() => setShowQuickTOC(!showQuickTOC)}
-          className="absolute top-4 right-4 w-8 h-8 bg-black/10 hover:bg-black/20 rounded-full 
-                     flex items-center justify-center transition-all duration-200 z-40
-                     backdrop-blur-sm border border-white/20 shadow-sm
-                     active:scale-95"
+          className="menu-button"
+          aria-label="Open navigation menu"
         >
-          <div className="flex flex-col gap-0.5">
-            <div className="w-3 h-0.5 bg-gray-700 rounded-full"></div>
-            <div className="w-3 h-0.5 bg-gray-700 rounded-full"></div>
-            <div className="w-3 h-0.5 bg-gray-700 rounded-full"></div>
-          </div>
+          <FaBars className="text-golf-green text-lg" />
         </button>
 
-        {/* Quick Table of Contents Overlay */}
+        {/* Contextual Table of Contents Overlay */}
         {showQuickTOC && (
-          <div className="absolute inset-0 bg-black/50 z-50 flex items-center justify-center" onClick={() => setShowQuickTOC(false)}>
-            <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full mx-4 max-h-[80vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+          <div className="fixed inset-0 overlay-glass z-[2000] flex items-center justify-center" onClick={() => setShowQuickTOC(false)}>
+            <div className="bg-weathered-white rounded-2xl shadow-2xl max-w-sm w-full mx-4 max-h-[80vh] overflow-y-auto border-2 border-leather-brown-light" onClick={(e) => e.stopPropagation()}>
               <div className="p-6">
                 <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-xl font-bold text-gray-800">Quick Navigation</h3>
+                  <h3 className="text-xl font-headers text-golf-green font-bold">Shot Navigation</h3>
                   <button 
                     onClick={() => setShowQuickTOC(false)}
-                    className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center"
+                    className="w-8 h-8 rounded-full bg-leather-brown-light hover:bg-leather-brown flex items-center justify-center text-weathered-white transition-colors"
                   >
-                    ✕
+                    <FaTimes className="text-sm" />
                   </button>
                 </div>
                 
                 <div className="space-y-2">
-                  {[
-                    { category: 'intro', name: 'Introduction', icon: '📖', color: 'bg-gray-500', page: 0 },
-                    { category: 'lies', name: 'Bad Lies', icon: '⛰️', color: 'bg-amber-500', page: 1, description: 'Uphill, Downhill, Sidehill shots' },
-                    { category: 'bunker', name: 'Bunker Shots', icon: '🏖️', color: 'bg-yellow-500', page: 5, description: 'Sand play techniques' },
-                    { category: 'trouble', name: 'Trouble Shots', icon: '🌲', color: 'bg-green-500', page: 9, description: 'Trees, obstacles, recovery' },
-                    { category: 'wind', name: 'Wind Play', icon: '💨', color: 'bg-blue-500', page: 11, description: 'Into, with, and crosswinds' },
-                    { category: 'shots', name: 'Shot Shaping', icon: '🎯', color: 'bg-purple-500', page: 15, description: 'Draws, fades, specialty shots' },
-                    { category: 'short', name: 'Short Game', icon: '⛳', color: 'bg-pink-500', page: 19, description: 'Pitching and chipping' }
-                  ].map((section, index) => (
+                  {menuData.map((section, index) => (
                     <button
-                      key={section.category}
+                      key={section.name}
                       onClick={() => {
                         playPaperSound('flip');
                         triggerHapticFeedback('light');
                         onPageChange(section.page);
                         setShowQuickTOC(false);
                       }}
-                      className="w-full p-3 rounded-lg border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all duration-200 text-left"
+                      className="w-full p-3 rounded-lg border border-leather-brown-light hover:border-golf-green hover:shadow-sm transition-all duration-200 text-left bg-weathered-cream hover:bg-weathered-white"
                     >
                       <div className="flex items-center gap-3">
-                        <div className={`w-8 h-8 ${section.color} rounded-lg flex items-center justify-center text-white text-sm shrink-0`}>
-                          {section.icon}
+                        <div className="w-8 h-8 bg-golf-green rounded-lg flex items-center justify-center text-weathered-white text-xs font-data font-bold shrink-0">
+                          {section.page}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <div className="font-medium text-gray-800 text-sm">{section.name}</div>
+                          <div className="font-body font-medium text-golf-green text-sm">{section.name}</div>
                           {section.description && (
-                            <div className="text-xs text-gray-500 truncate">{section.description}</div>
+                            <div className="text-xs text-pencil-gray truncate font-handwritten">{section.description}</div>
                           )}
-                        </div>
-                        <div className="text-xs text-gray-400">
-                          Page {section.page}
                         </div>
                       </div>
                     </button>
                   ))}
                 </div>
                 
-                <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-                  <div className="text-xs text-gray-600 text-center">
-                    💡 <strong>Tip:</strong> Grab bottom corners to flip forward, top corners to flip back
+                <div className="mt-4 p-3 bg-coffee-stain rounded-lg border border-leather-brown-light">
+                  <div className="text-xs text-golf-green text-center font-handwritten">
+                    TIP: Grab bottom corners to flip forward, top corners to flip back
                   </div>
                 </div>
               </div>

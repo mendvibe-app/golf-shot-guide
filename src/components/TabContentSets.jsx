@@ -772,7 +772,7 @@ const createFundamentalPage = (fundamental, index) => ({
         <div className="learn-insights">
           <div className="learn-insight-card pro-tip-card">
             <div className="insight-header">
-              <span className="insight-emoji">💡</span>
+              <span className="insight-emoji">TIP</span>
               <h4 className="insight-title">Pro Tip</h4>
             </div>
             <p className="insight-text">{fundamental.proTip}</p>

@@ -69,6 +69,98 @@
   --radius-xl: 1.5rem;
   --radius-2xl: 2rem;
 }
+.shot-viz-card { background: var(--aged-white); border: 1px solid var(--leather-brown-light); border-radius: 12px; padding: 12px; }
+.shot-viz-header { display:flex; justify-content: space-between; align-items:center; margin-bottom: 6px; }
+.shot-viz-header .club-name { font-weight: 800; color: var(--golf-green); font-size: 1.1rem; }
+.shot-viz-header .club-yards { font-weight: 800; color: var(--leather-brown); font-size: 1rem; }
+.trajectory-svg { width: 100%; height: 220px; }
+.trajectory-arc { stroke: var(--golf-green); stroke-width: 5px; fill: none; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
+.landing-zone { fill: rgba(45,80,22,0.18); stroke: var(--golf-green); stroke-width: 2px; }
+.label-strong { font-family: var(--font-data); font-size: 13px; fill: var(--golf-green); paint-order: stroke; stroke: #fff; stroke-width: 3px; }
+.shot-quick-stats { display:flex; justify-content: space-between; margin-top: 6px; }
+.shot-quick-stats .stat { display:flex; flex-direction: column; align-items:center; flex:1; }
+.shot-quick-stats .label { font-size: 12px; color: var(--pencil-gray); }
+.shot-quick-stats .value { font-size: 16px; color: var(--golf-green); font-weight: 700; }
+.club-switcher { display:flex; gap: 8px; margin-top: 10px; }
+.club-btn { flex:1; min-height:44px; border:2px solid var(--leather-brown); border-radius: 8px; background: var(--weathered-cream); font-weight:700; color: var(--pencil-gray); }
+.club-btn.primary { background: var(--golf-green); color: var(--weathered-white); border-color: var(--golf-green); }
+
+/* Utility helpers to back classNames used in JSX (Tailwind-like tokens) */
+.bg-weathered-white { background: var(--weathered-white); }
+.bg-weathered-cream { background: var(--weathered-cream); }
+.bg-leather-brown { background: var(--leather-brown); }
+.bg-leather-brown-light { background: var(--leather-brown-light); }
+.bg-golf-green { background: var(--golf-green); }
+.text-golf-green { color: var(--golf-green); }
+.text-weathered-white { color: var(--weathered-white); }
+.border-leather-brown-light { border-color: var(--leather-brown-light); }
+.border-leather-brown { border-color: var(--leather-brown); }
+.rounded-2xl { border-radius: 1.5rem; }
+.shadow-2xl { box-shadow: var(--shadow-floating); }
+.max-w-sm { max-width: 24rem; }
+.mx-4 { margin-left: 1rem; margin-right: 1rem; }
+.max-h\[80vh\] { max-height: 80vh; }
+.p-6 { padding: 1.5rem; }
+.w-8 { width: 2rem; }
+.h-8 { height: 2rem; }
+.rounded-full { border-radius: 9999px; }
+.hover\:bg-leather-brown:hover { background: var(--leather-brown); }
+.transition-colors { transition: background-color 0.2s ease, color 0.2s ease; }
+.space-y-2 > * + * { margin-top: 0.5rem; }
+.p-3 { padding: 0.75rem; }
+.rounded-lg { border-radius: 0.5rem; }
+.border { border-width: 1px; }
+.hover\:border-golf-green:hover { border-color: var(--golf-green); }
+.hover\:shadow-sm:hover { box-shadow: 0 1px 2px rgba(0,0,0,0.12); }
+.transition-all { transition: all 0.2s ease; }
+.duration-200 { transition-duration: 200ms; }
+.text-left { text-align: left; }
+.hover\:bg-weathered-white:hover { background: var(--weathered-white); }
+.bg-weathered-cream { background: var(--weathered-cream); }
+.flex { display: flex; }
+.items-center { align-items: center; }
+.gap-3 { gap: 0.75rem; }
+.w-8 { width: 2rem; }
+.h-8 { height: 2rem; }
+.text-xs { font-size: 0.75rem; }
+.font-data { font-family: var(--font-data); }
+.font-headers { font-family: var(--font-headers); }
+.font-body { font-family: var(--font-body); }
+.font-handwritten { font-family: var(--font-handwritten); }
+.font-bold { font-weight: 700; }
+.font-medium { font-weight: 600; }
+.shrink-0 { flex-shrink: 0; }
+.flex-1 { flex: 1 1 0%; }
+.min-w-0 { min-width: 0; }
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mt-4 { margin-top: 1rem; }
+.text-center { text-align: center; }
+.rounded-lg { border-radius: 0.5rem; }
+.border-2 { border-width: 2px; }
+.z-50 { z-index: 50; }
+.z-\[2000\] { z-index: 2000; }
+.absolute { position: absolute; }
+.fixed { position: fixed; }
+.inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.w-full { width: 100%; }
+.max-w-sm { max-width: 24rem; }
+.overflow-y-auto { overflow-y: auto; }
+.mx-4 { margin-left: 1rem; margin-right: 1rem; }
+.text-lg { font-size: 1.125rem; }
+.bg-black\/95 { background: rgba(0,0,0,0.95); }
+.bg-black\/90 { background: rgba(0,0,0,0.9); }
+.bg-black\/80 { background: rgba(0,0,0,0.8); }
+
+/* Frosted overlay helpers */
+.bg-transparent { background: transparent; }
+.overlay-glass {
+  background: rgba(245, 242, 232, 0.12); /* subtle warm tint over content */
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+}
+.bg-black\/50 { background: rgba(0,0,0,0.5); }
 
 * {
   box-sizing: border-box;
@@ -1504,21 +1596,28 @@ div.drills-section {
   right: 1rem;
   z-index: 1000;
   background: var(--weathered-white);
-  border: 1px solid var(--leather-brown-light);
+  border: 2px solid var(--leather-brown);
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: var(--shadow-card);
   cursor: pointer;
   transition: all 0.2s ease;
+  color: var(--golf-green);
 }
 
 .menu-button:hover {
   transform: translateY(-1px);
   box-shadow: var(--shadow-floating);
+  background: var(--aged-white);
+  border-color: var(--golf-green);
+}
+
+.menu-button:active {
+  transform: scale(0.95);
 }
 
 /* Ensure content extends under menu */

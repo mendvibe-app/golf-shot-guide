@@ -48,6 +48,8 @@ import {
   TbTarget,
   TbGolf
 } from "react-icons/tb";
+import DistanceVisualization from "./components/DistanceVisualization.jsx";
+import MobileShotViz from "./components/MobileShotViz.jsx";
 
 const GolfShotGuide = () => {
   // Add spiral binding styles to the document
@@ -2366,7 +2368,7 @@ const GolfShotGuide = () => {
             {wind !== "none" && windSpeed > 0 && (
               <div className="learn-insight-card mental-cue-card">
                 <div className="insight-header">
-                  <span className="insight-emoji">💨</span>
+                  <span className="insight-emoji">WIND</span>
                   <h4 className="insight-title">Wind Strategy</h4>
                 </div>
                 <p className="insight-quote memorable">
@@ -2381,7 +2383,7 @@ const GolfShotGuide = () => {
             {distance > 0 && (
               <div className="learn-insight-card pro-tip-card">
                 <div className="insight-header">
-                  <span className="insight-emoji">🏌️</span>
+                  <span className="insight-emoji">PUTT</span>
                   <h4 className="insight-title">Club Recommendation</h4>
                 </div>
                 <div className="text-center space-y-4">
@@ -2408,14 +2410,13 @@ const GolfShotGuide = () => {
                   <span className="learn-section-icon">VIZ</span>
                   <h3 className="learn-section-title">Shot Visualization</h3>
                 </div>
-                <div className="hole-diagram">
-                  <div className="hole-fairway">
-                    <div className="hole-tee"></div>
-                    <div className="hole-green"></div>
-                    <div className="hole-flag flag-wave"></div>
-                    <div className="yardage-label">{distance}y</div>
-                  </div>
-                </div>
+                {/* Mobile-first, focused viz */}
+                <MobileShotViz
+                  distances={personalSettings.distances}
+                  recommendedClub={getClubRecommendation(distance, windSpeed, wind).club}
+                  wind={wind}
+                  windSpeed={windSpeed}
+                />
                 <p className="handwritten-tip font-handwritten text-golf-green text-center mt-3">
                   "Account for pin position and green slope - play smart!"
                 </p>

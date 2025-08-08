@@ -8,6 +8,7 @@ export interface PageFlipProps {
   pages: PageContent[];
   currentPage: number;
   onPageChange: (page: number) => void;
+  tabId?: string; // Optional tabId for contextual menu
 }
 
 export interface CurlState {

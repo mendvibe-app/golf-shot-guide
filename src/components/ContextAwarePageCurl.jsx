@@ -43,6 +43,7 @@ const ContextAwarePageCurl = ({
           pages={contentSet}
           currentPage={currentPage}
           onPageChange={handlePageChange}
+          tabId={tabId}
         />
       </div>
     </div>
