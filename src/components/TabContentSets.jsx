@@ -119,7 +119,7 @@ const createShotPage = (shot, index) => {
           {shot.whenToUse && (
             <div className="learn-section key-points-section mb-8">
               <div className="learn-section-header">
-                <span className="learn-section-icon">🎯</span>
+                <span className="learn-section-icon">WHEN</span>
                 <h3 className="learn-section-title">When to Use</h3>
               </div>
               <p className="learn-text">{shot.whenToUse}</p>
@@ -129,7 +129,7 @@ const createShotPage = (shot, index) => {
           {/* SETUP GRID - Pro Tour technical specifications */}
           <div className="learn-section drills-section mb-8">
             <div className="learn-section-header">
-              <span className="learn-section-icon">⚙️</span>
+                              <span className="learn-section-icon">SETUP</span>
               <h3 className="learn-section-title">Setup & Execution</h3>
             </div>
             <div className="learn-list">
@@ -155,7 +155,7 @@ const createShotPage = (shot, index) => {
           {/* SWING THOUGHTS - Mental game */}
           <div className="learn-section mistakes-section mb-8">
             <div className="learn-section-header">
-              <span className="learn-section-icon">🧠</span>
+              <span className="learn-section-icon">THINK</span>
               <h3 className="learn-section-title">Swing Thoughts</h3>
             </div>
             <div className="learn-list">
@@ -172,7 +172,7 @@ const createShotPage = (shot, index) => {
           <div className="learn-insights">
             <div className="learn-insight-card mental-cue-card">
               <div className="insight-header">
-                <span className="insight-emoji">💭</span>
+                <span className="insight-emoji">REMEMBER</span>
                 <h4 className="insight-title">Remember This</h4>
               </div>
               <p className="insight-quote memorable">"{shot.memorableQuote}"</p>
@@ -180,7 +180,7 @@ const createShotPage = (shot, index) => {
             
             <div className="learn-insight-card pro-tip-card">
               <div className="insight-header">
-                <span className="insight-emoji">💡</span>
+                <span className="insight-emoji">TIP</span>
                 <h4 className="insight-title">Pro Tip</h4>
               </div>
               <p className="insight-text">{shot.proTip}</p>
@@ -314,7 +314,7 @@ const createPuttingPage = (putt, index) => {
           {putt.whenToUse && (
             <div className="learn-section key-points-section mb-8">
               <div className="learn-section-header">
-                <span className="learn-section-icon">🎯</span>
+                <span className="learn-section-icon">WHEN</span>
                 <h3 className="learn-section-title">When to Use</h3>
               </div>
               <p className="learn-text">{putt.whenToUse}</p>
@@ -324,7 +324,7 @@ const createPuttingPage = (putt, index) => {
           {/* SETUP GRID - Pro Tour technical specifications */}
           <div className="learn-section drills-section mb-8">
             <div className="learn-section-header">
-              <span className="learn-section-icon">⚙️</span>
+                              <span className="learn-section-icon">SETUP</span>
               <h3 className="learn-section-title">Setup & Execution</h3>
             </div>
             <div className="learn-list">
@@ -350,7 +350,7 @@ const createPuttingPage = (putt, index) => {
           {/* SWING THOUGHTS - Mental game */}
           <div className="learn-section mistakes-section mb-8">
             <div className="learn-section-header">
-              <span className="learn-section-icon">🧠</span>
+              <span className="learn-section-icon">THINK</span>
               <h3 className="learn-section-title">Key Thoughts</h3>
             </div>
             <div className="learn-list">
@@ -367,7 +367,7 @@ const createPuttingPage = (putt, index) => {
           <div className="learn-insights">
             <div className="learn-insight-card mental-cue-card">
               <div className="insight-header">
-                <span className="insight-emoji">💭</span>
+                <span className="insight-emoji">REMEMBER</span>
                 <h4 className="insight-title">Remember This</h4>
               </div>
               <p className="insight-quote memorable">"{putt.memorableQuote}"</p>
@@ -375,7 +375,7 @@ const createPuttingPage = (putt, index) => {
             
             <div className="learn-insight-card pro-tip-card">
               <div className="insight-header">
-                <span className="insight-emoji">💡</span>
+                <span className="insight-emoji">TIP</span>
                 <h4 className="insight-title">Pro Tip</h4>
               </div>
               <p className="insight-text">{putt.proTip}</p>
@@ -738,7 +738,7 @@ const createFundamentalPage = (fundamental, index) => ({
           {/* Common Mistakes Section */}
           <div className="learn-section mistakes-section">
             <div className="learn-section-header">
-              <span className="learn-section-icon">❌</span>
+              <span className="learn-section-icon">AVOID</span>
               <h3 className="learn-section-title">Avoid These</h3>
             </div>
             <div className="learn-list">
@@ -754,7 +754,7 @@ const createFundamentalPage = (fundamental, index) => ({
           {/* Practice Drills Section */}
           <div className="learn-section drills-section">
             <div className="learn-section-header">
-              <span className="learn-section-icon">🏌️</span>
+              <span className="learn-section-icon">DRILL</span>
               <h3 className="learn-section-title">Practice Drills</h3>
             </div>
             <div className="learn-list">
@@ -780,7 +780,7 @@ const createFundamentalPage = (fundamental, index) => ({
           
           <div className="learn-insight-card mental-cue-card">
             <div className="insight-header">
-              <span className="insight-emoji">🧠</span>
+              <span className="insight-emoji">THINK</span>
               <h4 className="insight-title">Mental Cue</h4>
             </div>
             <p className="insight-quote">"{fundamental.mentalCue}"</p>
@@ -788,7 +788,7 @@ const createFundamentalPage = (fundamental, index) => ({
           
           <div className="learn-insight-card quote-card">
             <div className="insight-header">
-              <span className="insight-emoji">✨</span>
+              <span className="insight-emoji">QUOTE</span>
               <h4 className="insight-title">Remember This</h4>
             </div>
             <p className="insight-quote memorable">"{fundamental.memorableQuote}"</p>

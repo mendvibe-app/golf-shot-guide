@@ -2405,7 +2405,7 @@ const GolfShotGuide = () => {
             {distance > 0 && (
               <div className="learn-section mistakes-section">
                 <div className="learn-section-header">
-                  <span className="learn-section-icon">🎯</span>
+                  <span className="learn-section-icon">VIZ</span>
                   <h3 className="learn-section-title">Shot Visualization</h3>
                 </div>
                 <div className="hole-diagram">
@@ -2422,11 +2422,11 @@ const GolfShotGuide = () => {
               </div>
             )}
 
-            <div className="learn-insight-card mental-cue-card">
-              <div className="insight-header">
-                <span className="insight-emoji">🎯</span>
-                <h4 className="insight-title">Mental Game</h4>
-              </div>
+                          <div className="learn-insight-card mental-cue-card">
+                <div className="insight-header">
+                  <span className="insight-emoji">FOCUS</span>
+                  <h4 className="insight-title">Mental Game</h4>
+                </div>
               <p className="insight-quote memorable">
                 "Trust your yardage and commit to the swing - doubt leads to poor contact"
               </p>
@@ -2994,7 +2994,7 @@ const GolfShotGuide = () => {
 
               <div className="learn-section mistakes-section">
                 <div className="learn-section-header">
-                  <span className="learn-section-icon">🧠</span>
+                  <span className="learn-section-icon">THINK</span>
                   <h3 className="learn-section-title">Swing Thoughts</h3>
                 </div>
                 <div className="learn-list">
@@ -3009,7 +3009,7 @@ const GolfShotGuide = () => {
 
               <div className="learn-insight-card pro-tip-card">
                 <div className="insight-header">
-                  <span className="insight-emoji">💡</span>
+                  <span className="insight-emoji">TIP</span>
                   <h4 className="insight-title">Pro Tip</h4>
                 </div>
                 <p className="insight-text">{selectedShot.proTip}</p>
@@ -3017,7 +3017,7 @@ const GolfShotGuide = () => {
 
               <div className="learn-insight-card mental-cue-card">
                 <div className="insight-header">
-                  <span className="insight-emoji">💭</span>
+                  <span className="insight-emoji">REMEMBER</span>
                   <h4 className="insight-title">Remember This</h4>
                 </div>
                 <p className="insight-quote memorable">"{selectedShot.memorableQuote}"</p>
