@@ -168,7 +168,7 @@ const playPaperSound = (type: 'flip' | 'rustle' = 'rustle') => {
     }
   } catch (error) {
     // Ultra-quiet fallback - almost no sound
-    console.log(`🔊 Organic ${type} sound (${error})`);
+    // Sound playback failed silently
   }
 };
 
@@ -503,33 +503,23 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
     
     // Larger corner areas for mobile (easier to grab)
     const cornerSize = Math.max(curlConfig.cornerSize, 100); // Minimum 100px for mobile
-    
-    // Debug logging
-    console.log(`📍 Touch at: (${Math.round(relativeX)}, ${Math.round(relativeY)}) | Container: ${Math.round(rect.width)}x${Math.round(rect.height)} | Corner size: ${cornerSize} | Page: ${currentPage}`);
-    
+
     // Bottom corners for NEXT page
     if (relativeX < cornerSize && relativeY > rect.height - cornerSize) {
-      console.log('🔥 Detected bottom-left corner');
       return 'bottom-left';
     }
     if (relativeX > rect.width - cornerSize && relativeY > rect.height - cornerSize) {
-      console.log('🔥 Detected bottom-right corner');
       return 'bottom-right';
     }
-    
+
     // Top corners for PREVIOUS page (only if not on first page)
     if (currentPage > 0) {
-      console.log(`🔍 Checking top corners: relativeY < ${cornerSize}? ${relativeY < cornerSize}`);
       if (relativeX < cornerSize && relativeY < cornerSize) {
-        console.log('🔥 Detected top-left corner (go back!)');
         return 'top-left';
       }
       if (relativeX > rect.width - cornerSize && relativeY < cornerSize) {
-        console.log('🔥 Detected top-right corner (go back!)');
         return 'top-right';
       }
-    } else {
-      console.log('❌ Cannot go back - on first page');
     }
     
     return null;
@@ -1064,32 +1054,7 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
         .tip-icon { font-size: 2rem; }
         .tip-text { color: #374151; font-weight: 500; font-style: italic; font-size: 1.125rem; }
 
-        /* Corner curl indicators for vertical flipping */
-        .page-curl-container::after {
-          content: '';
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          width: 80px;
-          height: 80px;
-          background: 
-            radial-gradient(
-              circle at bottom left,
-              rgba(255,255,255,0.2) 0%,
-              rgba(255,255,255,0.1) 40%,
-              transparent 70%
-            );
-          border-radius: 0 50px 0 0;
-          pointer-events: none;
-          opacity: 0;
-          transition: opacity 0.3s ease;
-        }
-
-        .page-curl-container:hover::after {
-          opacity: 1;
-        }
-
-        /* Bottom-right corner indicator */
+        /* Bottom-right corner indicator (forward navigation) */
         .page-curl-container::before {
           content: '';
           position: absolute;
@@ -1097,7 +1062,7 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
           right: 0;
           width: 80px;
           height: 80px;
-          background: 
+          background:
             radial-gradient(
               circle at bottom right,
               rgba(255,255,255,0.2) 0%,
@@ -1114,22 +1079,22 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
           opacity: 1;
         }
 
-        /* Top corner indicators for backward navigation */
+        /* Bottom-left corner indicator - using box-shadow approach */
         .page-curl-container::after {
           content: '';
           position: absolute;
-          top: 0;
+          bottom: 0;
           left: 0;
           width: 80px;
           height: 80px;
-          background: 
+          background:
             radial-gradient(
-              circle at top left,
-              rgba(59,130,246,0.3) 0%,
-              rgba(59,130,246,0.15) 40%,
+              circle at bottom left,
+              rgba(255,255,255,0.2) 0%,
+              rgba(255,255,255,0.1) 40%,
               transparent 70%
             );
-          border-radius: 0 0 50px 0;
+          border-radius: 0 50px 0 0;
           pointer-events: none;
           opacity: 0;
           transition: opacity 0.3s ease;
@@ -1139,13 +1104,17 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
           opacity: 1;
         }
 
-        /* Show top corner indicators only when not on first page */
-        .page-curl-container[data-can-go-back="true"]:hover::after {
-          opacity: 1;
+        /* Top corners hint - only show when can go back (styled via box-shadow on after element) */
+        .page-curl-container[data-can-go-back="true"]::after {
+          box-shadow:
+            -80px -80px 0 0 transparent,
+            0 -80px 80px -40px rgba(59,130,246,0.15);
         }
 
-        .page-curl-container[data-can-go-back="false"]::after {
-          display: none;
+        .page-curl-container[data-can-go-back="true"]:hover::after {
+          box-shadow:
+            -80px -80px 0 0 transparent,
+            0 -80px 80px -40px rgba(59,130,246,0.25);
         }
 
         .menu-button {
