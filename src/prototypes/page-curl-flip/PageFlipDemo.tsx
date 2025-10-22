@@ -861,8 +861,9 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
           flex: 1;
           overflow-y: auto;
           overflow-x: hidden;
-          padding: 1.5rem;
-          margin: 60px 8px 140px 20px; /* Extra bottom margin for safe scrolling on all devices */
+          padding: 1rem 1.5rem;
+          padding-top: 1rem; /* Space for menu button */
+          padding-bottom: 8rem; /* Extra bottom padding to ensure content is not hidden behind bottom nav */
           -webkit-overflow-scrolling: touch;
           overscroll-behavior: contain;
           touch-action: pan-y;
@@ -1015,7 +1016,7 @@ const PageFlipDemo: React.FC<PageFlipProps> = ({
           bottom: 2rem; left: 2rem; width: 1.5rem; height: 1rem; background: #a16207;
         }
 
-        .page-curl-body { margin-top: 1rem; margin-bottom: 140px; flex: 1; /* Extra bottom margin for safe scrolling on all devices */ }
+        .page-curl-body { margin-top: 1rem; flex: 1; }
         .page-curl-header { text-align: center; margin-bottom: 1.5rem; }
         .hole-title { font-size: 1.5rem; font-weight: bold; color: #374151; margin-bottom: 0.5rem; }
         .hole-subtitle { color: #6b7280; font-weight: 500; }

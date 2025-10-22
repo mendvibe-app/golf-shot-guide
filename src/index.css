@@ -1620,11 +1620,7 @@ div.drills-section {
   transform: scale(0.95);
 }
 
-/* Ensure content extends under menu */
-.page-curl-scrollable {
-  margin-top: -40px; /* Negative margin to extend under menu */
-  padding-top: 0;
-}
+/* Ensure content is properly positioned */
 
 /* Page Curl Container Wrapper */
 .page-curl-wrapper {
@@ -1632,7 +1628,7 @@ div.drills-section {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -1642,13 +1638,14 @@ div.drills-section {
 /* Page Curl Scrollable Container */
 .page-curl-scrollable {
   flex: 1 1 auto;
-  overflow-y: scroll;
-  padding: 0 1rem 5rem 1rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1rem 1.5rem;
+  padding-bottom: 8rem; /* Extra bottom padding to ensure content is not hidden behind bottom nav */
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   position: relative;
-  background: var(--weathered-white);
-  margin-top: 0;
-  height: 100vh;
+  background: transparent;
   box-sizing: border-box;
   z-index: 1;
 }
